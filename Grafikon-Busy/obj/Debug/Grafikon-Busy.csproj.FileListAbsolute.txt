@@ -1,0 +1,13 @@
+C:\Users\Francimor\source\repos\Grafikon-Busy\Grafikon-Busy\bin\Debug\Grafikon-Busy.exe.config
+C:\Users\Francimor\source\repos\Grafikon-Busy\Grafikon-Busy\bin\Debug\Grafikon-Busy.exe
+C:\Users\Francimor\source\repos\Grafikon-Busy\Grafikon-Busy\bin\Debug\Grafikon-Busy.pdb
+C:\Users\Francimor\source\repos\Grafikon-Busy\Grafikon-Busy\obj\Debug\Grafikon-Busy.csprojAssemblyReference.cache
+C:\Users\Francimor\source\repos\Grafikon-Busy\Grafikon-Busy\obj\Debug\Grafikon_Busy.Form1.resources
+C:\Users\Francimor\source\repos\Grafikon-Busy\Grafikon-Busy\obj\Debug\Grafikon_Busy.Properties.Resources.resources
+C:\Users\Francimor\source\repos\Grafikon-Busy\Grafikon-Busy\obj\Debug\Grafikon-Busy.csproj.GenerateResource.cache
+C:\Users\Francimor\source\repos\Grafikon-Busy\Grafikon-Busy\obj\Debug\Grafikon-Busy.csproj.CoreCompileInputs.cache
+C:\Users\Francimor\source\repos\Grafikon-Busy\Grafikon-Busy\obj\Debug\Grafikon-Busy.exe
+C:\Users\Francimor\source\repos\Grafikon-Busy\Grafikon-Busy\obj\Debug\Grafikon-Busy.pdb
+C:\Users\Francimor\source\repos\Grafikon-Busy\Grafikon-Busy\bin\Debug\RozvrhBusu.dll
+C:\Users\Francimor\source\repos\Grafikon-Busy\Grafikon-Busy\bin\Debug\RozvrhBusu.pdb
+C:\Users\Francimor\source\repos\Grafikon-Busy\Grafikon-Busy\obj\Debug\Grafikon-Busy.csproj.CopyComplete

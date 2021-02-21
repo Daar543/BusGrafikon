@@ -1,0 +1,35 @@
+Linka číslo 805009		Uherské Hradiště - Mařatice - Sady - Míkovice - Kunovice,Let - Uherské Hradiště								
+Platí od 1. 1. 2021 do 31. 12. 2021		opačný směr								
+Tč			Spoj 2	Spoj 4	Spoj 104	Spoj 6	km	km	km	km
+			X	X	X 20	X				
+29	Uherské Hradiště,,aut.nádr.	odjezd		7:05	7:15			0		0
+28	Uherské Hradiště,,Smetanovy sady			<	<			<		<
+27	Uherské Hradiště,,B.Němcové			7:08	|			1		1
+26	Uherské Hradiště,,garáže ČSAD			7:10	|			2		2
+25	Kunovice,,rozc.k žel.st.0.5			7:12	|			3		3
+24	Kunovice,,Na Rynku			7:14	<			4		<
+23	Kunovice,,Let		6:20	<	<	14:45	0	<	0	<
+22	Kunovice,,Na Bělince		|	<	<	14:47	2	<	2	<
+21	Kunovice,,Panská		|	<	<	14:48	3	<	3	<
+20	Kunovice,,Na Rynku		<	<	<	14:50	<	<	3	<
+19	Kunovice,,rozc.k žel.st.0.5		<	<	<	14:52	<	<	4	<
+18	Kunovice,,Lidická		6:28	7:16	<	<	4	5	<	<
+17	Uherské Hradiště,Míkovice,Hlavní		6:30	7:20	<	<	6	7	<	<
+16	Uherské Hradiště,Vésky,střed		6:32	7:22	7:25	<	7	8	<	6
+15	Uherské Hradiště,Vésky,hor.konec		6:33	7:23	7:26	<	7	8	<	6
+14	Uherské Hradiště,Sady,Za Kovárnou		6:35	7:25	7:28	<	8	9	<	7
+13	Uherské Hradiště,Sady		6:36	7:26	7:29	<	9	10	<	8
+12	Uherské Hradiště,Sady,rozc.		6:38	7:28	7:31	<	10	11	<	9
+11	Uherské Hradiště,Sady,Špitálky		|	|	|	14:54	10	11	5	9
+10	Uherské Hradiště,Mařatice,ZŠ Větrná		6:40	7:30	7:33	<	11	12	<	10
+9	Uherské Hradiště,Mařatice,Derflanská		<	<	<	14:56	<	<	6	<
+8	Uherské Hradiště,Mařatice,R.Kubíčka		<	<	<	14:57	<	<	7	<
+7	Uherské Hradiště,Mařatice,hor.konec		6:42	7:32	7:35	14:59	12	13	8	11
+6	Uherské Hradiště,Mařatice,škola		6:43	7:33	7:36	15:00	12	13	8	11
+5	Uherské Hradiště,Mařatice,dol.konec		6:45	7:35	7:38	15:02	13	14	9	12
+4	Uherské Hradiště,Mařatice,Mesit		6:47	7:37	<	15:04	14	15	10	<
+3	Uherské Hradiště,Mařatice,Jaktáře		6:49	7:39	<	15:05	15	16	11	<
+2	Uherské Hradiště,Mařatice,Mesit		6:51	7:41	<		16	17		<
+1	Uherské Hradiště,,aut.nádr.	příjezd	6:55	7:45	7:43		18	19		13
+										
+Přepravu zajišťuje: ČSAD BUS Uherské Hradiště a.s., Malinovského 874, 686 19 Uherské Hradiště, www.csaduh.cz										
