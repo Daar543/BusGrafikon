@@ -37,8 +37,7 @@ namespace Grafikon_Busy
             {Color.Brown,Color.Orange },{Color.Yellow,Color.Green },
             {Color.Blue,Color.DarkCyan },{Color.Magenta,Color.Purple}
         };
-
-        private void RenderGraphicon(IEnumerable<ConnectionGroup> conns, string[] stoplist, double[]distances)
+        private void ClearGraphicon()
         {
             var Chart = BusChart.ChartAreas[0];
             BusChart.Size = new Size(this.Size.Width * 2 / 3, this.Size.Height);
@@ -59,7 +58,12 @@ namespace Grafikon_Busy
             Chart.AxisY.MajorGrid.LineWidth = 0;
 
             Chart.AxisY.CustomLabels.Clear();
+        }
+        private void RenderGraphicon(IEnumerable<ConnectionGroup> conns, string[] stoplist, double[]distances)
+        {
 
+            ClearGraphicon();
+            var Chart = BusChart.ChartAreas[0];
             Chart.AxisY.CustomLabels.Add(new CustomLabel
             {
                 FromPosition = distances[0],
@@ -111,7 +115,12 @@ namespace Grafikon_Busy
 
         private void RenderButtonBoth_Click(object sender, EventArgs e)
         {
-            if (StopsB.IsInverseOf(StopsF))
+            if (StopsF is null || StopsB is null)
+            {
+                ClearGraphicon();
+                return;
+            }
+            else if (StopsB.IsInverseOf(StopsF))
             {
                 RenderGraphicon(TableFront.Concat(TableBack), StopsF,kilometrage2);
             }
@@ -209,8 +218,6 @@ namespace Grafikon_Busy
                 }
             }
         }
-
-
         private enum DayType
         {
             Workday, SchoolHoliday, Saturday, Sunday
@@ -443,11 +450,21 @@ namespace Grafikon_Busy
 
         private void btnRenderFront_Click(object sender, EventArgs e)
         {
+            if (StopsF is null)
+            {
+                ClearGraphicon();
+                return;
+            }
             RenderGraphicon(TableFront, StopsF,kilometrage2);
         }
 
         private void btnRenderBack_Click(object sender, EventArgs e)
         {
+            if(StopsB is null)
+            {
+                ClearGraphicon();
+                return;
+            }
             RenderGraphicon(TableBack, StopsB.Reverse().ToArray(),kilometrage2);
         }
     }

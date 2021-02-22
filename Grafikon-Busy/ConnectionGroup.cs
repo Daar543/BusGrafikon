@@ -57,6 +57,11 @@ namespace Grafikon_Busy
             return true;
         }
     }
+    public struct Zastavka
+    {
+        public int order;
+        public double distance;
+    }
     public static class ArrayCalculations
     {
         public static double[] Normalize(int[] arr, double minDiff)

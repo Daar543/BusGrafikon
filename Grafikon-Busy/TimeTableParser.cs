@@ -17,6 +17,7 @@ namespace Grafikon_Busy
         const char WorkdaySign = 'X';
         const char SaturdaySign = '6';
         const char SundaySign = '+';
+        static string DistanceSign = "km";
         static char[] SignSeparators = new char[] { ' ' };
         public string[] HolidayPositiveSigns;
         public string[] HolidayNegativeSigns;
@@ -89,6 +90,85 @@ namespace Grafikon_Busy
             catch
             {
                 return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// Gets all kilometrage tours from the reduced table
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="kms"></param>
+        /// <returns></returns>
+        public bool GetKilometrageTable(out string[][] kms)
+        {
+            if (ReducedTable == null)
+                ReducedTable = this.Cutout();
+            List<int> AllowedRows = new List<int>();
+                AllowedRows.Add(1); //Stops
+            for (int i = 2; i < ReducedTable.Length; ++i)
+            {
+                if (ReducedTable[i][0].Contains(DistanceSign) || ReducedTable[i][1].Contains(DistanceSign))
+                {
+                    AllowedRows.Add(i);
+                }
+            }
+            kms = new string[AllowedRows.Count][];
+            if (AllowedRows.Count == 0)
+                return false;
+
+            int j = 0;
+            foreach (int row in AllowedRows)
+            {
+                kms[j] = new string[ReducedTable[row].Length];
+                Array.Copy(ReducedTable[row], kms[j], ReducedTable[row].Length);
+                ++j;
+            }
+            return true;
+        }
+        public bool ExtractKilometragesFromTable(string[][]table, double normalizingDistance, out Zastavka[][]toursNorm)
+        {
+            int[][] tours = new int[table.Length - 1][];
+            int len = table[0].Length;
+            int diff = 0;
+            int i = 0;
+            for(; i<table[0].Length && table[0][i] == ""; ++i)
+            {
+                len--;
+                diff++;
+            }
+            
+            for(int j = 0; j < tours.Length; ++j)
+            {
+                tours[j] = new int[len];
+            }
+            for(int j = 0; j < tours.Length; ++j)
+            {
+                for(i = diff; i < table[0].Length; ++i)
+                {
+                    if (int.TryParse(table[j+1][i], out int dist))
+                        tours[j][i - diff] = dist;
+                    else
+                        tours[j][i - diff] = -1;
+                }
+            }
+
+
+
+            toursNorm = new Zastavka[tours.Length][];
+            if (len == 0)
+                return false;
+            for (int j = 0; j < tours.Length; ++j)
+            {
+                double[] toursNormA = ArrayCalculations.Normalize(tours[j], normalizingDistance);
+                var zst = new List<Zastavka>();
+                for (int k = 0; k < len; ++k)
+                {
+                    if (toursNormA[k] >= 0)
+                    {
+                        zst.Add(new Zastavka { order = zst.Count, distance = toursNormA[k] });
+                    }
+                }
+                toursNorm[j] = zst.ToArray();
             }
             return true;
         }
