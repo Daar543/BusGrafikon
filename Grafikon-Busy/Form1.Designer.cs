@@ -59,8 +59,16 @@
             this.textboxInfoHoliday = new System.Windows.Forms.TextBox();
             this.holidayNegativ = new System.Windows.Forms.TextBox();
             this.holidayPositive = new System.Windows.Forms.TextBox();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.trackBar2 = new System.Windows.Forms.TrackBar();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.BusChart)).BeginInit();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             this.SuspendLayout();
             // 
             // BusChart
@@ -69,24 +77,22 @@
             this.BusChart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.BusChart.Legends.Add(legend1);
-            this.BusChart.Location = new System.Drawing.Point(13, -11);
-            this.BusChart.Margin = new System.Windows.Forms.Padding(4);
+            this.BusChart.Location = new System.Drawing.Point(10, -9);
             this.BusChart.Name = "BusChart";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.BusChart.Series.Add(series1);
-            this.BusChart.Size = new System.Drawing.Size(556, 528);
+            this.BusChart.Size = new System.Drawing.Size(417, 429);
             this.BusChart.TabIndex = 0;
             this.BusChart.Text = "BusChart";
             // 
             // btnRenderBoth
             // 
             this.btnRenderBoth.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnRenderBoth.Location = new System.Drawing.Point(172, 473);
-            this.btnRenderBoth.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRenderBoth.Location = new System.Drawing.Point(152, 384);
             this.btnRenderBoth.Name = "btnRenderBoth";
-            this.btnRenderBoth.Size = new System.Drawing.Size(123, 44);
+            this.btnRenderBoth.Size = new System.Drawing.Size(92, 36);
             this.btnRenderBoth.TabIndex = 1;
             this.btnRenderBoth.Text = "Vykresli obě";
             this.btnRenderBoth.UseVisualStyleBackColor = true;
@@ -95,9 +101,10 @@
             // btnChooseLine
             // 
             this.btnChooseLine.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnChooseLine.Location = new System.Drawing.Point(362, 7);
+            this.btnChooseLine.Location = new System.Drawing.Point(320, 7);
+            this.btnChooseLine.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnChooseLine.Name = "btnChooseLine";
-            this.btnChooseLine.Size = new System.Drawing.Size(112, 59);
+            this.btnChooseLine.Size = new System.Drawing.Size(84, 48);
             this.btnChooseLine.TabIndex = 2;
             this.btnChooseLine.Text = "Vyber linku";
             this.btnChooseLine.UseVisualStyleBackColor = true;
@@ -106,9 +113,10 @@
             // textBoxLine
             // 
             this.textBoxLine.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.textBoxLine.Location = new System.Drawing.Point(362, 72);
+            this.textBoxLine.Location = new System.Drawing.Point(320, 59);
+            this.textBoxLine.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxLine.Name = "textBoxLine";
-            this.textBoxLine.Size = new System.Drawing.Size(112, 22);
+            this.textBoxLine.Size = new System.Drawing.Size(85, 20);
             this.textBoxLine.TabIndex = 3;
             this.textBoxLine.Text = "JR/805004-T.txt";
             this.textBoxLine.TextChanged += new System.EventHandler(this.textBoxLine_TextChanged);
@@ -116,9 +124,10 @@
             // btnWorkday
             // 
             this.btnWorkday.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnWorkday.Location = new System.Drawing.Point(362, 100);
+            this.btnWorkday.Location = new System.Drawing.Point(320, 82);
+            this.btnWorkday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnWorkday.Name = "btnWorkday";
-            this.btnWorkday.Size = new System.Drawing.Size(112, 58);
+            this.btnWorkday.Size = new System.Drawing.Size(84, 47);
             this.btnWorkday.TabIndex = 4;
             this.btnWorkday.Text = "Načti pracovní dny";
             this.btnWorkday.UseVisualStyleBackColor = true;
@@ -127,9 +136,10 @@
             // btnSaturday
             // 
             this.btnSaturday.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnSaturday.Location = new System.Drawing.Point(362, 228);
+            this.btnSaturday.Location = new System.Drawing.Point(320, 186);
+            this.btnSaturday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSaturday.Name = "btnSaturday";
-            this.btnSaturday.Size = new System.Drawing.Size(112, 58);
+            this.btnSaturday.Size = new System.Drawing.Size(84, 47);
             this.btnSaturday.TabIndex = 5;
             this.btnSaturday.Text = "Načti soboty";
             this.btnSaturday.UseVisualStyleBackColor = true;
@@ -138,9 +148,10 @@
             // btnSunday
             // 
             this.btnSunday.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnSunday.Location = new System.Drawing.Point(362, 292);
+            this.btnSunday.Location = new System.Drawing.Point(320, 238);
+            this.btnSunday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSunday.Name = "btnSunday";
-            this.btnSunday.Size = new System.Drawing.Size(112, 58);
+            this.btnSunday.Size = new System.Drawing.Size(84, 47);
             this.btnSunday.TabIndex = 6;
             this.btnSunday.Text = "Načti neděle";
             this.btnSunday.UseVisualStyleBackColor = true;
@@ -149,9 +160,10 @@
             // btnNoSchoolWorkday
             // 
             this.btnNoSchoolWorkday.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnNoSchoolWorkday.Location = new System.Drawing.Point(362, 164);
+            this.btnNoSchoolWorkday.Location = new System.Drawing.Point(320, 134);
+            this.btnNoSchoolWorkday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnNoSchoolWorkday.Name = "btnNoSchoolWorkday";
-            this.btnNoSchoolWorkday.Size = new System.Drawing.Size(112, 58);
+            this.btnNoSchoolWorkday.Size = new System.Drawing.Size(84, 47);
             this.btnNoSchoolWorkday.TabIndex = 7;
             this.btnNoSchoolWorkday.Text = "Načti školní prázdniny";
             this.btnNoSchoolWorkday.UseVisualStyleBackColor = true;
@@ -161,9 +173,10 @@
             // 
             this.chbWorkday.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chbWorkday.Enabled = false;
-            this.chbWorkday.Location = new System.Drawing.Point(324, 356);
+            this.chbWorkday.Location = new System.Drawing.Point(291, 291);
+            this.chbWorkday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chbWorkday.Name = "chbWorkday";
-            this.chbWorkday.Size = new System.Drawing.Size(150, 20);
+            this.chbWorkday.Size = new System.Drawing.Size(112, 16);
             this.chbWorkday.TabIndex = 8;
             this.chbWorkday.Text = "Pracovní dny";
             this.chbWorkday.UseVisualStyleBackColor = true;
@@ -174,9 +187,10 @@
             this.chbSaturday.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chbSaturday.Enabled = false;
-            this.chbSaturday.Location = new System.Drawing.Point(324, 412);
+            this.chbSaturday.Location = new System.Drawing.Point(291, 335);
+            this.chbSaturday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chbSaturday.Name = "chbSaturday";
-            this.chbSaturday.Size = new System.Drawing.Size(150, 20);
+            this.chbSaturday.Size = new System.Drawing.Size(112, 18);
             this.chbSaturday.TabIndex = 9;
             this.chbSaturday.Text = "Sobota";
             this.chbSaturday.UseVisualStyleBackColor = true;
@@ -186,9 +200,10 @@
             // 
             this.chbSunday.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chbSunday.Enabled = false;
-            this.chbSunday.Location = new System.Drawing.Point(324, 438);
+            this.chbSunday.Location = new System.Drawing.Point(291, 356);
+            this.chbSunday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chbSunday.Name = "chbSunday";
-            this.chbSunday.Size = new System.Drawing.Size(150, 20);
+            this.chbSunday.Size = new System.Drawing.Size(112, 16);
             this.chbSunday.TabIndex = 10;
             this.chbSunday.Text = "Neděle";
             this.chbSunday.UseVisualStyleBackColor = true;
@@ -198,9 +213,10 @@
             // 
             this.chbSchoolHoliday.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chbSchoolHoliday.Enabled = false;
-            this.chbSchoolHoliday.Location = new System.Drawing.Point(324, 386);
+            this.chbSchoolHoliday.Location = new System.Drawing.Point(291, 314);
+            this.chbSchoolHoliday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chbSchoolHoliday.Name = "chbSchoolHoliday";
-            this.chbSchoolHoliday.Size = new System.Drawing.Size(150, 20);
+            this.chbSchoolHoliday.Size = new System.Drawing.Size(112, 16);
             this.chbSchoolHoliday.TabIndex = 11;
             this.chbSchoolHoliday.Text = "Školní prázdniny";
             this.chbSchoolHoliday.UseVisualStyleBackColor = true;
@@ -209,6 +225,12 @@
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.checkBox2);
+            this.panel2.Controls.Add(this.checkBox1);
+            this.panel2.Controls.Add(this.button2);
+            this.panel2.Controls.Add(this.button1);
+            this.panel2.Controls.Add(this.trackBar2);
+            this.panel2.Controls.Add(this.trackBar1);
             this.panel2.Controls.Add(this.btnRenderFront);
             this.panel2.Controls.Add(this.btnRenderBack);
             this.panel2.Controls.Add(this.chbSundayBack);
@@ -235,18 +257,18 @@
             this.panel2.Controls.Add(this.btnNoSchoolWorkday);
             this.panel2.Controls.Add(this.btnSaturday);
             this.panel2.Controls.Add(this.btnWorkday);
-            this.panel2.Location = new System.Drawing.Point(576, 12);
+            this.panel2.Location = new System.Drawing.Point(419, 11);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(478, 523);
+            this.panel2.Size = new System.Drawing.Size(406, 427);
             this.panel2.TabIndex = 14;
             // 
             // btnRenderFront
             // 
             this.btnRenderFront.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRenderFront.Location = new System.Drawing.Point(362, 475);
-            this.btnRenderFront.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRenderFront.Location = new System.Drawing.Point(320, 388);
             this.btnRenderFront.Name = "btnRenderFront";
-            this.btnRenderFront.Size = new System.Drawing.Size(112, 40);
+            this.btnRenderFront.Size = new System.Drawing.Size(84, 32);
             this.btnRenderFront.TabIndex = 26;
             this.btnRenderFront.Text = "Vykresli";
             this.btnRenderFront.UseVisualStyleBackColor = true;
@@ -255,10 +277,9 @@
             // btnRenderBack
             // 
             this.btnRenderBack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnRenderBack.Location = new System.Drawing.Point(4, 479);
-            this.btnRenderBack.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRenderBack.Location = new System.Drawing.Point(3, 391);
             this.btnRenderBack.Name = "btnRenderBack";
-            this.btnRenderBack.Size = new System.Drawing.Size(112, 40);
+            this.btnRenderBack.Size = new System.Drawing.Size(84, 32);
             this.btnRenderBack.TabIndex = 25;
             this.btnRenderBack.Text = "Vykresli";
             this.btnRenderBack.UseVisualStyleBackColor = true;
@@ -267,9 +288,10 @@
             // chbSundayBack
             // 
             this.chbSundayBack.Enabled = false;
-            this.chbSundayBack.Location = new System.Drawing.Point(3, 434);
+            this.chbSundayBack.Location = new System.Drawing.Point(2, 353);
+            this.chbSundayBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chbSundayBack.Name = "chbSundayBack";
-            this.chbSundayBack.Size = new System.Drawing.Size(150, 20);
+            this.chbSundayBack.Size = new System.Drawing.Size(112, 16);
             this.chbSundayBack.TabIndex = 23;
             this.chbSundayBack.Text = "Neděle";
             this.chbSundayBack.UseVisualStyleBackColor = true;
@@ -280,9 +302,10 @@
             this.chbWorkdayBack.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.chbWorkdayBack.Enabled = false;
-            this.chbWorkdayBack.Location = new System.Drawing.Point(3, 352);
+            this.chbWorkdayBack.Location = new System.Drawing.Point(2, 286);
+            this.chbWorkdayBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chbWorkdayBack.Name = "chbWorkdayBack";
-            this.chbWorkdayBack.Size = new System.Drawing.Size(150, 20);
+            this.chbWorkdayBack.Size = new System.Drawing.Size(112, 18);
             this.chbWorkdayBack.TabIndex = 21;
             this.chbWorkdayBack.Text = "Pracovní dny";
             this.chbWorkdayBack.UseVisualStyleBackColor = true;
@@ -293,9 +316,10 @@
             this.chbSaturdayBack.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.chbSaturdayBack.Enabled = false;
-            this.chbSaturdayBack.Location = new System.Drawing.Point(3, 408);
+            this.chbSaturdayBack.Location = new System.Drawing.Point(2, 332);
+            this.chbSaturdayBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chbSaturdayBack.Name = "chbSaturdayBack";
-            this.chbSaturdayBack.Size = new System.Drawing.Size(150, 20);
+            this.chbSaturdayBack.Size = new System.Drawing.Size(112, 18);
             this.chbSaturdayBack.TabIndex = 22;
             this.chbSaturdayBack.Text = "Sobota";
             this.chbSaturdayBack.UseVisualStyleBackColor = true;
@@ -306,9 +330,10 @@
             this.chbSchoolHolidayBack.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.chbSchoolHolidayBack.Enabled = false;
-            this.chbSchoolHolidayBack.Location = new System.Drawing.Point(3, 382);
+            this.chbSchoolHolidayBack.Location = new System.Drawing.Point(2, 310);
+            this.chbSchoolHolidayBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chbSchoolHolidayBack.Name = "chbSchoolHolidayBack";
-            this.chbSchoolHolidayBack.Size = new System.Drawing.Size(150, 20);
+            this.chbSchoolHolidayBack.Size = new System.Drawing.Size(112, 18);
             this.chbSchoolHolidayBack.TabIndex = 24;
             this.chbSchoolHolidayBack.Text = "Školní prázdniny";
             this.chbSchoolHolidayBack.UseVisualStyleBackColor = true;
@@ -317,9 +342,10 @@
             // btnChooseBackLine
             // 
             this.btnChooseBackLine.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnChooseBackLine.Location = new System.Drawing.Point(3, 3);
+            this.btnChooseBackLine.Location = new System.Drawing.Point(2, 3);
+            this.btnChooseBackLine.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnChooseBackLine.Name = "btnChooseBackLine";
-            this.btnChooseBackLine.Size = new System.Drawing.Size(112, 59);
+            this.btnChooseBackLine.Size = new System.Drawing.Size(84, 48);
             this.btnChooseBackLine.TabIndex = 15;
             this.btnChooseBackLine.Text = "Vyber linku (protisměr)";
             this.btnChooseBackLine.UseVisualStyleBackColor = true;
@@ -328,18 +354,20 @@
             // textBoxLineBack
             // 
             this.textBoxLineBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.textBoxLineBack.Location = new System.Drawing.Point(3, 68);
+            this.textBoxLineBack.Location = new System.Drawing.Point(2, 56);
+            this.textBoxLineBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxLineBack.Name = "textBoxLineBack";
-            this.textBoxLineBack.Size = new System.Drawing.Size(112, 22);
+            this.textBoxLineBack.Size = new System.Drawing.Size(85, 20);
             this.textBoxLineBack.TabIndex = 16;
             this.textBoxLineBack.Text = "JR/805004-Z.txt";
             // 
             // btnSundayBack
             // 
             this.btnSundayBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnSundayBack.Location = new System.Drawing.Point(3, 288);
+            this.btnSundayBack.Location = new System.Drawing.Point(2, 235);
+            this.btnSundayBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSundayBack.Name = "btnSundayBack";
-            this.btnSundayBack.Size = new System.Drawing.Size(112, 58);
+            this.btnSundayBack.Size = new System.Drawing.Size(84, 47);
             this.btnSundayBack.TabIndex = 19;
             this.btnSundayBack.Text = "Načti neděle";
             this.btnSundayBack.UseVisualStyleBackColor = true;
@@ -348,9 +376,10 @@
             // btnSchoolHolidayBack
             // 
             this.btnSchoolHolidayBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnSchoolHolidayBack.Location = new System.Drawing.Point(3, 160);
+            this.btnSchoolHolidayBack.Location = new System.Drawing.Point(2, 131);
+            this.btnSchoolHolidayBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSchoolHolidayBack.Name = "btnSchoolHolidayBack";
-            this.btnSchoolHolidayBack.Size = new System.Drawing.Size(112, 58);
+            this.btnSchoolHolidayBack.Size = new System.Drawing.Size(84, 47);
             this.btnSchoolHolidayBack.TabIndex = 20;
             this.btnSchoolHolidayBack.Text = "Načti školní prázdniny";
             this.btnSchoolHolidayBack.UseVisualStyleBackColor = true;
@@ -359,9 +388,10 @@
             // btnSaturdayBack
             // 
             this.btnSaturdayBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnSaturdayBack.Location = new System.Drawing.Point(3, 224);
+            this.btnSaturdayBack.Location = new System.Drawing.Point(2, 183);
+            this.btnSaturdayBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSaturdayBack.Name = "btnSaturdayBack";
-            this.btnSaturdayBack.Size = new System.Drawing.Size(112, 58);
+            this.btnSaturdayBack.Size = new System.Drawing.Size(84, 47);
             this.btnSaturdayBack.TabIndex = 18;
             this.btnSaturdayBack.Text = "Načti soboty";
             this.btnSaturdayBack.UseVisualStyleBackColor = true;
@@ -370,9 +400,10 @@
             // btnWorkdayBack
             // 
             this.btnWorkdayBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnWorkdayBack.Location = new System.Drawing.Point(3, 96);
+            this.btnWorkdayBack.Location = new System.Drawing.Point(2, 79);
+            this.btnWorkdayBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnWorkdayBack.Name = "btnWorkdayBack";
-            this.btnWorkdayBack.Size = new System.Drawing.Size(112, 58);
+            this.btnWorkdayBack.Size = new System.Drawing.Size(84, 47);
             this.btnWorkdayBack.TabIndex = 17;
             this.btnWorkdayBack.Text = "Načti pracovní dny";
             this.btnWorkdayBack.UseVisualStyleBackColor = true;
@@ -382,20 +413,22 @@
             // 
             this.textboxInfoHoliday.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.textboxInfoHoliday.Enabled = false;
-            this.textboxInfoHoliday.Location = new System.Drawing.Point(240, 7);
+            this.textboxInfoHoliday.Location = new System.Drawing.Point(228, 3);
+            this.textboxInfoHoliday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textboxInfoHoliday.Multiline = true;
             this.textboxInfoHoliday.Name = "textboxInfoHoliday";
-            this.textboxInfoHoliday.Size = new System.Drawing.Size(116, 108);
+            this.textboxInfoHoliday.Size = new System.Drawing.Size(88, 88);
             this.textboxInfoHoliday.TabIndex = 14;
             this.textboxInfoHoliday.Text = "Značky pro prázdniny (odděluj mezerou): nahoře pozitivní, dole negativní";
             // 
             // holidayNegativ
             // 
             this.holidayNegativ.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.holidayNegativ.Location = new System.Drawing.Point(297, 182);
+            this.holidayNegativ.Location = new System.Drawing.Point(271, 140);
+            this.holidayNegativ.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.holidayNegativ.Multiline = true;
             this.holidayNegativ.Name = "holidayNegativ";
-            this.holidayNegativ.Size = new System.Drawing.Size(59, 58);
+            this.holidayNegativ.Size = new System.Drawing.Size(45, 48);
             this.holidayNegativ.TabIndex = 13;
             this.holidayNegativ.Text = "20 28 29";
             this.holidayNegativ.TextChanged += new System.EventHandler(this.holidayNegative_TextChanged);
@@ -404,27 +437,81 @@
             // 
             this.holidayPositive.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.holidayPositive.Location = new System.Drawing.Point(297, 121);
+            this.holidayPositive.Location = new System.Drawing.Point(271, 96);
+            this.holidayPositive.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.holidayPositive.Multiline = true;
             this.holidayPositive.Name = "holidayPositive";
-            this.holidayPositive.Size = new System.Drawing.Size(59, 46);
+            this.holidayPositive.Size = new System.Drawing.Size(45, 40);
             this.holidayPositive.TabIndex = 12;
             this.holidayPositive.Text = "18 19";
             this.holidayPositive.TextChanged += new System.EventHandler(this.holidayPositive_TextChanged);
             // 
+            // trackBar1
+            // 
+            this.trackBar1.Location = new System.Drawing.Point(212, 240);
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(104, 45);
+            this.trackBar1.TabIndex = 27;
+            // 
+            // trackBar2
+            // 
+            this.trackBar2.Location = new System.Drawing.Point(92, 240);
+            this.trackBar2.Name = "trackBar2";
+            this.trackBar2.Size = new System.Drawing.Size(104, 45);
+            this.trackBar2.TabIndex = 28;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(92, 195);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 29;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(240, 195);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 30;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(92, 224);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(80, 17);
+            this.checkBox1.TabIndex = 31;
+            this.checkBox1.Text = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(228, 224);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(80, 17);
+            this.checkBox2.TabIndex = 32;
+            this.checkBox2.Text = "checkBox2";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.ClientSize = new System.Drawing.Size(819, 538);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.BusChart);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.BusChart)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -459,6 +546,12 @@
         private System.Windows.Forms.Button btnWorkdayBack;
         private System.Windows.Forms.Button btnRenderFront;
         private System.Windows.Forms.Button btnRenderBack;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TrackBar trackBar2;
+        private System.Windows.Forms.TrackBar trackBar1;
     }
 }
 
