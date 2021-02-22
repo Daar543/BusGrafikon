@@ -59,8 +59,8 @@ namespace Grafikon_Busy
     }
     public struct Zastavka
     {
-        public int order;
-        public double distance;
+        public int Order;
+        public double Distance;
     }
     public static class ArrayCalculations
     {
@@ -92,7 +92,7 @@ namespace Grafikon_Busy
                     for (int d = firstInd; d < secondInd; ++d)
                     {
                         result[d] += (d - median) * minDiff;
-                        if (result[d] - result[d - 1] < minDiff)
+                        if (d > 0 && result[d] - result[d - 1] < minDiff && result[d] - result[d - 1] > 0)
                         {
                             result[d] = result[d - 1] + minDiff;
                         }

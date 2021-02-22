@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.BusChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btnRenderBoth = new System.Windows.Forms.Button();
             this.btnChooseLine = new System.Windows.Forms.Button();
@@ -44,6 +44,12 @@
             this.chbSunday = new System.Windows.Forms.CheckBox();
             this.chbSchoolHoliday = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.chbToursF = new System.Windows.Forms.CheckBox();
+            this.chbToursB = new System.Windows.Forms.CheckBox();
+            this.btnLoadDistsF = new System.Windows.Forms.Button();
+            this.btnLoadDistsB = new System.Windows.Forms.Button();
+            this.trbToursB = new System.Windows.Forms.TrackBar();
+            this.trbToursF = new System.Windows.Forms.TrackBar();
             this.btnRenderFront = new System.Windows.Forms.Button();
             this.btnRenderBack = new System.Windows.Forms.Button();
             this.chbSundayBack = new System.Windows.Forms.CheckBox();
@@ -59,30 +65,24 @@
             this.textboxInfoHoliday = new System.Windows.Forms.TextBox();
             this.holidayNegativ = new System.Windows.Forms.TextBox();
             this.holidayPositive = new System.Windows.Forms.TextBox();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.trackBar2 = new System.Windows.Forms.TrackBar();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.BusChart)).BeginInit();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbToursB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbToursF)).BeginInit();
             this.SuspendLayout();
             // 
             // BusChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.BusChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.BusChart.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.BusChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.BusChart.Legends.Add(legend2);
             this.BusChart.Location = new System.Drawing.Point(10, -9);
             this.BusChart.Name = "BusChart";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.BusChart.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.BusChart.Series.Add(series2);
             this.BusChart.Size = new System.Drawing.Size(417, 429);
             this.BusChart.TabIndex = 0;
             this.BusChart.Text = "BusChart";
@@ -102,7 +102,7 @@
             // 
             this.btnChooseLine.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnChooseLine.Location = new System.Drawing.Point(320, 7);
-            this.btnChooseLine.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnChooseLine.Margin = new System.Windows.Forms.Padding(2);
             this.btnChooseLine.Name = "btnChooseLine";
             this.btnChooseLine.Size = new System.Drawing.Size(84, 48);
             this.btnChooseLine.TabIndex = 2;
@@ -114,7 +114,7 @@
             // 
             this.textBoxLine.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.textBoxLine.Location = new System.Drawing.Point(320, 59);
-            this.textBoxLine.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxLine.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxLine.Name = "textBoxLine";
             this.textBoxLine.Size = new System.Drawing.Size(85, 20);
             this.textBoxLine.TabIndex = 3;
@@ -125,7 +125,7 @@
             // 
             this.btnWorkday.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnWorkday.Location = new System.Drawing.Point(320, 82);
-            this.btnWorkday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnWorkday.Margin = new System.Windows.Forms.Padding(2);
             this.btnWorkday.Name = "btnWorkday";
             this.btnWorkday.Size = new System.Drawing.Size(84, 47);
             this.btnWorkday.TabIndex = 4;
@@ -137,7 +137,7 @@
             // 
             this.btnSaturday.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnSaturday.Location = new System.Drawing.Point(320, 186);
-            this.btnSaturday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSaturday.Margin = new System.Windows.Forms.Padding(2);
             this.btnSaturday.Name = "btnSaturday";
             this.btnSaturday.Size = new System.Drawing.Size(84, 47);
             this.btnSaturday.TabIndex = 5;
@@ -149,7 +149,7 @@
             // 
             this.btnSunday.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnSunday.Location = new System.Drawing.Point(320, 238);
-            this.btnSunday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSunday.Margin = new System.Windows.Forms.Padding(2);
             this.btnSunday.Name = "btnSunday";
             this.btnSunday.Size = new System.Drawing.Size(84, 47);
             this.btnSunday.TabIndex = 6;
@@ -161,7 +161,7 @@
             // 
             this.btnNoSchoolWorkday.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnNoSchoolWorkday.Location = new System.Drawing.Point(320, 134);
-            this.btnNoSchoolWorkday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnNoSchoolWorkday.Margin = new System.Windows.Forms.Padding(2);
             this.btnNoSchoolWorkday.Name = "btnNoSchoolWorkday";
             this.btnNoSchoolWorkday.Size = new System.Drawing.Size(84, 47);
             this.btnNoSchoolWorkday.TabIndex = 7;
@@ -174,7 +174,7 @@
             this.chbWorkday.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chbWorkday.Enabled = false;
             this.chbWorkday.Location = new System.Drawing.Point(291, 291);
-            this.chbWorkday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chbWorkday.Margin = new System.Windows.Forms.Padding(2);
             this.chbWorkday.Name = "chbWorkday";
             this.chbWorkday.Size = new System.Drawing.Size(112, 16);
             this.chbWorkday.TabIndex = 8;
@@ -188,7 +188,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chbSaturday.Enabled = false;
             this.chbSaturday.Location = new System.Drawing.Point(291, 335);
-            this.chbSaturday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chbSaturday.Margin = new System.Windows.Forms.Padding(2);
             this.chbSaturday.Name = "chbSaturday";
             this.chbSaturday.Size = new System.Drawing.Size(112, 18);
             this.chbSaturday.TabIndex = 9;
@@ -201,7 +201,7 @@
             this.chbSunday.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chbSunday.Enabled = false;
             this.chbSunday.Location = new System.Drawing.Point(291, 356);
-            this.chbSunday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chbSunday.Margin = new System.Windows.Forms.Padding(2);
             this.chbSunday.Name = "chbSunday";
             this.chbSunday.Size = new System.Drawing.Size(112, 16);
             this.chbSunday.TabIndex = 10;
@@ -214,7 +214,7 @@
             this.chbSchoolHoliday.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chbSchoolHoliday.Enabled = false;
             this.chbSchoolHoliday.Location = new System.Drawing.Point(291, 314);
-            this.chbSchoolHoliday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chbSchoolHoliday.Margin = new System.Windows.Forms.Padding(2);
             this.chbSchoolHoliday.Name = "chbSchoolHoliday";
             this.chbSchoolHoliday.Size = new System.Drawing.Size(112, 16);
             this.chbSchoolHoliday.TabIndex = 11;
@@ -225,12 +225,12 @@
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel2.Controls.Add(this.checkBox2);
-            this.panel2.Controls.Add(this.checkBox1);
-            this.panel2.Controls.Add(this.button2);
-            this.panel2.Controls.Add(this.button1);
-            this.panel2.Controls.Add(this.trackBar2);
-            this.panel2.Controls.Add(this.trackBar1);
+            this.panel2.Controls.Add(this.chbToursF);
+            this.panel2.Controls.Add(this.chbToursB);
+            this.panel2.Controls.Add(this.btnLoadDistsF);
+            this.panel2.Controls.Add(this.btnLoadDistsB);
+            this.panel2.Controls.Add(this.trbToursB);
+            this.panel2.Controls.Add(this.trbToursF);
             this.panel2.Controls.Add(this.btnRenderFront);
             this.panel2.Controls.Add(this.btnRenderBack);
             this.panel2.Controls.Add(this.chbSundayBack);
@@ -258,10 +258,64 @@
             this.panel2.Controls.Add(this.btnSaturday);
             this.panel2.Controls.Add(this.btnWorkday);
             this.panel2.Location = new System.Drawing.Point(419, 11);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(406, 427);
             this.panel2.TabIndex = 14;
+            // 
+            // chbToursF
+            // 
+            this.chbToursF.AutoSize = true;
+            this.chbToursF.Location = new System.Drawing.Point(228, 224);
+            this.chbToursF.Name = "chbToursF";
+            this.chbToursF.Size = new System.Drawing.Size(82, 17);
+            this.chbToursF.TabIndex = 32;
+            this.chbToursF.Text = "Vybrat trasu";
+            this.chbToursF.UseVisualStyleBackColor = true;
+            // 
+            // chbToursB
+            // 
+            this.chbToursB.AutoSize = true;
+            this.chbToursB.Location = new System.Drawing.Point(92, 224);
+            this.chbToursB.Name = "chbToursB";
+            this.chbToursB.Size = new System.Drawing.Size(82, 17);
+            this.chbToursB.TabIndex = 31;
+            this.chbToursB.Text = "Vybrat trasu";
+            this.chbToursB.UseVisualStyleBackColor = true;
+            // 
+            // btnLoadDistsF
+            // 
+            this.btnLoadDistsF.Location = new System.Drawing.Point(212, 195);
+            this.btnLoadDistsF.Name = "btnLoadDistsF";
+            this.btnLoadDistsF.Size = new System.Drawing.Size(103, 23);
+            this.btnLoadDistsF.TabIndex = 30;
+            this.btnLoadDistsF.Text = "Načíst vzdálenosti tras";
+            this.btnLoadDistsF.UseVisualStyleBackColor = true;
+            this.btnLoadDistsF.Click += new System.EventHandler(this.btnLoadDistsF_Click);
+            // 
+            // btnLoadDistsB
+            // 
+            this.btnLoadDistsB.Location = new System.Drawing.Point(92, 195);
+            this.btnLoadDistsB.Name = "btnLoadDistsB";
+            this.btnLoadDistsB.Size = new System.Drawing.Size(104, 23);
+            this.btnLoadDistsB.TabIndex = 29;
+            this.btnLoadDistsB.Text = "Načíst vzdálenosti tras";
+            this.btnLoadDistsB.UseVisualStyleBackColor = true;
+            this.btnLoadDistsB.Click += new System.EventHandler(this.btnLoadDistsB_Click);
+            // 
+            // trbToursB
+            // 
+            this.trbToursB.Location = new System.Drawing.Point(92, 240);
+            this.trbToursB.Name = "trbToursB";
+            this.trbToursB.Size = new System.Drawing.Size(104, 45);
+            this.trbToursB.TabIndex = 28;
+            // 
+            // trbToursF
+            // 
+            this.trbToursF.Location = new System.Drawing.Point(212, 240);
+            this.trbToursF.Name = "trbToursF";
+            this.trbToursF.Size = new System.Drawing.Size(104, 45);
+            this.trbToursF.TabIndex = 27;
             // 
             // btnRenderFront
             // 
@@ -289,7 +343,7 @@
             // 
             this.chbSundayBack.Enabled = false;
             this.chbSundayBack.Location = new System.Drawing.Point(2, 353);
-            this.chbSundayBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chbSundayBack.Margin = new System.Windows.Forms.Padding(2);
             this.chbSundayBack.Name = "chbSundayBack";
             this.chbSundayBack.Size = new System.Drawing.Size(112, 16);
             this.chbSundayBack.TabIndex = 23;
@@ -303,7 +357,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.chbWorkdayBack.Enabled = false;
             this.chbWorkdayBack.Location = new System.Drawing.Point(2, 286);
-            this.chbWorkdayBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chbWorkdayBack.Margin = new System.Windows.Forms.Padding(2);
             this.chbWorkdayBack.Name = "chbWorkdayBack";
             this.chbWorkdayBack.Size = new System.Drawing.Size(112, 18);
             this.chbWorkdayBack.TabIndex = 21;
@@ -317,7 +371,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.chbSaturdayBack.Enabled = false;
             this.chbSaturdayBack.Location = new System.Drawing.Point(2, 332);
-            this.chbSaturdayBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chbSaturdayBack.Margin = new System.Windows.Forms.Padding(2);
             this.chbSaturdayBack.Name = "chbSaturdayBack";
             this.chbSaturdayBack.Size = new System.Drawing.Size(112, 18);
             this.chbSaturdayBack.TabIndex = 22;
@@ -331,7 +385,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.chbSchoolHolidayBack.Enabled = false;
             this.chbSchoolHolidayBack.Location = new System.Drawing.Point(2, 310);
-            this.chbSchoolHolidayBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chbSchoolHolidayBack.Margin = new System.Windows.Forms.Padding(2);
             this.chbSchoolHolidayBack.Name = "chbSchoolHolidayBack";
             this.chbSchoolHolidayBack.Size = new System.Drawing.Size(112, 18);
             this.chbSchoolHolidayBack.TabIndex = 24;
@@ -343,7 +397,7 @@
             // 
             this.btnChooseBackLine.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnChooseBackLine.Location = new System.Drawing.Point(2, 3);
-            this.btnChooseBackLine.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnChooseBackLine.Margin = new System.Windows.Forms.Padding(2);
             this.btnChooseBackLine.Name = "btnChooseBackLine";
             this.btnChooseBackLine.Size = new System.Drawing.Size(84, 48);
             this.btnChooseBackLine.TabIndex = 15;
@@ -355,7 +409,7 @@
             // 
             this.textBoxLineBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.textBoxLineBack.Location = new System.Drawing.Point(2, 56);
-            this.textBoxLineBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxLineBack.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxLineBack.Name = "textBoxLineBack";
             this.textBoxLineBack.Size = new System.Drawing.Size(85, 20);
             this.textBoxLineBack.TabIndex = 16;
@@ -365,7 +419,7 @@
             // 
             this.btnSundayBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnSundayBack.Location = new System.Drawing.Point(2, 235);
-            this.btnSundayBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSundayBack.Margin = new System.Windows.Forms.Padding(2);
             this.btnSundayBack.Name = "btnSundayBack";
             this.btnSundayBack.Size = new System.Drawing.Size(84, 47);
             this.btnSundayBack.TabIndex = 19;
@@ -377,7 +431,7 @@
             // 
             this.btnSchoolHolidayBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnSchoolHolidayBack.Location = new System.Drawing.Point(2, 131);
-            this.btnSchoolHolidayBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSchoolHolidayBack.Margin = new System.Windows.Forms.Padding(2);
             this.btnSchoolHolidayBack.Name = "btnSchoolHolidayBack";
             this.btnSchoolHolidayBack.Size = new System.Drawing.Size(84, 47);
             this.btnSchoolHolidayBack.TabIndex = 20;
@@ -389,7 +443,7 @@
             // 
             this.btnSaturdayBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnSaturdayBack.Location = new System.Drawing.Point(2, 183);
-            this.btnSaturdayBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSaturdayBack.Margin = new System.Windows.Forms.Padding(2);
             this.btnSaturdayBack.Name = "btnSaturdayBack";
             this.btnSaturdayBack.Size = new System.Drawing.Size(84, 47);
             this.btnSaturdayBack.TabIndex = 18;
@@ -401,7 +455,7 @@
             // 
             this.btnWorkdayBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnWorkdayBack.Location = new System.Drawing.Point(2, 79);
-            this.btnWorkdayBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnWorkdayBack.Margin = new System.Windows.Forms.Padding(2);
             this.btnWorkdayBack.Name = "btnWorkdayBack";
             this.btnWorkdayBack.Size = new System.Drawing.Size(84, 47);
             this.btnWorkdayBack.TabIndex = 17;
@@ -414,7 +468,7 @@
             this.textboxInfoHoliday.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.textboxInfoHoliday.Enabled = false;
             this.textboxInfoHoliday.Location = new System.Drawing.Point(228, 3);
-            this.textboxInfoHoliday.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textboxInfoHoliday.Margin = new System.Windows.Forms.Padding(2);
             this.textboxInfoHoliday.Multiline = true;
             this.textboxInfoHoliday.Name = "textboxInfoHoliday";
             this.textboxInfoHoliday.Size = new System.Drawing.Size(88, 88);
@@ -425,7 +479,7 @@
             // 
             this.holidayNegativ.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.holidayNegativ.Location = new System.Drawing.Point(271, 140);
-            this.holidayNegativ.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.holidayNegativ.Margin = new System.Windows.Forms.Padding(2);
             this.holidayNegativ.Multiline = true;
             this.holidayNegativ.Name = "holidayNegativ";
             this.holidayNegativ.Size = new System.Drawing.Size(45, 48);
@@ -438,65 +492,13 @@
             this.holidayPositive.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.holidayPositive.Location = new System.Drawing.Point(271, 96);
-            this.holidayPositive.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.holidayPositive.Margin = new System.Windows.Forms.Padding(2);
             this.holidayPositive.Multiline = true;
             this.holidayPositive.Name = "holidayPositive";
             this.holidayPositive.Size = new System.Drawing.Size(45, 40);
             this.holidayPositive.TabIndex = 12;
             this.holidayPositive.Text = "18 19";
             this.holidayPositive.TextChanged += new System.EventHandler(this.holidayPositive_TextChanged);
-            // 
-            // trackBar1
-            // 
-            this.trackBar1.Location = new System.Drawing.Point(212, 240);
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(104, 45);
-            this.trackBar1.TabIndex = 27;
-            // 
-            // trackBar2
-            // 
-            this.trackBar2.Location = new System.Drawing.Point(92, 240);
-            this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(104, 45);
-            this.trackBar2.TabIndex = 28;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(92, 195);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 29;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(240, 195);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 30;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(92, 224);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(80, 17);
-            this.checkBox1.TabIndex = 31;
-            this.checkBox1.Text = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(228, 224);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(80, 17);
-            this.checkBox2.TabIndex = 32;
-            this.checkBox2.Text = "checkBox2";
-            this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -510,8 +512,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.BusChart)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbToursB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbToursF)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -546,12 +548,12 @@
         private System.Windows.Forms.Button btnWorkdayBack;
         private System.Windows.Forms.Button btnRenderFront;
         private System.Windows.Forms.Button btnRenderBack;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TrackBar trackBar2;
-        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.CheckBox chbToursF;
+        private System.Windows.Forms.CheckBox chbToursB;
+        private System.Windows.Forms.Button btnLoadDistsF;
+        private System.Windows.Forms.Button btnLoadDistsB;
+        private System.Windows.Forms.TrackBar trbToursB;
+        private System.Windows.Forms.TrackBar trbToursF;
     }
 }
 

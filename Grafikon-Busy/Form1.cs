@@ -27,6 +27,8 @@ namespace Grafikon_Busy
         double[] kilometrage2 = ArrayCalculations.Normalize(kilometrage, 0.3);
         string[] StopsF;
         string[] StopsB;
+        Zastavka[][] StopsDistsF;
+        Zastavka[][] StopsDistsB;
         static char[] SignSeparators = new char[] { ' ' };
         const int directionsCount = 2;
         static readonly int DayTypeCount = Enum.GetNames(typeof(DayType)).Length;
@@ -59,33 +61,33 @@ namespace Grafikon_Busy
 
             Chart.AxisY.CustomLabels.Clear();
         }
-        private void RenderGraphicon(IEnumerable<ConnectionGroup> conns, string[] stoplist, double[]distances)
+        private void RenderGraphicon(IEnumerable<ConnectionGroup> conns, string[] stoplist, Zastavka[]stopDists)
         {
 
             ClearGraphicon();
             var Chart = BusChart.ChartAreas[0];
             Chart.AxisY.CustomLabels.Add(new CustomLabel
             {
-                FromPosition = distances[0],
-                ToPosition = distances[0] + (distances[1] - distances[0]) / 2,
-                Text = stoplist[0],
+                FromPosition = stopDists[0].Distance,
+                ToPosition = stopDists[0].Distance + (stopDists[1].Distance - stopDists[0].Distance) / 2,
+                Text = stoplist[stopDists[0].Order],
             });
-            for (int i = 1; i < stoplist.Length-1; ++i)
+            for (int i = 1; i < stopDists.Length-1; ++i)
             {
                 Chart.AxisY.CustomLabels.Add(new CustomLabel
                 {
-                    FromPosition = distances[i] - (distances[i]-distances[i-1])/2,
-                    ToPosition = distances[i] + (distances[i+1] - distances[i]) / 2,
-                    Text = stoplist[i],
+                    FromPosition = stopDists[i].Distance - (stopDists[i].Distance-stopDists[i-1].Distance)/2,
+                    ToPosition = stopDists[i].Distance + (stopDists[i+1].Distance - stopDists[i].Distance) / 2,
+                    Text = stoplist[stopDists[i].Order],
                 });
             }
-            if (stoplist.Length >= 1)
+            if (stopDists.Length >= 1)
             {
                 Chart.AxisY.CustomLabels.Add(new CustomLabel
                 {
-                    FromPosition = distances[stoplist.Length-1] - (distances[stoplist.Length-1]-distances[stoplist.Length-2])/2,
-                    ToPosition = distances[stoplist.Length - 1],
-                    Text = stoplist[stoplist.Length - 1],
+                    FromPosition = stopDists[stopDists.Length-1].Distance - (stopDists[stopDists.Length-1].Distance - stopDists[stopDists.Length-2].Distance) /2,
+                    ToPosition = stopDists[stopDists.Length - 1].Distance,
+                    Text = stoplist[stopDists[stopDists.Length - 1].Order],
                 });
             }
             BusChart.Series.Clear();
@@ -102,7 +104,7 @@ namespace Grafikon_Busy
             {
                 if (group is null || !group.Enabled)
                     continue;
-                List<Series> newS = MakeSeriesForTable(group,distances);
+                List<Series> newS = MakeSeriesForTable(group,stopDists);
                 foreach (Series s in newS)
                     BusChart.Series.Add(s);
             }
@@ -122,7 +124,7 @@ namespace Grafikon_Busy
             }
             else if (StopsB.IsInverseOf(StopsF))
             {
-                RenderGraphicon(TableFront.Concat(TableBack), StopsF,kilometrage2);
+                RenderGraphicon(TableFront.Concat(TableBack), StopsF,StopsDistsF[trbToursB.Value]);
             }
             else
             {
@@ -132,7 +134,7 @@ namespace Grafikon_Busy
             //RenderGraphicon(ArrayExtension.Enumerate<ConnectionGroup>(Tables));
 
         }
-        private List<Series> MakeSeriesForTable(ConnectionGroup CG,double[]distances)
+        private List<Series> MakeSeriesForTable(ConnectionGroup CG, Zastavka[]zst)
         {
             List<Series> Ser = new List<Series>();
             foreach (var connName in CG.Connections.Keys)
@@ -147,17 +149,18 @@ namespace Grafikon_Busy
                     MarkerStyle = MarkerStyle.Circle,
                     MarkerSize = 7
                 };
-                AddConnection(Sx, CG.Connections[connName], distances, CG.Direction);
+                AddConnection(Sx, CG.Connections[connName], zst, CG.Direction);
 
                 Ser.Add(Sx);
             }
             return Ser;
         }
-        private void AddConnection(Series s, string[] connectionTimes, double[]distances, bool dir)
+        private void AddConnection(Series s, string[] connectionTimes, bool dir)
         {
             for (int i = 0; i < connectionTimes.Length; ++i)
             {
-                string checkedTime = dir ? connectionTimes[i] : connectionTimes[connectionTimes.Length - 1 - i];
+                int indx = dir ? i : connectionTimes.Length - 1 - i;
+                string checkedTime = connectionTimes[indx];
                 if (checkedTime == "|" || checkedTime == "<")
                 {
                     continue; //stop is skipped
@@ -168,7 +171,33 @@ namespace Grafikon_Busy
                 }
                 else if (TimeConverter.HoursMinsToMins(checkedTime, out int connMinute))
                 {
-                    s.Points.AddXY(connMinute, distances[i]); //stop is in parsable time
+                    s.Points.AddXY(connMinute, i); //stop is in parsable time
+                }
+                else
+                {
+                    throw new FormatException("Time not in correct format!");
+                }
+            }
+        }
+        private void AddConnection(Series s, string[] connectionTimes, Zastavka[] dists, bool dir)
+        {
+            foreach(var Z in dists)
+            {
+                int indx = dir ? Z.Order : connectionTimes.Length - 1 - Z.Order;
+                string checkedTime = connectionTimes[indx];
+                if (checkedTime == "|" || checkedTime == "" ) 
+                {
+                    continue; //stops is passed through, has no impact on kilometrage
+                }
+                else if (checkedTime == "<")
+                {
+                    /*s.Points.Clear();*/ //This route should not be on the stops
+                    continue;
+                    //return;
+                }
+                else if (TimeConverter.HoursMinsToMins(checkedTime, out int connMinute))
+                {
+                    s.Points.AddXY(connMinute, Z.Distance); //stop is in parsable time
                 }
                 else
                 {
@@ -286,19 +315,6 @@ namespace Grafikon_Busy
             //bool ss = ChosenTimeTable.GetStops(out this.stops);
             if (StopList is null)
                 StopList = analyzedStops;
-            /*switch (direction)
-            {
-                case Direction.Forward:
-                    if (StopsF is null)
-                        StopsF = analyzedStops;
-                    break;
-                case Direction.Backward:
-                    if (StopsB is null)
-                        StopsB = analyzedStops;
-                    break;
-                default:
-                    throw new ArgumentException("Nonsense direction!");
-            }*/
             return true;
         }
         private void btnWorkday_Click(object sender, EventArgs e)
@@ -455,7 +471,7 @@ namespace Grafikon_Busy
                 ClearGraphicon();
                 return;
             }
-            RenderGraphicon(TableFront, StopsF,kilometrage2);
+            RenderGraphicon(TableFront, StopsF, StopsDistsF[trbToursF.Value]);
         }
 
         private void btnRenderBack_Click(object sender, EventArgs e)
@@ -465,7 +481,45 @@ namespace Grafikon_Busy
                 ClearGraphicon();
                 return;
             }
-            RenderGraphicon(TableBack, StopsB.Reverse().ToArray(),kilometrage2);
+            RenderGraphicon(TableBack, StopsB.Reverse().ToArray(), StopsDistsB[trbToursB.Value]);
+        }
+
+        private void btnLoadDistsF_Click(object sender, EventArgs e)
+        {
+            chbToursF.Enabled = false;
+            if (!TimeTableF.GetKilometrageTable(out string[][] kilometrage))
+            {
+                MessageBox.Show("Vstup nemá správný formát!", "Chybný vstup", MessageBoxButtons.OK);
+                return;
+            }
+                
+            if(!TimeTableF.ExtractKilometragesFromTable(kilometrage, 0.1, out Zastavka[][]Zastavky))
+            {
+                MessageBox.Show("Vzdálenosti nešlo dobře najít", "Chybný vstup", MessageBoxButtons.OK);
+                return;
+            }
+            this.StopsDistsF = Zastavky;
+            chbToursF.Enabled = true;
+            return;
+        }
+
+        private void btnLoadDistsB_Click(object sender, EventArgs e)
+        {
+            chbToursB.Enabled = false;
+            if (!TimeTableB.GetKilometrageTable(out string[][] kilometrage))
+            {
+                MessageBox.Show("Vstup nemá správný formát!", "Chybný vstup", MessageBoxButtons.OK);
+                return;
+            }
+
+            if (!TimeTableB.ExtractKilometragesFromTable(kilometrage, 0.1, out Zastavka[][] Zastavky))
+            {
+                MessageBox.Show("Vzdálenosti nešlo dobře najít", "Chybný vstup", MessageBoxButtons.OK);
+                return;
+            }
+            this.StopsDistsB = Zastavky;
+            chbToursB.Enabled = true;
+            return;
         }
     }
 }

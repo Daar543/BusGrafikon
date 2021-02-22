@@ -165,7 +165,7 @@ namespace Grafikon_Busy
                 {
                     if (toursNormA[k] >= 0)
                     {
-                        zst.Add(new Zastavka { order = zst.Count, distance = toursNormA[k] });
+                        zst.Add(new Zastavka { Order = k, Distance = toursNormA[k] });
                     }
                 }
                 toursNorm[j] = zst.ToArray();
