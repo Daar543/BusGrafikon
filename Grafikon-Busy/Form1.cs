@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
+
+//TODO: MÍSTO STRUKTURY "ZASTÁVKA" UDĚLEJ MAPOVÁNÍ POŘADÍ:KILOMETRY
 namespace Grafikon_Busy
 {
     public partial class Form1 : Form
@@ -163,25 +165,7 @@ namespace Grafikon_Busy
             }
         }
 
-        private void RenderButtonBoth_Click(object sender, EventArgs e)
-        {
-            if (StopsF is null || StopsB is null)
-            {
-                ClearGraphicon();
-                return;
-            }
-            else if (StopsB.IsInverseOf(StopsF))
-            {
-                RenderGraphicon(TableFront.Concat(TableBack), StopsF,StopsDistsF[slidToursB.Value]);
-            }
-            else
-            {
-                MessageBox.Show("Linky nemají protichůdné zastávky, nebo zastávky ještě nejsou načteny.", "Chybný vstup", MessageBoxButtons.OK);
-                btnRenderBoth.Enabled = false;
-            }
-            //RenderGraphicon(ArrayExtension.Enumerate<ConnectionGroup>(Tables));
-
-        }
+        
         private List<Series> MakeSeriesForTable(ConnectionGroup CG, Zastavka[]zst)
         {
             List<Series> Ser = new List<Series>();
@@ -332,7 +316,7 @@ namespace Grafikon_Busy
             chbSunday.Enabled = false;
             chbSunday.Checked = false;
             chbToursF.Enabled = false;
-            chbToursB.Enabled = false;
+            chbToursF.Checked = false;
             slidToursF.Enabled = false;
             StopsF = null;
             TableFront = new ConnectionGroup[DayTypeCount];
@@ -605,7 +589,38 @@ namespace Grafikon_Busy
                 RenderGraphicon(TableBack, StopsB.Reverse().ToArray(), null);
             
         }
+        private void RenderButtonBoth_Click(object sender, EventArgs e)
+        {
+            if (StopsF is null || StopsB is null)
+            {
+                ClearGraphicon();
+                return;
+            }
+            else if (StopsB.IsInverseOf(StopsF))
+            {
+                if (chbToursF.Checked == chbToursB.Checked) //Both distances are checked or unchecked, so no distance measured
+                {
+                    RenderGraphicon(TableFront.Concat(TableBack), StopsF, null);
+                }
+                else
+                {
+                    if (chbToursF.Checked)
+                    {
+                        RenderGraphicon(TableFront.Concat(TableBack), StopsF, StopsDistsF[slidToursF.Value]);
+                    }
+                    else
+                    {
+                        RenderGraphicon(TableFront.Concat(TableBack), StopsB, StopsDistsB[slidToursB.Value]);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Linky nemají protichůdné zastávky, nebo zastávky ještě nejsou načteny.", "Chybný vstup", MessageBoxButtons.OK);
+            }
+            //RenderGraphicon(ArrayExtension.Enumerate<ConnectionGroup>(Tables));
 
+        }
         private void btnLoadDistsF_Click(object sender, EventArgs e)
         {
             chbToursF.Enabled = false;
@@ -641,7 +656,7 @@ namespace Grafikon_Busy
                 MessageBox.Show("Vzdálenosti nešlo dobře najít", "Chybný vstup", MessageBoxButtons.OK);
                 return;
             }
-            this.StopsDistsB = Zastavky.MirrorDistances;
+            this.StopsDistsB = Zastavky;
             chbToursB.Enabled = true;
             slidToursB.Maximum = StopsDistsB.Length - 1;
             slidToursB.Enabled = true;

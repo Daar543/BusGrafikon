@@ -45,6 +45,17 @@ namespace Grafikon_Busy
             foreach (var item in target)
                 yield return item;
         }
+        public static bool Equals<T>(this T[]target, T[] compared)
+        {
+            if (target.Length != compared.Length)
+                return false;
+            for (int i = 0; i < target.Length; ++i)
+            {
+                if (!(target[i].Equals(compared[i])))
+                    return false;
+            }
+            return true;
+        }
         public static bool IsInverseOf<T>(this T[] target, T[] compared)
         {
             if (target.Length != compared.Length)
@@ -67,7 +78,22 @@ namespace Grafikon_Busy
                 return;
             for (int i = 0; i < target.Length; ++i)
             {
-                if (target[i] > 0)
+                if (target[i] >= 0)
+                    target[i] = max - target[i];
+            }
+        }
+        public static void MirrorPositives(this double[] target)
+        {
+            double max = double.MinValue;
+            for (int i = 0; i < target.Length; ++i)
+            {
+                if (target[i] > max) max = target[i];
+            }
+            if (max < 0)
+                return;
+            for (int i = 0; i < target.Length; ++i)
+            {
+                if (target[i] >= 0)
                     target[i] = max - target[i];
             }
         }

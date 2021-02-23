@@ -160,13 +160,11 @@ namespace Grafikon_Busy
                 return false;
             for (int j = 0; j < tours.Length; ++j)
             {
-                if (mirror)
-                {
-                    tours[j].MirrorPositives();
-                }
+                
                     
                 double[] toursNormA = ArrayCalculations.Normalize(tours[j], normalizingDistance);
-                
+                if (mirror)
+                    toursNormA.MirrorPositives();
                 var zst = new List<Zastavka>();
                 for (int k = 0; k < len; ++k)
                 {
