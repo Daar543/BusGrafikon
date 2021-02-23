@@ -126,7 +126,7 @@ namespace Grafikon_Busy
             }
             return true;
         }
-        public bool ExtractKilometragesFromTable(string[][]table, double normalizingDistance, out Zastavka[][]toursNorm)
+        public bool ExtractKilometragesFromTable(string[][]table, double normalizingDistance, bool mirror, out Zastavka[][]toursNorm)
         {
             int[][] tours = new int[table.Length - 1][];
             int len = table[0].Length;
@@ -160,7 +160,13 @@ namespace Grafikon_Busy
                 return false;
             for (int j = 0; j < tours.Length; ++j)
             {
+                if (mirror)
+                {
+                    tours[j].MirrorPositives();
+                }
+                    
                 double[] toursNormA = ArrayCalculations.Normalize(tours[j], normalizingDistance);
+                
                 var zst = new List<Zastavka>();
                 for (int k = 0; k < len; ++k)
                 {

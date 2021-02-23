@@ -56,6 +56,21 @@ namespace Grafikon_Busy
             }
             return true;
         }
+        public static void MirrorPositives(this int[] target)
+        {
+            int max = int.MinValue;
+            for(int i = 0; i < target.Length; ++i)
+            {
+                if (target[i] > max) max = target[i];
+            }
+            if (max < 0)
+                return;
+            for (int i = 0; i < target.Length; ++i)
+            {
+                if (target[i] > 0)
+                    target[i] = max - target[i];
+            }
+        }
     }
     public struct Zastavka
     {

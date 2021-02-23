@@ -113,7 +113,7 @@ namespace Grafikon_Busy
             {
                 Chart.AxisY.CustomLabels.Add(new CustomLabel
                 {
-                    FromPosition = stopDists[0].Distance,
+                    FromPosition = stopDists[0].Distance - 0.25,
                     ToPosition = stopDists[0].Distance + 0.25,
                     Text = stoplist[stopDists[0].Order],
                 });
@@ -290,7 +290,7 @@ namespace Grafikon_Busy
             {
                 if (Z.Order < first) first = Z.Order;   //Not necessary
                 if (Z.Order > last) last = Z.Order;     //if the dists are ordered
-                int indx = dir ? Z.Order : connectionTimes.Length - 1 - Z.Order;
+                int indx = dir ? Z.Order : /*connectionTimes.Length - 1 - */Z.Order;
                 string checkedTime = connectionTimes[indx];
                 if (checkedTime == "|" || checkedTime == "" ) 
                 {
@@ -600,7 +600,7 @@ namespace Grafikon_Busy
                 return;
             }
             if (chbToursB.Checked)
-                RenderGraphicon(TableBack, StopsB.Reverse().ToArray(), StopsDistsB[slidToursB.Value]);
+                RenderGraphicon(TableBack, StopsB, StopsDistsB[slidToursB.Value]);
             else
                 RenderGraphicon(TableBack, StopsB.Reverse().ToArray(), null);
             
@@ -615,7 +615,7 @@ namespace Grafikon_Busy
                 return;
             }
                 
-            if(!TimeTableF.ExtractKilometragesFromTable(kilometrage, 0.5, out Zastavka[][]Zastavky))
+            if(!TimeTableF.ExtractKilometragesFromTable(kilometrage, 0.5, false, out Zastavka[][]Zastavky))
             {
                 MessageBox.Show("Vzdálenosti nešlo dobře najít", "Chybný vstup", MessageBoxButtons.OK);
                 return;
@@ -636,12 +636,12 @@ namespace Grafikon_Busy
                 return;
             }
 
-            if (!TimeTableB.ExtractKilometragesFromTable(kilometrage, 0.5, out Zastavka[][] Zastavky))
+            if (!TimeTableB.ExtractKilometragesFromTable(kilometrage, 0.5, true, out Zastavka[][] Zastavky))
             {
                 MessageBox.Show("Vzdálenosti nešlo dobře najít", "Chybný vstup", MessageBoxButtons.OK);
                 return;
             }
-            this.StopsDistsB = Zastavky;
+            this.StopsDistsB = Zastavky.MirrorDistances;
             chbToursB.Enabled = true;
             slidToursB.Maximum = StopsDistsB.Length - 1;
             slidToursB.Enabled = true;
