@@ -18,13 +18,12 @@ namespace Grafikon_Busy
         public Form1()
         {
             InitializeComponent();
-            this.Size = new Size(1600, 800);
+            this.Size = new Size(1920, 800);
             BusChart.Size = new Size(this.Size.Width * 2 / 3, this.Size.Height);
             this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2,
                           (Screen.PrimaryScreen.WorkingArea.Height - this.Height) / 2 + 200);
         }
-        static double[] kilometrage = new double[] { 0, 2, 3, 4, 5, 5, 6, 6.5, 7 };
-        double[] kilometrage2 = ArrayCalculations.Normalize(kilometrage, 0.3);
+        bool Detection = false; //True version not working yet
         string[] StopsF;
         string[] StopsB;
         Zastavka[][] StopsDistsF;
@@ -65,8 +64,9 @@ namespace Grafikon_Busy
         {
 
             ClearGraphicon();
+            
             var Chart = BusChart.ChartAreas[0];
-            Chart.AxisY.CustomLabels.Add(new CustomLabel
+            /*Chart.AxisY.CustomLabels.Add(new CustomLabel
             {
                 FromPosition = stopDists[0].Distance,
                 ToPosition = stopDists[0].Distance + (stopDists[1].Distance - stopDists[0].Distance) / 2,
@@ -89,7 +89,55 @@ namespace Grafikon_Busy
                     ToPosition = stopDists[stopDists.Length - 1].Distance,
                     Text = stoplist[stopDists[stopDists.Length - 1].Order],
                 });
+            }*/
+            if (stopDists is null)
+            {
+                Chart.AxisY.CustomLabels.Add(new CustomLabel
+                {
+                    FromPosition = 0,
+                    ToPosition = 0.25,
+                    Text = stoplist[0],
+                });
+                for (int i = 1; i < stoplist.Length; ++i)
+                {
+                    Chart.AxisY.CustomLabels.Add(new CustomLabel
+                    {
+                        FromPosition = i - 0.25,
+                        ToPosition = i + 0.25,
+                        Text = stoplist[i],
+                    });
+                }
+                
             }
+            else
+            {
+                Chart.AxisY.CustomLabels.Add(new CustomLabel
+                {
+                    FromPosition = stopDists[0].Distance,
+                    ToPosition = stopDists[0].Distance + 0.25,
+                    Text = stoplist[stopDists[0].Order],
+                });
+                for (int i = 1; i < stopDists.Length - 1; ++i)
+                {
+                    Chart.AxisY.CustomLabels.Add(new CustomLabel
+                    {
+                        FromPosition = stopDists[i].Distance - 0.25,
+                        ToPosition = stopDists[i].Distance + 0.25,
+                        Text = stoplist[stopDists[i].Order],
+                    });
+                }
+                if (stopDists.Length >= 1)
+                {
+                    Chart.AxisY.CustomLabels.Add(new CustomLabel
+                    {
+                        FromPosition = stopDists[stopDists.Length - 1].Distance - 0.25,
+                        ToPosition = stopDists[stopDists.Length - 1].Distance + 0.25,
+                        Text = stoplist[stopDists[stopDists.Length - 1].Order],
+                    });
+                }
+            }
+            
+            
             BusChart.Series.Clear();
 
             /*BusChart.Series.Add("Spoj 3");
@@ -124,11 +172,11 @@ namespace Grafikon_Busy
             }
             else if (StopsB.IsInverseOf(StopsF))
             {
-                RenderGraphicon(TableFront.Concat(TableBack), StopsF,StopsDistsF[trbToursB.Value]);
+                RenderGraphicon(TableFront.Concat(TableBack), StopsF,StopsDistsF[slidToursB.Value]);
             }
             else
             {
-                MessageBox.Show("Linky nemají protichůdné zastávky!", "Chybný vstup", MessageBoxButtons.OK);
+                MessageBox.Show("Linky nemají protichůdné zastávky, nebo zastávky ještě nejsou načteny.", "Chybný vstup", MessageBoxButtons.OK);
                 btnRenderBoth.Enabled = false;
             }
             //RenderGraphicon(ArrayExtension.Enumerate<ConnectionGroup>(Tables));
@@ -149,7 +197,11 @@ namespace Grafikon_Busy
                     MarkerStyle = MarkerStyle.Circle,
                     MarkerSize = 7
                 };
-                AddConnection(Sx, CG.Connections[connName], zst, CG.Direction);
+                if(zst is null)
+                    AddConnection(Sx, CG.Connections[connName], CG.Direction);
+                else
+                    AddConnection(Sx, CG.Connections[connName], zst, CG.Direction);
+                
 
                 Ser.Add(Sx);
             }
@@ -181,8 +233,63 @@ namespace Grafikon_Busy
         }
         private void AddConnection(Series s, string[] connectionTimes, Zastavka[] dists, bool dir)
         {
-            foreach(var Z in dists)
+            int first = int.MaxValue;
+            int last = 0;
+            //Slower method, but can also mark routes with other stops
+            /*if(Detection)
             {
+                bool susge = false;
+                int current = 0;
+                for(int i = dists[0].Order; i < connectionTimes.Length; ++i)
+                {
+                    ref string checkedTime = ref connectionTimes[i];
+                    if (checkedTime == "|")
+                    {
+                        continue; //stops is passed through, has no impact on kilometrage
+                    }
+                    else if(checkedTime == "")
+                    {
+                        if(current < dists.Length)
+                            if (i == dists[current].Order)
+                                current++;
+                        continue; 
+                    }
+                    else if (checkedTime == "<")
+                    {
+                        if (current < dists.Length)
+                            if (i == dists[current].Order)
+                                current++;
+                        continue;
+                    }
+                    else if (TimeConverter.HoursMinsToMins(checkedTime, out int connMinute))
+                    {
+                        if(current < dists.Length && i < dists[current].Order)
+                        {
+                            //Detect routes with additional stops
+                            susge = true;
+                            //s.BorderDashStyle = ChartDashStyle.Dash;
+                            continue;
+                        }
+                        if(susge)
+                        {
+                            s.BorderDashStyle = ChartDashStyle.Dash;
+                        }
+                        if (current >= dists.Length)
+                            return;
+                        s.Points.AddXY(connMinute, dists[current].Distance); //stop is in parsable time
+                        current++;
+                    }
+                    else
+                    {
+                        throw new FormatException("Time not in correct format!");
+                    }
+                }
+            }
+            else*/
+            foreach (var Z in dists)
+            {
+                if (Z.Order < first) first = Z.Order;   //Not necessary
+                if (Z.Order > last) last = Z.Order;     //if the dists are ordered
                 int indx = dir ? Z.Order : connectionTimes.Length - 1 - Z.Order;
                 string checkedTime = connectionTimes[indx];
                 if (checkedTime == "|" || checkedTime == "" ) 
@@ -224,6 +331,9 @@ namespace Grafikon_Busy
             chbSaturday.Checked = false;
             chbSunday.Enabled = false;
             chbSunday.Checked = false;
+            chbToursF.Enabled = false;
+            chbToursB.Enabled = false;
+            slidToursF.Enabled = false;
             StopsF = null;
             TableFront = new ConnectionGroup[DayTypeCount];
             string line = textBoxLine.Text;
@@ -239,6 +349,42 @@ namespace Grafikon_Busy
                 {
                     string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadExcelInput(line, '\t'));
                     TimeTableF = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
+                    textBoxLine.Text = line; //Updates the text so exception has not to be catched again
+                }
+                catch (FileNotFoundException)
+                {
+                    MessageBox.Show("Linka neexistuje", "Chybný vstup", MessageBoxButtons.RetryCancel);
+                }
+            }
+        }
+        private void btnChooseBackLine_Click(object sender, EventArgs e)
+        {
+            chbWorkdayBack.Enabled = false;
+            chbWorkdayBack.Checked = false;
+            chbSchoolHolidayBack.Enabled = false;
+            chbSchoolHolidayBack.Checked = false;
+            chbSaturdayBack.Enabled = false;
+            chbSaturdayBack.Checked = false;
+            chbSundayBack.Enabled = false;
+            chbSundayBack.Checked = false;
+            chbToursB.Enabled = false;
+            chbToursB.Checked = false;
+            slidToursB.Enabled = false;
+            StopsB = null;
+            TableBack = new ConnectionGroup[DayTypeCount];
+            string line = textBoxLineBack.Text;
+            try
+            {
+                string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadExcelInput(line, '\t'));
+                TimeTableB = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
+            }
+            catch (FileNotFoundException)
+            {
+                line += ".txt";
+                try
+                {
+                    string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadExcelInput(line, '\t'));
+                    TimeTableB = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
                     textBoxLine.Text = line; //Updates the text so exception has not to be catched again
                 }
                 catch (FileNotFoundException)
@@ -308,13 +454,14 @@ namespace Grafikon_Busy
             }
             else
             {
-                MessageBox.Show("Analýza jízdního řádu proběhla v pořádku", "Hotovo", MessageBoxButtons.OK);
+                //MessageBox.Show("Analýza jízdního řádu proběhla v pořádku", "Hotovo", MessageBoxButtons.OK);
             }
 
             FinalizedCG[(int)day] = new ConnectionGroup(analyzedConnections, color, direction == Direction.Forward);
             //bool ss = ChosenTimeTable.GetStops(out this.stops);
             if (StopList is null)
                 StopList = analyzedStops;
+
             return true;
         }
         private void btnWorkday_Click(object sender, EventArgs e)
@@ -382,39 +529,7 @@ namespace Grafikon_Busy
             TimeTableF.HolidayNegativeSigns = holidayNegativ.Text.Split(SignSeparators);
         }
 
-        private void btnChooseBackLine_Click(object sender, EventArgs e)
-        {
-            chbWorkdayBack.Enabled = false;
-            chbWorkdayBack.Checked = false;
-            chbSchoolHolidayBack.Enabled = false;
-            chbSchoolHolidayBack.Checked = false;
-            chbSaturdayBack.Enabled = false;
-            chbSaturdayBack.Checked = false;
-            chbSundayBack.Enabled = false;
-            chbSundayBack.Checked = false;
-            StopsB = null;
-            TableBack = new ConnectionGroup[DayTypeCount];
-            string line = textBoxLineBack.Text;
-            try
-            {
-                string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadExcelInput(line, '\t'));
-                TimeTableB = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
-            }
-            catch (FileNotFoundException)
-            {
-                line += ".txt";
-                try
-                {
-                    string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadExcelInput(line, '\t'));
-                    TimeTableB = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
-                    textBoxLine.Text = line; //Updates the text so exception has not to be catched again
-                }
-                catch (FileNotFoundException)
-                {
-                    MessageBox.Show("Linka neexistuje", "Chybný vstup", MessageBoxButtons.RetryCancel);
-                }
-            }
-        }
+        
 
         private void btnWorkdayBack_Click(object sender, EventArgs e)
         {
@@ -471,7 +586,10 @@ namespace Grafikon_Busy
                 ClearGraphicon();
                 return;
             }
-            RenderGraphicon(TableFront, StopsF, StopsDistsF[trbToursF.Value]);
+            if (chbToursF.Checked)
+                RenderGraphicon(TableFront, StopsF, StopsDistsF[slidToursF.Value]);
+            else
+                RenderGraphicon(TableFront, StopsF, null);
         }
 
         private void btnRenderBack_Click(object sender, EventArgs e)
@@ -481,7 +599,11 @@ namespace Grafikon_Busy
                 ClearGraphicon();
                 return;
             }
-            RenderGraphicon(TableBack, StopsB.Reverse().ToArray(), StopsDistsB[trbToursB.Value]);
+            if (chbToursB.Checked)
+                RenderGraphicon(TableBack, StopsB.Reverse().ToArray(), StopsDistsB[slidToursB.Value]);
+            else
+                RenderGraphicon(TableBack, StopsB.Reverse().ToArray(), null);
+            
         }
 
         private void btnLoadDistsF_Click(object sender, EventArgs e)
@@ -493,13 +615,15 @@ namespace Grafikon_Busy
                 return;
             }
                 
-            if(!TimeTableF.ExtractKilometragesFromTable(kilometrage, 0.1, out Zastavka[][]Zastavky))
+            if(!TimeTableF.ExtractKilometragesFromTable(kilometrage, 0.5, out Zastavka[][]Zastavky))
             {
                 MessageBox.Show("Vzdálenosti nešlo dobře najít", "Chybný vstup", MessageBoxButtons.OK);
                 return;
             }
             this.StopsDistsF = Zastavky;
             chbToursF.Enabled = true;
+            slidToursF.Maximum = StopsDistsF.Length-1;
+            slidToursF.Enabled = true;
             return;
         }
 
@@ -512,13 +636,15 @@ namespace Grafikon_Busy
                 return;
             }
 
-            if (!TimeTableB.ExtractKilometragesFromTable(kilometrage, 0.1, out Zastavka[][] Zastavky))
+            if (!TimeTableB.ExtractKilometragesFromTable(kilometrage, 0.5, out Zastavka[][] Zastavky))
             {
                 MessageBox.Show("Vzdálenosti nešlo dobře najít", "Chybný vstup", MessageBoxButtons.OK);
                 return;
             }
             this.StopsDistsB = Zastavky;
             chbToursB.Enabled = true;
+            slidToursB.Maximum = StopsDistsB.Length - 1;
+            slidToursB.Enabled = true;
             return;
         }
     }

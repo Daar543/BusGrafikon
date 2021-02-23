@@ -14,6 +14,7 @@ namespace Grafikon_Busy
         private string[][] TimeTable;
         private string[][] ReducedTable = null;
 
+        static bool detection = true;
         const char WorkdaySign = 'X';
         const char SaturdaySign = '6';
         const char SundaySign = '+';

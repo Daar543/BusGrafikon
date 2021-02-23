@@ -48,8 +48,8 @@
             this.chbToursB = new System.Windows.Forms.CheckBox();
             this.btnLoadDistsF = new System.Windows.Forms.Button();
             this.btnLoadDistsB = new System.Windows.Forms.Button();
-            this.trbToursB = new System.Windows.Forms.TrackBar();
-            this.trbToursF = new System.Windows.Forms.TrackBar();
+            this.slidToursB = new System.Windows.Forms.TrackBar();
+            this.slidToursF = new System.Windows.Forms.TrackBar();
             this.btnRenderFront = new System.Windows.Forms.Button();
             this.btnRenderBack = new System.Windows.Forms.Button();
             this.chbSundayBack = new System.Windows.Forms.CheckBox();
@@ -67,8 +67,8 @@
             this.holidayPositive = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.BusChart)).BeginInit();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trbToursB)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trbToursF)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slidToursB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slidToursF)).BeginInit();
             this.SuspendLayout();
             // 
             // BusChart
@@ -229,8 +229,8 @@
             this.panel2.Controls.Add(this.chbToursB);
             this.panel2.Controls.Add(this.btnLoadDistsF);
             this.panel2.Controls.Add(this.btnLoadDistsB);
-            this.panel2.Controls.Add(this.trbToursB);
-            this.panel2.Controls.Add(this.trbToursF);
+            this.panel2.Controls.Add(this.slidToursB);
+            this.panel2.Controls.Add(this.slidToursF);
             this.panel2.Controls.Add(this.btnRenderFront);
             this.panel2.Controls.Add(this.btnRenderBack);
             this.panel2.Controls.Add(this.chbSundayBack);
@@ -303,19 +303,19 @@
             this.btnLoadDistsB.UseVisualStyleBackColor = true;
             this.btnLoadDistsB.Click += new System.EventHandler(this.btnLoadDistsB_Click);
             // 
-            // trbToursB
+            // slidToursB
             // 
-            this.trbToursB.Location = new System.Drawing.Point(92, 240);
-            this.trbToursB.Name = "trbToursB";
-            this.trbToursB.Size = new System.Drawing.Size(104, 45);
-            this.trbToursB.TabIndex = 28;
+            this.slidToursB.Location = new System.Drawing.Point(92, 240);
+            this.slidToursB.Name = "slidToursB";
+            this.slidToursB.Size = new System.Drawing.Size(104, 45);
+            this.slidToursB.TabIndex = 28;
             // 
-            // trbToursF
+            // slidToursF
             // 
-            this.trbToursF.Location = new System.Drawing.Point(212, 240);
-            this.trbToursF.Name = "trbToursF";
-            this.trbToursF.Size = new System.Drawing.Size(104, 45);
-            this.trbToursF.TabIndex = 27;
+            this.slidToursF.Location = new System.Drawing.Point(212, 240);
+            this.slidToursF.Name = "slidToursF";
+            this.slidToursF.Size = new System.Drawing.Size(104, 45);
+            this.slidToursF.TabIndex = 27;
             // 
             // btnRenderFront
             // 
@@ -512,8 +512,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.BusChart)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trbToursB)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trbToursF)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slidToursB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slidToursF)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -552,8 +552,8 @@
         private System.Windows.Forms.CheckBox chbToursB;
         private System.Windows.Forms.Button btnLoadDistsF;
         private System.Windows.Forms.Button btnLoadDistsB;
-        private System.Windows.Forms.TrackBar trbToursB;
-        private System.Windows.Forms.TrackBar trbToursF;
+        private System.Windows.Forms.TrackBar slidToursB;
+        private System.Windows.Forms.TrackBar slidToursF;
     }
 }
 
