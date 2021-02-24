@@ -62,7 +62,7 @@ namespace Grafikon_Busy
 
             Chart.AxisY.CustomLabels.Clear();
         }
-        private void RenderGraphicon(IEnumerable<ConnectionGroup> conns, string[] stoplist, Zastavka[]stopDists)
+        private void RenderGraphicon(IEnumerable<ConnectionGroup> conns, string[] stoplist, Zastavka[]stopDists, bool priorityDir)
         {
 
             ClearGraphicon();
@@ -154,7 +154,7 @@ namespace Grafikon_Busy
             {
                 if (group is null || !group.Enabled)
                     continue;
-                List<Series> newS = MakeSeriesForTable(group,stopDists);
+                List<Series> newS = MakeSeriesForTable(group,stopDists, priorityDir);
                 foreach (Series s in newS)
                     BusChart.Series.Add(s);
             }
@@ -166,7 +166,7 @@ namespace Grafikon_Busy
         }
 
         
-        private List<Series> MakeSeriesForTable(ConnectionGroup CG, Zastavka[]zst)
+        private List<Series> MakeSeriesForTable(ConnectionGroup CG, Zastavka[]zst, bool priorityDir)
         {
             List<Series> Ser = new List<Series>();
             foreach (var connName in CG.Connections.Keys)
@@ -184,7 +184,7 @@ namespace Grafikon_Busy
                 if(zst is null)
                     AddConnection(Sx, CG.Connections[connName], CG.Direction);
                 else
-                    AddConnection(Sx, CG.Connections[connName], zst, CG.Direction);
+                    AddConnection(Sx, CG.Connections[connName], zst, CG.Direction^priorityDir);
                 
 
                 Ser.Add(Sx);
@@ -215,7 +215,7 @@ namespace Grafikon_Busy
                 }
             }
         }
-        private void AddConnection(Series s, string[] connectionTimes, Zastavka[] dists, bool dir)
+        private void AddConnection(Series s, string[] connectionTimes, Zastavka[] dists, bool forw)
         {
             int first = int.MaxValue;
             int last = 0;
@@ -274,7 +274,8 @@ namespace Grafikon_Busy
             {
                 if (Z.Order < first) first = Z.Order;   //Not necessary
                 if (Z.Order > last) last = Z.Order;     //if the dists are ordered
-                int indx = dir ? Z.Order : /*connectionTimes.Length - 1 - */Z.Order;
+                //int indx = !dir ? Z.Order : connectionTimes.Length - 1 - Z.Order;
+                int indx = forw ? Z.Order : connectionTimes.Length - 1 - Z.Order;
                 string checkedTime = connectionTimes[indx];
                 if (checkedTime == "|" || checkedTime == "" ) 
                 {
@@ -571,9 +572,9 @@ namespace Grafikon_Busy
                 return;
             }
             if (chbToursF.Checked)
-                RenderGraphicon(TableFront, StopsF, StopsDistsF[slidToursF.Value]);
+                RenderGraphicon(TableFront, StopsF, StopsDistsF[slidToursF.Value], false);
             else
-                RenderGraphicon(TableFront, StopsF, null);
+                RenderGraphicon(TableFront, StopsF, null, false);
         }
 
         private void btnRenderBack_Click(object sender, EventArgs e)
@@ -584,33 +585,34 @@ namespace Grafikon_Busy
                 return;
             }
             if (chbToursB.Checked)
-                RenderGraphicon(TableBack, StopsB, StopsDistsB[slidToursB.Value]);
+                RenderGraphicon(TableBack, StopsB, StopsDistsB[slidToursB.Value], true);
             else
-                RenderGraphicon(TableBack, StopsB.Reverse().ToArray(), null);
+                RenderGraphicon(TableBack, StopsB.Reverse().ToArray(), null, false);
             
         }
         private void RenderButtonBoth_Click(object sender, EventArgs e)
         {
             if (StopsF is null || StopsB is null)
             {
-                ClearGraphicon();
+                MessageBox.Show("Linky nemají protichůdné zastávky, nebo zastávky ještě nejsou načteny.", "Chybný vstup", MessageBoxButtons.OK);
+                //ClearGraphicon();
                 return;
             }
             else if (StopsB.IsInverseOf(StopsF))
             {
                 if (chbToursF.Checked == chbToursB.Checked) //Both distances are checked or unchecked, so no distance measured
                 {
-                    RenderGraphicon(TableFront.Concat(TableBack), StopsF, null);
+                    RenderGraphicon(TableFront.Concat(TableBack), StopsF, null, false);
                 }
                 else
                 {
                     if (chbToursF.Checked)
                     {
-                        RenderGraphicon(TableFront.Concat(TableBack), StopsF, StopsDistsF[slidToursF.Value]);
+                        RenderGraphicon(TableFront.Concat(TableBack), StopsF, StopsDistsF[slidToursF.Value], false);
                     }
                     else
                     {
-                        RenderGraphicon(TableFront.Concat(TableBack), StopsB, StopsDistsB[slidToursB.Value]);
+                        RenderGraphicon(TableFront.Concat(TableBack), StopsB, StopsDistsB[slidToursB.Value], true);
                     }
                 }
             }

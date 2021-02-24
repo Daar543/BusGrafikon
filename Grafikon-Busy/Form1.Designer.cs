@@ -413,7 +413,7 @@
             this.textBoxLineBack.Name = "textBoxLineBack";
             this.textBoxLineBack.Size = new System.Drawing.Size(85, 20);
             this.textBoxLineBack.TabIndex = 16;
-            this.textBoxLineBack.Text = "JR/805004-T.txt";
+            this.textBoxLineBack.Text = "JR/805004-Z.txt";
             // 
             // btnSundayBack
             // 
