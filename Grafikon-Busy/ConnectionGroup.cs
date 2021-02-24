@@ -105,65 +105,38 @@ namespace Grafikon_Busy
     }
     public static class ArrayCalculations
     {
-        /*public static double[] Normalize(int[] arr, double minDiff)
+        /// <summary>
+        /// In a sorted array, spreads values that are too close together, so their arithmetic mean stays the same. Does not fix numbers that came too close to each other during this algorithm.
+        /// </summary>
+        /// <param name="arr">Input array, changed in-place</param>
+        /// <param name="minDiff">Required difference between numbers in original array</param>
+        public static void NormalizeA(ref double[] arr, double minDiff, int iterations)
         {
-            double[] result = new double[arr.Length];
-            for (int i = 0; i < arr.Length; ++i)
-            {
-                result[i] = (double)(arr[i] >= 0 ? arr[i] : arr[i] - minDiff * 2 * (2*arr.Length-i));
-            }
-
+            bool finished = true;
             int firstInd = 0;
             int secondInd = 1;
             while (secondInd < arr.Length)
             {
-                double differ = result[secondInd] - result[firstInd];
+                double differ = arr[secondInd] - arr[firstInd];
                 if(0 <= differ && differ < minDiff && secondInd < arr.Length)
                 {
+                    finished = false;
+                    double avg = arr[firstInd];
                     while (0 <= differ && differ < minDiff)
                     {
+                        avg += arr[secondInd];
                         secondInd++;
                         if (secondInd >= arr.Length)
                             break;
-                        differ = result[secondInd] - result[firstInd];
+                        differ = arr[secondInd] - arr[firstInd];
                         
                     }
                     int count = secondInd - firstInd;
+                    avg /= count;
                     double median = firstInd - 1 + (count + 1) / 2.0;
                     for (int d = firstInd; d < secondInd; ++d)
                     {
-                        result[d] += (d - median) * minDiff;
-                        /*if (d > 0 && result[d] - result[d - 1] < minDiff && result[d] - result[d - 1] > 0)
-                        {
-                            result[d] = result[d - 1] + minDiff;
-                        }
-                    }
-                    if (result[firstInd] < 0 && (result[firstInd] - (firstInd - median) * minDiff) >= 0) //if the value has just dropped below 0
-                    {
-                        for (int d = secondInd - 1; d >= firstInd; --d)
-                        {
-                            result[d] += -result[firstInd]; //Pushes the value back to 0 and offsets the other values by the same
-                        }
-                    }
-                    int fc = firstInd - 1;
-                    while (fc > 0 && result[fc] < 0)
-                        fc--;
-                    int sc = firstInd;
-                    while (sc < result.Length && result[sc] - result[fc] < minDiff)
-                    {
-                        if (result[sc] < 0)
-                        {
-                            sc++;
-                            continue;
-                        }
-                        else if(result[fc] < 0)
-                        {
-                            fc++;
-                            continue;
-                        }
-                        result[sc] = result[fc] + minDiff;
-                        fc++;
-                        sc++;
+                        arr[d] = avg + (d - median) * minDiff;
                     }
                     firstInd = secondInd-1;
                 }
@@ -173,8 +146,12 @@ namespace Grafikon_Busy
                     secondInd++;
                 }
             }
-            return result;
-        }*/
+            if (!finished && iterations < arr.Length)
+            {
+                NormalizeA(ref arr, minDiff, iterations+1);
+            }
+            return;
+        }
         public static double[] Normalize(int[] arr, double minDiff)
         {
             double[] result = new double[arr.Length];
@@ -190,13 +167,21 @@ namespace Grafikon_Busy
                 }
             }
             var tempResult = tempResultList.ToArray();
-            for(int spread = 1; spread < tempResult.Length; ++spread)
+            NormalizeA(ref tempResult, minDiff, 0);
+            /*for(int spread = 1; spread < tempResult.Length; ++spread)
             {
                 for(int starting = 0; starting + spread < tempResult.Length; ++starting)
                 {
                     NormalizeX(ref tempResult, starting, starting + spread, minDiff);
                 }
+            }*/
+            for(int i = 0; i + 1 < tempResult.Length; ++i)
+            {
+                if(tempResult[i] < 0)
+                    tempResult[i] = 0;
+                tempResult[i + 1] = Math.Max(tempResult[i] + minDiff, tempResult[i + 1]);
             }
+
 
             for(int i = 0; i < tempResult.Length; ++i)
             {
