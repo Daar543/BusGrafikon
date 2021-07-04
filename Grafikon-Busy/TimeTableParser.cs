@@ -126,7 +126,7 @@ namespace Grafikon_Busy
             }
             return true;
         }
-        public bool ExtractKilometragesFromTable(string[][]table, double normalizingDistance, bool mirror, out Zastavka[][]toursNorm)
+        public bool ExtractKilometragesFromTable(string[][]table, double normalizingDistance, bool mirror, out Stop[][]toursNorm)
         {
             int[][] tours = new int[table.Length - 1][];
             int len = table[0].Length;
@@ -155,7 +155,7 @@ namespace Grafikon_Busy
 
 
 
-            toursNorm = new Zastavka[tours.Length][];
+            toursNorm = new Stop[tours.Length][];
             if (len == 0)
                 return false;
             for (int j = 0; j < tours.Length; ++j)
@@ -165,12 +165,12 @@ namespace Grafikon_Busy
                 double[] toursNormA = ArrayCalculations.Normalize(tours[j], normalizingDistance);
                 if (mirror)
                     toursNormA.MirrorPositives();
-                var zst = new List<Zastavka>();
+                var zst = new List<Stop>();
                 for (int k = 0; k < len; ++k)
                 {
                     if (toursNormA[k] >= 0)
                     {
-                        zst.Add(new Zastavka { Order = k, Distance = toursNormA[k] });
+                        zst.Add(new Stop { Order = k, Distance = toursNormA[k] });
                     }
                 }
                 toursNorm[j] = zst.ToArray();
@@ -220,10 +220,26 @@ namespace Grafikon_Busy
 
             for (int i = 2; i < ReducedTable.Length; ++i)
             {
+                bool allowed = true;
                 if (ReducedTable[i][1].Contains(WorkdaySign))
                 {
-                    AllowedRows.Add(i);
+                    foreach(string forbiddenString in HolidayPositiveSigns)
+                    {
+                        if (forbiddenString == "")
+                            continue;
+                        else if (ReducedTable[i][1].Contains(forbiddenString))
+                        {
+                            allowed = false;
+                            break;
+                        }
+                    }
                 }
+                else
+                {
+                    allowed = false;
+                }
+                if (allowed)
+                    AllowedRows.Add(i);
             }
             string[][] newTable = new string[AllowedRows.Count][];
             int j = 0;
@@ -251,7 +267,7 @@ namespace Grafikon_Busy
                     {
                         if (forbiddenString == "")
                             continue;
-                        if (ReducedTable[i][1].Contains(forbiddenString))
+                        else if (ReducedTable[i][1].Contains(forbiddenString))
                         {
                             allowed = false;
                             break;

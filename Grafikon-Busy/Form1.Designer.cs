@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.BusChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btnRenderBoth = new System.Windows.Forms.Button();
             this.btnChooseLine = new System.Windows.Forms.Button();
@@ -65,25 +65,27 @@
             this.textboxInfoHoliday = new System.Windows.Forms.TextBox();
             this.holidayNegativ = new System.Windows.Forms.TextBox();
             this.holidayPositive = new System.Windows.Forms.TextBox();
+            this.slidZoom = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.BusChart)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slidToursB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slidToursF)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slidZoom)).BeginInit();
             this.SuspendLayout();
             // 
             // BusChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.BusChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.BusChart.Legends.Add(legend1);
-            this.BusChart.Location = new System.Drawing.Point(10, -9);
+            chartArea2.Name = "ChartArea1";
+            this.BusChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.BusChart.Legends.Add(legend2);
+            this.BusChart.Location = new System.Drawing.Point(10, 9);
             this.BusChart.Name = "BusChart";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.BusChart.Series.Add(series1);
-            this.BusChart.Size = new System.Drawing.Size(417, 429);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.BusChart.Series.Add(series2);
+            this.BusChart.Size = new System.Drawing.Size(404, 429);
             this.BusChart.TabIndex = 0;
             this.BusChart.Text = "BusChart";
             // 
@@ -225,6 +227,7 @@
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.slidZoom);
             this.panel2.Controls.Add(this.chbToursF);
             this.panel2.Controls.Add(this.chbToursB);
             this.panel2.Controls.Add(this.btnLoadDistsF);
@@ -500,10 +503,23 @@
             this.holidayPositive.Text = "18 19";
             this.holidayPositive.TextChanged += new System.EventHandler(this.holidayPositive_TextChanged);
             // 
+            // slidZoom
+            // 
+            this.slidZoom.Location = new System.Drawing.Point(140, 314);
+            this.slidZoom.Maximum = 50;
+            this.slidZoom.Minimum = 1;
+            this.slidZoom.Name = "slidZoom";
+            this.slidZoom.Size = new System.Drawing.Size(104, 45);
+            this.slidZoom.TabIndex = 33;
+            this.slidZoom.Value = 1;
+            this.slidZoom.Scroll += new System.EventHandler(this.slidZoom_Scroll);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(819, 538);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.BusChart);
@@ -514,6 +530,7 @@
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slidToursB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.slidToursF)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slidZoom)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -554,6 +571,7 @@
         private System.Windows.Forms.Button btnLoadDistsB;
         private System.Windows.Forms.TrackBar slidToursB;
         private System.Windows.Forms.TrackBar slidToursF;
+        private System.Windows.Forms.TrackBar slidZoom;
     }
 }
 

@@ -40,11 +40,25 @@ namespace Grafikon_Busy
     }
     public static class ArrayExtension
     {
-        public static IEnumerable<T> Enumerate<T>(this T[,] target)
+
+        /// <summary>
+        /// Enumerate 2D array by rows
+        /// </summary>
+        /// <typeparam name="T">Type of items in the array</typeparam>
+        /// <param name="arr">2D array</param>
+        /// <returns></returns>
+        public static IEnumerable<T> Enumerate<T>(this T[,] arr)
         {
-            foreach (var item in target)
+            foreach (var item in arr)
                 yield return item;
         }
+        /// <summary>
+        /// Compares arrays on equality by each element
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target"></param>
+        /// <param name="compared"></param>
+        /// <returns></returns>
         public static bool Equals<T>(this T[]target, T[] compared)
         {
             if (target.Length != compared.Length)
@@ -56,6 +70,13 @@ namespace Grafikon_Busy
             }
             return true;
         }
+        /// <summary>
+        /// Compares arrays on equality by mirrored elements
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target"></param>
+        /// <param name="compared"></param>
+        /// <returns></returns>
         public static bool IsInverseOf<T>(this T[] target, T[] compared)
         {
             if (target.Length != compared.Length)
@@ -67,6 +88,10 @@ namespace Grafikon_Busy
             }
             return true;
         }
+        /// <summary>
+        /// Finds highest value in the array and turns all other (positive) values into complement of that one
+        /// </summary>
+        /// <param name="target"></param>
         public static void MirrorPositives(this int[] target)
         {
             int max = int.MinValue;
@@ -82,6 +107,10 @@ namespace Grafikon_Busy
                     target[i] = max - target[i];
             }
         }
+        /// <summary>
+        /// Finds highest value in the array and turns all other (positive) values into complement of that one
+        /// </summary>
+        /// <param name="target"></param>
         public static void MirrorPositives(this double[] target)
         {
             double max = double.MinValue;
@@ -98,7 +127,7 @@ namespace Grafikon_Busy
             }
         }
     }
-    public struct Zastavka
+    public struct Stop
     {
         public int Order;
         public double Distance;
@@ -106,7 +135,8 @@ namespace Grafikon_Busy
     public static class ArrayCalculations
     {
         /// <summary>
-        /// In a sorted array, spreads values that are too close together, so their arithmetic mean stays the same. Does not fix numbers that came too close to each other during this algorithm.
+        /// In a sorted array, spreads values that are too close together, so their arithmetic mean stays the same. 
+        /// Does not fix numbers that came too close to each other during this algorithm.
         /// </summary>
         /// <param name="arr">Input array, changed in-place</param>
         /// <param name="minDiff">Required difference between numbers in original array</param>
@@ -219,6 +249,46 @@ namespace Grafikon_Busy
                 }
             }*/
             
+        }
+        public static bool Equals<T>(this T[] original, T[] compared)
+        {
+            if (compared is null)
+                return false;
+            if (original.Length != compared.Length)
+                return false;
+            for (int i = 0; i < original.Length; ++i)
+            {
+                if (!original[i].Equals(compared[i]))
+                    return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// Checks whether the array is a continous substring of the right array 
+        /// (e.g. {2,3,4} is a substr of {0,1,2,3,4,5})
+        /// </summary>
+        /// <param name="subString">Substring to be checked</param>
+        /// <param name="fullString">Original string to be checked</param>
+        /// <returns>True if first array is not empty/null and is a substring of the second array, otherwise false</returns>
+        public static bool IsContinousSubstring<T>(T[]subString, T[]fullString, out int i, out int j)
+        {
+            i = 0;
+            j = 0;
+            if (subString is null || subString.Length == 0)
+                return false;
+            i = 0;
+            T start = subString[0];
+            while (!fullString[i].Equals(start))
+                i++;
+            j = fullString.Length - 1;
+            T end = subString[subString.Length - 1];
+            while (!fullString[j].Equals(end))
+                j--;
+            if (i >= j)
+                return false;
+            T[] checkArray = new T[j - i];
+            Array.Copy(fullString,i,checkArray,0,j-i);
+            return subString.Equals(checkArray);
         }
     }
     
