@@ -43,6 +43,9 @@ namespace Grafikon_Busy
         };
         Size defaultSize = new Size(1920, 800);
         
+        /// <summary>
+        /// Redraw the chart area
+        /// </summary>
         private void ClearGraphicon()
         {
             var Chart = BusChart.ChartAreas[0];
@@ -80,36 +83,19 @@ namespace Grafikon_Busy
 
             Chart.AxisY.CustomLabels.Clear();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="conns"></param>
+        /// <param name="stoplist"></param>
+        /// <param name="stopDists"></param>
+        /// <param name="priorityDir"></param>
         private void RenderGraphicon(IEnumerable<ConnectionGroup> conns, string[] stoplist, Stop[]stopDists, bool priorityDir)
         {
 
             ClearGraphicon();
             
             var Chart = BusChart.ChartAreas[0];
-            /*Chart.AxisY.CustomLabels.Add(new CustomLabel
-            {
-                FromPosition = stopDists[0].Distance,
-                ToPosition = stopDists[0].Distance + (stopDists[1].Distance - stopDists[0].Distance) / 2,
-                Text = stoplist[stopDists[0].Order],
-            });
-            for (int i = 1; i < stopDists.Length-1; ++i)
-            {
-                Chart.AxisY.CustomLabels.Add(new CustomLabel
-                {
-                    FromPosition = stopDists[i].Distance - (stopDists[i].Distance-stopDists[i-1].Distance)/2,
-                    ToPosition = stopDists[i].Distance + (stopDists[i+1].Distance - stopDists[i].Distance) / 2,
-                    Text = stoplist[stopDists[i].Order],
-                });
-            }
-            if (stopDists.Length >= 1)
-            {
-                Chart.AxisY.CustomLabels.Add(new CustomLabel
-                {
-                    FromPosition = stopDists[stopDists.Length-1].Distance - (stopDists[stopDists.Length-1].Distance - stopDists[stopDists.Length-2].Distance) /2,
-                    ToPosition = stopDists[stopDists.Length - 1].Distance,
-                    Text = stoplist[stopDists[stopDists.Length - 1].Order],
-                });
-            }*/
             if (stopDists is null)
             {
                 Chart.AxisY.CustomLabels.Add(new CustomLabel
@@ -209,7 +195,7 @@ namespace Grafikon_Busy
             }
             return Ser;
         }
-        private ConnectionGroup AnalyzeConnections(ConnectionGroup CG,Stop[]analyzedStops,out ConnectionGroup remaining, out double totalDistance)
+        /*private ConnectionGroup AnalyzeConnections(ConnectionGroup CG,Stop[]analyzedStops,out ConnectionGroup remaining, out double totalDistance)
         {
             double maxDistance = Math.Max(analyzedStops[0].Distance, analyzedStops[analyzedStops.Length - 1].Distance);
             totalDistance = 0;
@@ -245,7 +231,7 @@ namespace Grafikon_Busy
                 }
             }
             return extractedConns;
-        }
+        }*/
         private void AddConnection(Series s, string[] connectionTimes, bool dir)
         {
             for (int i = 0; i < connectionTimes.Length; ++i)
@@ -274,7 +260,7 @@ namespace Grafikon_Busy
         {
             int first = int.MaxValue;
             int last = 0;
-            //Slower method, but can also mark routes with other stops
+            //Slower method, but can also mark routes with other stops - not working yet
             /*if(Detection)
             {
                 bool susge = false;
