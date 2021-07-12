@@ -9,18 +9,34 @@ namespace Grafikon_Busy
 {
     public static class ControlExtensions
     {
-        static void DisableAll(this IReadOnlyList<CheckBox> controls)
+        public static void DisableAll(this IReadOnlyList<CheckBox> controls)
         {
-            foreach (CheckBox c in controls)
+            foreach (var x in controls)
             {
-                c.Enabled = false;
+                x.Enabled = false;
+                x.Checked = false;
             }
         }
-        static void DisableAll(this IReadOnlyList<Button> controls)
+        public static void DisableAll(this IReadOnlyList<Button> controls)
         {
-            foreach (Button b in controls)
+            foreach (var x in controls)
             {
-                b.Enabled = false;
+                x.Enabled = false;
+                
+            }
+        }
+        public static void EnableAll(this IReadOnlyList<CheckBox> controls)
+        {
+            foreach (var x in controls)
+            {
+                x.Enabled = true;
+            }
+        }
+        public static void EnableAll(this IReadOnlyList<Button> controls)
+        {
+            foreach (var x in controls)
+            {
+                x.Enabled = true;
             }
         }
     }

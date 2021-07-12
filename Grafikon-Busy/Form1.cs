@@ -23,11 +23,12 @@ namespace Grafikon_Busy
             this.Size = defaultSize;
             this.AutoScroll = true;
             BusChart.Size = new Size(this.Size.Width * 2 / 3, this.Size.Height);
+            BusChart.Legends.Clear();
             this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2,
                           (Screen.PrimaryScreen.WorkingArea.Height - this.Height) / 2 + 200);
 
-            CheckBoxesFront = new List<CheckBox>() { chbWorkday, chbSchoolHoliday, chbSaturday, chbSunday }.AsReadOnly();
-            CheckBoxesBack = new List<CheckBox>() { chbWorkdayBack, chbSchoolHolidayBack, chbSaturdayBack, chbSundayBack }.AsReadOnly();
+            CheckBoxesFront = new List<CheckBox>() { chbWorkday, chbSchoolHoliday, chbSaturday, chbSunday,chbToursF }.AsReadOnly();
+            CheckBoxesBack = new List<CheckBox>() { chbWorkdayBack, chbSchoolHolidayBack, chbSaturdayBack, chbSundayBack, chbToursB }.AsReadOnly();
         }
         bool Detection = false; //True version not working yet
 
@@ -172,11 +173,6 @@ namespace Grafikon_Busy
                 foreach (Series s in newS)
                     BusChart.Series.Add(s);
             }
-
-            foreach (var legend in BusChart.Legends)
-            {
-                legend.Enabled = false;
-            }
         }
 
         
@@ -313,16 +309,7 @@ namespace Grafikon_Busy
         /// <param name="e"></param>
         private void btnChooseLine_Click(object sender, EventArgs e)
         {
-            chbWorkday.Enabled = false;
-            chbWorkday.Checked = false;
-            chbSchoolHoliday.Enabled = false;
-            chbSchoolHoliday.Checked = false;
-            chbSaturday.Enabled = false;
-            chbSaturday.Checked = false;
-            chbSunday.Enabled = false;
-            chbSunday.Checked = false;
-            chbToursF.Enabled = false;
-            chbToursF.Checked = false;
+            CheckBoxesFront.DisableAll();
             slidToursF.Enabled = false;
 
             StopsF = null;
@@ -350,17 +337,7 @@ namespace Grafikon_Busy
         }
         private void btnChooseBackLine_Click(object sender, EventArgs e)
         {
-            CheckBoxesFront.DisableAll();
-            chbWorkdayBack.Enabled = false;
-            chbWorkdayBack.Checked = false;
-            chbSchoolHolidayBack.Enabled = false;
-            chbSchoolHolidayBack.Checked = false;
-            chbSaturdayBack.Enabled = false;
-            chbSaturdayBack.Checked = false;
-            chbSundayBack.Enabled = false;
-            chbSundayBack.Checked = false;
-            chbToursB.Enabled = false;
-            chbToursB.Checked = false;
+            CheckBoxesBack.DisableAll();
             slidToursB.Enabled = false;
             StopsB = null;
             TableBack = new ConnectionGroup[DayTypeCount];
@@ -579,9 +556,14 @@ namespace Grafikon_Busy
                 return;
             }
             if (chbToursF.Checked)
+            {
                 RenderGraphicon(TableFront, StopsF, StopsDistsF[slidToursF.Value], false);
+            }
             else
+            {
                 RenderGraphicon(TableFront, StopsF, null, false);
+            }
+                
         }
 
         private void btnRenderBack_Click(object sender, EventArgs e)
@@ -592,9 +574,13 @@ namespace Grafikon_Busy
                 return;
             }
             if (chbToursB.Checked)
+            {
                 RenderGraphicon(TableBack, StopsB, StopsDistsB[slidToursB.Value], true);
+            }
             else
+            {
                 RenderGraphicon(TableBack, StopsB.Reverse().ToArray(), null, false);
+            }
             
         }
         private void RenderButtonBoth_Click(object sender, EventArgs e)
@@ -678,6 +664,11 @@ namespace Grafikon_Busy
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void BusChart_Click(object sender, EventArgs e)
         {
 
         }

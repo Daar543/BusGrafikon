@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.BusChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btnRenderBoth = new System.Windows.Forms.Button();
             this.btnChooseLine = new System.Windows.Forms.Button();
@@ -75,19 +75,20 @@
             // 
             // BusChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.BusChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.BusChart.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.BusChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.BusChart.Legends.Add(legend1);
             this.BusChart.Location = new System.Drawing.Point(10, 9);
             this.BusChart.Name = "BusChart";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.BusChart.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.BusChart.Series.Add(series1);
             this.BusChart.Size = new System.Drawing.Size(404, 429);
             this.BusChart.TabIndex = 0;
             this.BusChart.Text = "BusChart";
+            this.BusChart.Click += new System.EventHandler(this.BusChart_Click);
             // 
             // btnRenderBoth
             // 
@@ -126,7 +127,6 @@
             // btnWorkday
             // 
             this.btnWorkday.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnWorkday.Enabled = false;
             this.btnWorkday.Location = new System.Drawing.Point(320, 82);
             this.btnWorkday.Margin = new System.Windows.Forms.Padding(2);
             this.btnWorkday.Name = "btnWorkday";
@@ -139,7 +139,6 @@
             // btnSaturday
             // 
             this.btnSaturday.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnSaturday.Enabled = false;
             this.btnSaturday.Location = new System.Drawing.Point(320, 186);
             this.btnSaturday.Margin = new System.Windows.Forms.Padding(2);
             this.btnSaturday.Name = "btnSaturday";
@@ -152,7 +151,6 @@
             // btnSunday
             // 
             this.btnSunday.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnSunday.Enabled = false;
             this.btnSunday.Location = new System.Drawing.Point(320, 238);
             this.btnSunday.Margin = new System.Windows.Forms.Padding(2);
             this.btnSunday.Name = "btnSunday";
@@ -165,7 +163,6 @@
             // btnNoSchoolWorkday
             // 
             this.btnNoSchoolWorkday.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnNoSchoolWorkday.Enabled = false;
             this.btnNoSchoolWorkday.Location = new System.Drawing.Point(320, 134);
             this.btnNoSchoolWorkday.Margin = new System.Windows.Forms.Padding(2);
             this.btnNoSchoolWorkday.Name = "btnNoSchoolWorkday";
@@ -304,7 +301,6 @@
             // 
             // btnLoadDistsF
             // 
-            this.btnLoadDistsF.Enabled = false;
             this.btnLoadDistsF.Location = new System.Drawing.Point(212, 195);
             this.btnLoadDistsF.Name = "btnLoadDistsF";
             this.btnLoadDistsF.Size = new System.Drawing.Size(103, 23);
@@ -315,7 +311,6 @@
             // 
             // btnLoadDistsB
             // 
-            this.btnLoadDistsB.Enabled = false;
             this.btnLoadDistsB.Location = new System.Drawing.Point(92, 195);
             this.btnLoadDistsB.Name = "btnLoadDistsB";
             this.btnLoadDistsB.Size = new System.Drawing.Size(104, 23);
@@ -439,7 +434,6 @@
             // btnSundayBack
             // 
             this.btnSundayBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnSundayBack.Enabled = false;
             this.btnSundayBack.Location = new System.Drawing.Point(2, 235);
             this.btnSundayBack.Margin = new System.Windows.Forms.Padding(2);
             this.btnSundayBack.Name = "btnSundayBack";
@@ -452,7 +446,6 @@
             // btnSchoolHolidayBack
             // 
             this.btnSchoolHolidayBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnSchoolHolidayBack.Enabled = false;
             this.btnSchoolHolidayBack.Location = new System.Drawing.Point(2, 131);
             this.btnSchoolHolidayBack.Margin = new System.Windows.Forms.Padding(2);
             this.btnSchoolHolidayBack.Name = "btnSchoolHolidayBack";
@@ -465,7 +458,6 @@
             // btnSaturdayBack
             // 
             this.btnSaturdayBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnSaturdayBack.Enabled = false;
             this.btnSaturdayBack.Location = new System.Drawing.Point(2, 183);
             this.btnSaturdayBack.Margin = new System.Windows.Forms.Padding(2);
             this.btnSaturdayBack.Name = "btnSaturdayBack";
@@ -478,7 +470,6 @@
             // btnWorkdayBack
             // 
             this.btnWorkdayBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnWorkdayBack.Enabled = false;
             this.btnWorkdayBack.Location = new System.Drawing.Point(2, 79);
             this.btnWorkdayBack.Margin = new System.Windows.Forms.Padding(2);
             this.btnWorkdayBack.Name = "btnWorkdayBack";

@@ -9,9 +9,10 @@ namespace Grafikon_Busy
 {
     public class ConnectionGroup
     {
-        public Dictionary<string, string[]> Connections;
-        public Color ChartColor;
-        public bool Direction = true;
+        public Dictionary<string, string[]> Connections { get; private set; }
+        public Color ChartColor { get; private set; }
+        public bool Direction { get; private set; }
+        public string Name { get; private set; }
         private bool enabled;
         public bool Enabled
         {
