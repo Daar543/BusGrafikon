@@ -19,14 +19,18 @@ namespace Grafikon_Busy
         public Form1()
         {
             InitializeComponent();
-            
+
             this.Size = defaultSize;
             this.AutoScroll = true;
             BusChart.Size = new Size(this.Size.Width * 2 / 3, this.Size.Height);
             this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2,
                           (Screen.PrimaryScreen.WorkingArea.Height - this.Height) / 2 + 200);
+
+            CheckBoxesFront = new List<CheckBox>() { chbWorkday, chbSchoolHoliday, chbSaturday, chbSunday }.AsReadOnly();
+            CheckBoxesBack = new List<CheckBox>() { chbWorkdayBack, chbSchoolHolidayBack, chbSaturdayBack, chbSundayBack }.AsReadOnly();
         }
         bool Detection = false; //True version not working yet
+
         string[] StopsF;
         string[] StopsB;
         Stop[][] StopsDistsF;
@@ -34,15 +38,21 @@ namespace Grafikon_Busy
         static char[] SignSeparators = new char[] { ' ' };
         const int directionsCount = 2;
         static readonly int DayTypeCount = Enum.GetNames(typeof(DayType)).Length;
+        IReadOnlyList<CheckBox> CheckBoxesFront { get;}
+        IReadOnlyList<CheckBox> CheckBoxesBack { get; }
+
+
         ConnectionGroup[] TableFront = new ConnectionGroup[DayTypeCount];
         ConnectionGroup[] TableBack = new ConnectionGroup[DayTypeCount];
         //Color[,] TableColoring = new Color[DayTypeCount, directionsCount];
+
         Color[,] TableColoring = new Color[4, directionsCount]{
             {Color.Brown,Color.Orange },{Color.Yellow,Color.Green },
             {Color.Blue,Color.DarkCyan },{Color.Magenta,Color.Purple}
         };
         Size defaultSize = new Size(1920, 800);
         
+       
         /// <summary>
         /// Redraw the chart area
         /// </summary>
@@ -186,9 +196,14 @@ namespace Grafikon_Busy
                     MarkerSize = 7
                 };
                 if(zst is null)
+                {
                     AddConnection(Sx, CG.Connections[connName], CG.Direction);
+                }
                 else
-                    AddConnection(Sx, CG.Connections[connName], zst, CG.Direction^priorityDir);
+                {
+                    AddConnection(Sx, CG.Connections[connName], zst, CG.Direction ^ priorityDir);
+                }
+                    
                 
 
                 Ser.Add(Sx);
@@ -260,57 +275,6 @@ namespace Grafikon_Busy
         {
             int first = int.MaxValue;
             int last = 0;
-            //Slower method, but can also mark routes with other stops - not working yet
-            /*if(Detection)
-            {
-                bool susge = false;
-                int current = 0;
-                for(int i = dists[0].Order; i < connectionTimes.Length; ++i)
-                {
-                    ref string checkedTime = ref connectionTimes[i];
-                    if (checkedTime == "|")
-                    {
-                        continue; //stops is passed through, has no impact on kilometrage
-                    }
-                    else if(checkedTime == "")
-                    {
-                        if(current < dists.Length)
-                            if (i == dists[current].Order)
-                                current++;
-                        continue; 
-                    }
-                    else if (checkedTime == "<")
-                    {
-                        if (current < dists.Length)
-                            if (i == dists[current].Order)
-                                current++;
-                        continue;
-                    }
-                    else if (TimeConverter.HoursMinsToMins(checkedTime, out int connMinute))
-                    {
-                        if(current < dists.Length && i < dists[current].Order)
-                        {
-                            //Detect routes with additional stops
-                            susge = true;
-                            //s.BorderDashStyle = ChartDashStyle.Dash;
-                            continue;
-                        }
-                        if(susge)
-                        {
-                            s.BorderDashStyle = ChartDashStyle.Dash;
-                        }
-                        if (current >= dists.Length)
-                            return;
-                        s.Points.AddXY(connMinute, dists[current].Distance); //stop is in parsable time
-                        current++;
-                    }
-                    else
-                    {
-                        throw new FormatException("Time not in correct format!");
-                    }
-                }
-            }
-            else*/
             foreach (var Z in dists)
             {
                 if (Z.Order < first) first = Z.Order;   //Not necessary
@@ -360,6 +324,7 @@ namespace Grafikon_Busy
             chbToursF.Enabled = false;
             chbToursF.Checked = false;
             slidToursF.Enabled = false;
+
             StopsF = null;
             TableFront = new ConnectionGroup[DayTypeCount];
             string line = textBoxLine.Text;
@@ -385,6 +350,7 @@ namespace Grafikon_Busy
         }
         private void btnChooseBackLine_Click(object sender, EventArgs e)
         {
+            CheckBoxesFront.DisableAll();
             chbWorkdayBack.Enabled = false;
             chbWorkdayBack.Checked = false;
             chbSchoolHolidayBack.Enabled = false;
@@ -707,6 +673,11 @@ namespace Grafikon_Busy
         }
 
         private void slidZoom_Scroll(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
         {
 
         }

@@ -44,6 +44,7 @@
             this.chbSunday = new System.Windows.Forms.CheckBox();
             this.chbSchoolHoliday = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.slidZoom = new System.Windows.Forms.TrackBar();
             this.chbToursF = new System.Windows.Forms.CheckBox();
             this.chbToursB = new System.Windows.Forms.CheckBox();
             this.btnLoadDistsF = new System.Windows.Forms.Button();
@@ -65,12 +66,11 @@
             this.textboxInfoHoliday = new System.Windows.Forms.TextBox();
             this.holidayNegativ = new System.Windows.Forms.TextBox();
             this.holidayPositive = new System.Windows.Forms.TextBox();
-            this.slidZoom = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.BusChart)).BeginInit();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.slidZoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slidToursB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slidToursF)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.slidZoom)).BeginInit();
             this.SuspendLayout();
             // 
             // BusChart
@@ -126,6 +126,7 @@
             // btnWorkday
             // 
             this.btnWorkday.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnWorkday.Enabled = false;
             this.btnWorkday.Location = new System.Drawing.Point(320, 82);
             this.btnWorkday.Margin = new System.Windows.Forms.Padding(2);
             this.btnWorkday.Name = "btnWorkday";
@@ -138,6 +139,7 @@
             // btnSaturday
             // 
             this.btnSaturday.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnSaturday.Enabled = false;
             this.btnSaturday.Location = new System.Drawing.Point(320, 186);
             this.btnSaturday.Margin = new System.Windows.Forms.Padding(2);
             this.btnSaturday.Name = "btnSaturday";
@@ -150,6 +152,7 @@
             // btnSunday
             // 
             this.btnSunday.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnSunday.Enabled = false;
             this.btnSunday.Location = new System.Drawing.Point(320, 238);
             this.btnSunday.Margin = new System.Windows.Forms.Padding(2);
             this.btnSunday.Name = "btnSunday";
@@ -162,6 +165,7 @@
             // btnNoSchoolWorkday
             // 
             this.btnNoSchoolWorkday.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnNoSchoolWorkday.Enabled = false;
             this.btnNoSchoolWorkday.Location = new System.Drawing.Point(320, 134);
             this.btnNoSchoolWorkday.Margin = new System.Windows.Forms.Padding(2);
             this.btnNoSchoolWorkday.Name = "btnNoSchoolWorkday";
@@ -265,6 +269,18 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(406, 427);
             this.panel2.TabIndex = 14;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            // 
+            // slidZoom
+            // 
+            this.slidZoom.Location = new System.Drawing.Point(140, 314);
+            this.slidZoom.Maximum = 50;
+            this.slidZoom.Minimum = 1;
+            this.slidZoom.Name = "slidZoom";
+            this.slidZoom.Size = new System.Drawing.Size(104, 45);
+            this.slidZoom.TabIndex = 33;
+            this.slidZoom.Value = 1;
+            this.slidZoom.Scroll += new System.EventHandler(this.slidZoom_Scroll);
             // 
             // chbToursF
             // 
@@ -288,6 +304,7 @@
             // 
             // btnLoadDistsF
             // 
+            this.btnLoadDistsF.Enabled = false;
             this.btnLoadDistsF.Location = new System.Drawing.Point(212, 195);
             this.btnLoadDistsF.Name = "btnLoadDistsF";
             this.btnLoadDistsF.Size = new System.Drawing.Size(103, 23);
@@ -298,6 +315,7 @@
             // 
             // btnLoadDistsB
             // 
+            this.btnLoadDistsB.Enabled = false;
             this.btnLoadDistsB.Location = new System.Drawing.Point(92, 195);
             this.btnLoadDistsB.Name = "btnLoadDistsB";
             this.btnLoadDistsB.Size = new System.Drawing.Size(104, 23);
@@ -421,6 +439,7 @@
             // btnSundayBack
             // 
             this.btnSundayBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnSundayBack.Enabled = false;
             this.btnSundayBack.Location = new System.Drawing.Point(2, 235);
             this.btnSundayBack.Margin = new System.Windows.Forms.Padding(2);
             this.btnSundayBack.Name = "btnSundayBack";
@@ -433,6 +452,7 @@
             // btnSchoolHolidayBack
             // 
             this.btnSchoolHolidayBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnSchoolHolidayBack.Enabled = false;
             this.btnSchoolHolidayBack.Location = new System.Drawing.Point(2, 131);
             this.btnSchoolHolidayBack.Margin = new System.Windows.Forms.Padding(2);
             this.btnSchoolHolidayBack.Name = "btnSchoolHolidayBack";
@@ -445,6 +465,7 @@
             // btnSaturdayBack
             // 
             this.btnSaturdayBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnSaturdayBack.Enabled = false;
             this.btnSaturdayBack.Location = new System.Drawing.Point(2, 183);
             this.btnSaturdayBack.Margin = new System.Windows.Forms.Padding(2);
             this.btnSaturdayBack.Name = "btnSaturdayBack";
@@ -457,6 +478,7 @@
             // btnWorkdayBack
             // 
             this.btnWorkdayBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnWorkdayBack.Enabled = false;
             this.btnWorkdayBack.Location = new System.Drawing.Point(2, 79);
             this.btnWorkdayBack.Margin = new System.Windows.Forms.Padding(2);
             this.btnWorkdayBack.Name = "btnWorkdayBack";
@@ -503,17 +525,6 @@
             this.holidayPositive.Text = "18 19";
             this.holidayPositive.TextChanged += new System.EventHandler(this.holidayPositive_TextChanged);
             // 
-            // slidZoom
-            // 
-            this.slidZoom.Location = new System.Drawing.Point(140, 314);
-            this.slidZoom.Maximum = 50;
-            this.slidZoom.Minimum = 1;
-            this.slidZoom.Name = "slidZoom";
-            this.slidZoom.Size = new System.Drawing.Size(104, 45);
-            this.slidZoom.TabIndex = 33;
-            this.slidZoom.Value = 1;
-            this.slidZoom.Scroll += new System.EventHandler(this.slidZoom_Scroll);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -528,9 +539,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.BusChart)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.slidZoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.slidToursB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.slidToursF)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.slidZoom)).EndInit();
             this.ResumeLayout(false);
 
         }

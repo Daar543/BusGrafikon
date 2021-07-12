@@ -132,6 +132,7 @@ namespace Grafikon_Busy
         public int Order;
         public double Distance;
     }
+
     public static class ArrayCalculations
     {
         /// <summary>
