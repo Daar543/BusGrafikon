@@ -1,13 +1,8 @@
-﻿using RozvrhBusu;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -27,7 +22,7 @@ namespace Grafikon_Busy
             this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2,
                           (Screen.PrimaryScreen.WorkingArea.Height - this.Height) / 2 + 200);
 
-            CheckBoxesFront = new List<CheckBox>() { chbWorkday, chbSchoolHoliday, chbSaturday, chbSunday,chbToursF }.AsReadOnly();
+            CheckBoxesFront = new List<CheckBox>() { chbWorkday, chbSchoolHoliday, chbSaturday, chbSunday, chbToursF }.AsReadOnly();
             CheckBoxesBack = new List<CheckBox>() { chbWorkdayBack, chbSchoolHolidayBack, chbSaturdayBack, chbSundayBack, chbToursB }.AsReadOnly();
         }
         bool Detection = false; //True version not working yet
@@ -39,7 +34,7 @@ namespace Grafikon_Busy
         static char[] SignSeparators = new char[] { ' ' };
         const int directionsCount = 2;
         static readonly int DayTypeCount = Enum.GetNames(typeof(DayType)).Length;
-        IReadOnlyList<CheckBox> CheckBoxesFront { get;}
+        IReadOnlyList<CheckBox> CheckBoxesFront { get; }
         IReadOnlyList<CheckBox> CheckBoxesBack { get; }
 
 
@@ -52,8 +47,8 @@ namespace Grafikon_Busy
             {Color.Blue,Color.DarkCyan },{Color.Magenta,Color.Purple}
         };
         Size defaultSize = new Size(1920, 800);
-        
-       
+
+
         /// <summary>
         /// Redraw the chart area
         /// </summary>
@@ -61,7 +56,7 @@ namespace Grafikon_Busy
         {
             var Chart = BusChart.ChartAreas[0];
             this.Size = new Size((int)(Math.Sqrt(slidZoom.Value) * defaultSize.Width), (int)(Math.Sqrt(slidZoom.Value) * defaultSize.Height));
-            BusChart.Size = new Size((int)(this.Size.Width * Math.Sqrt(slidZoom.Value) - 2*panel2.Width), (int)(this.Size.Height * Math.Sqrt(slidZoom.Value)));
+            BusChart.Size = new Size((int)(this.Size.Width * Math.Sqrt(slidZoom.Value) - 2 * panel2.Width), (int)(this.Size.Height * Math.Sqrt(slidZoom.Value)));
             Chart.AxisX.ScaleView.Zoomable = true;
             Chart.CursorX.AutoScroll = true;
             Chart.CursorX.IsUserSelectionEnabled = true;
@@ -77,12 +72,12 @@ namespace Grafikon_Busy
 
             Chart.AxisX.Interval = 60;
 
-            for(int i = (int)Chart.AxisX.Minimum/60; i < (int)Chart.AxisX.Maximum / 60; i += 1)
+            for (int i = (int)Chart.AxisX.Minimum / 60; i < (int)Chart.AxisX.Maximum / 60; i += 1)
             {
                 Chart.AxisX.CustomLabels.Add(new CustomLabel()
                 {
-                    FromPosition = (i - 0.5)*60,
-                    ToPosition = (i + 0.5)*60,
+                    FromPosition = (i - 0.5) * 60,
+                    ToPosition = (i + 0.5) * 60,
                     Text = i.ToString(),
                 });
             }
@@ -101,11 +96,11 @@ namespace Grafikon_Busy
         /// <param name="stoplist"></param>
         /// <param name="stopDists"></param>
         /// <param name="priorityDir"></param>
-        private void RenderGraphicon(IEnumerable<ConnectionGroup> conns, string[] stoplist, Stop[]stopDists, bool priorityDir)
+        private void RenderGraphicon(IEnumerable<ConnectionGroup> conns, string[] stoplist, Stop[] stopDists, bool priorityDir)
         {
 
             ClearGraphicon();
-            
+
             var Chart = BusChart.ChartAreas[0];
             if (stopDists is null)
             {
@@ -124,7 +119,7 @@ namespace Grafikon_Busy
                         Text = stoplist[i],
                     });
                 }
-                
+
             }
             else
             {
@@ -153,8 +148,8 @@ namespace Grafikon_Busy
                     });
                 }
             }
-            
-            
+
+
             BusChart.Series.Clear();
 
             /*BusChart.Series.Add("Spoj 3");
@@ -169,14 +164,14 @@ namespace Grafikon_Busy
             {
                 if (group is null || !group.Enabled)
                     continue;
-                List<Series> newS = MakeSeriesForTable(group,stopDists, priorityDir);
+                List<Series> newS = MakeSeriesForTable(group, stopDists, priorityDir);
                 foreach (Series s in newS)
                     BusChart.Series.Add(s);
             }
         }
 
-        
-        private List<Series> MakeSeriesForTable(ConnectionGroup CG, Stop[]zst, bool priorityDir)
+
+        private List<Series> MakeSeriesForTable(ConnectionGroup CG, Stop[] zst, bool priorityDir)
         {
             List<Series> Ser = new List<Series>();
             foreach (var connName in CG.Connections.Keys)
@@ -191,7 +186,7 @@ namespace Grafikon_Busy
                     MarkerStyle = MarkerStyle.Circle,
                     MarkerSize = 7
                 };
-                if(zst is null)
+                if (zst is null)
                 {
                     AddConnection(Sx, CG.Connections[connName], CG.Direction);
                 }
@@ -199,8 +194,8 @@ namespace Grafikon_Busy
                 {
                     AddConnection(Sx, CG.Connections[connName], zst, CG.Direction ^ priorityDir);
                 }
-                    
-                
+
+
 
                 Ser.Add(Sx);
             }
@@ -278,7 +273,7 @@ namespace Grafikon_Busy
                 //int indx = !dir ? Z.Order : connectionTimes.Length - 1 - Z.Order;
                 int indx = forw ? Z.Order : connectionTimes.Length - 1 - Z.Order;
                 string checkedTime = connectionTimes[indx];
-                if (checkedTime == "|" || checkedTime == "" ) 
+                if (checkedTime == "|" || checkedTime == "")
                 {
                     continue; //stops is passed through, has no impact on kilometrage
                 }
@@ -498,7 +493,7 @@ namespace Grafikon_Busy
             TimeTableF.HolidayNegativeSigns = holidayNegativ.Text.Split(SignSeparators);
         }
 
-        
+
 
         private void btnWorkdayBack_Click(object sender, EventArgs e)
         {
@@ -563,12 +558,12 @@ namespace Grafikon_Busy
             {
                 RenderGraphicon(TableFront, StopsF, null, false);
             }
-                
+
         }
 
         private void btnRenderBack_Click(object sender, EventArgs e)
         {
-            if(StopsB is null)
+            if (StopsB is null)
             {
                 ClearGraphicon();
                 return;
@@ -581,7 +576,7 @@ namespace Grafikon_Busy
             {
                 RenderGraphicon(TableBack, StopsB.Reverse().ToArray(), null, false);
             }
-            
+
         }
         private void RenderButtonBoth_Click(object sender, EventArgs e)
         {
@@ -624,15 +619,15 @@ namespace Grafikon_Busy
                 MessageBox.Show("Vstup nemá správný formát!", "Chybný vstup", MessageBoxButtons.OK);
                 return;
             }
-                
-            if(!TimeTableF.ExtractKilometragesFromTable(kilometrage, 0.5, false, out Stop[][]Zastavky))
+
+            if (!TimeTableF.ExtractKilometragesFromTable(kilometrage, 0.5, false, out Stop[][] Zastavky))
             {
                 MessageBox.Show("Vzdálenosti nešlo dobře najít", "Chybný vstup", MessageBoxButtons.OK);
                 return;
             }
             this.StopsDistsF = Zastavky;
             chbToursF.Enabled = true;
-            slidToursF.Maximum = StopsDistsF.Length-1;
+            slidToursF.Maximum = StopsDistsF.Length - 1;
             slidToursF.Enabled = true;
             return;
         }
