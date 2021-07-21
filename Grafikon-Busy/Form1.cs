@@ -31,7 +31,7 @@ namespace Grafikon_Busy
         string[] StopsB;
         Stop[][] StopsDistsF;
         Stop[][] StopsDistsB;
-        static char[] SignSeparators = new char[] { ' ' };
+        static char[] SignSeparators = new char[] {' '};
         const int directionsCount = 2;
         static readonly int DayTypeCount = Enum.GetNames(typeof(DayType)).Length;
         IReadOnlyList<CheckBox> CheckBoxesFront { get; }
