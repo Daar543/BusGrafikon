@@ -75,6 +75,34 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="JR\100180-T" />
+    <None Include="JR\805003.csv" />
+    <None Include="JR\Kunovjan_2013_01.pdf" />
+    <None Include="JR\L802170_od20210307_do20211231_export20210309171637.xlsx" />
+    <None Include="JR\L802180_od20210101_do20211231_export20210224143838.xlsx" />
+    <None Include="JR\L802192_od20210307_do20211231_export20210309171629.xlsx" />
+    <None Include="JR\L802365_od20210101_do20211231_export20210224152601.xlsx" />
+    <None Include="JR\L802366_od20210101_do20211231_export20210303133809.xlsx" />
+    <None Include="JR\L802374_od20210101_do20211231_export20210224155452.xlsx" />
+    <None Include="JR\L802374_od20210307_do20211231_export20210309153734.xlsx" />
+    <None Include="JR\L802375_od20210101_do20211231_export20210209134505.xlsx" />
+    <None Include="JR\L802375_od20210127_do20210306_export20210209134518.xlsx" />
+    <None Include="JR\L802375_od20210127_do20210306_export20210309171906.xlsx" />
+    <None Include="JR\L802375_od20210412_do20210630_export20210426124818.xlsx" />
+    <None Include="JR\L802381_od20210307_do20211231_export20210309171643.xlsx" />
+    <None Include="JR\L802956_od20210101_do20211231_export20210224155609.xlsx" />
+    <None Include="JR\L802975_od20210101_do20211231_export20210224153708.xlsx" />
+    <None Include="JR\L805002_od20210101_do20211231_export20210215191642.xlsx" />
+    <None Include="JR\L805003_od20210101_do20211231_export20210202223029.xlsx" />
+    <None Include="JR\L805003_od20210101_do20211231_export20210215191651.xlsx" />
+    <None Include="JR\L805004_od20210101_do20211231_export20210215191652.xlsx" />
+    <None Include="JR\L805004_od20210307_do20211231_export20210309153609.xlsx" />
+    <None Include="JR\L805005_od20210101_do20211231_export20210215191654.xlsx" />
+    <None Include="JR\L805006_od20210101_do20211231_export20210215191656.xlsx" />
+    <None Include="JR\L805007_od20210101_do20211231_export20210215191657.xlsx" />
+    <None Include="JR\L805008_od20210101_do20211231_export20210206191015.xlsx" />
+    <None Include="JR\L805009_od20210101_do20211231_export20210215191722.xlsx" />
+    <None Include="JR\~%24L805004_od20210101_do20211231_export20210215191652.xlsx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -87,6 +115,168 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="JR\100180-T.txt" />
+    <Content Include="JR\100180-Z.txt" />
+    <Content Include="JR\802170-T.txt" />
+    <Content Include="JR\802170-Z.txt" />
+    <Content Include="JR\802180-T.txt" />
+    <Content Include="JR\802180-Z.txt" />
+    <Content Include="JR\802192-T.txt" />
+    <Content Include="JR\802192-Z.txt" />
+    <Content Include="JR\802365-T.txt" />
+    <Content Include="JR\802365-Z.txt" />
+    <Content Include="JR\802366-T.txt" />
+    <Content Include="JR\802366-Z.txt" />
+    <Content Include="JR\802374-T.txt" />
+    <Content Include="JR\802374-Z.txt" />
+    <Content Include="JR\802374S-T.txt" />
+    <Content Include="JR\802374S-Z.txt" />
+    <Content Include="JR\802375-T.txt" />
+    <Content Include="JR\802375-Z.txt" />
+    <Content Include="JR\802375S-T.txt" />
+    <Content Include="JR\802375V-T.txt" />
+    <Content Include="JR\802375V-Z.txt" />
+    <Content Include="JR\802381-T.txt" />
+    <Content Include="JR\802381-Z.txt" />
+    <Content Include="JR\802956-T.txt" />
+    <Content Include="JR\802956-Z.txt" />
+    <Content Include="JR\802975-T.txt" />
+    <Content Include="JR\802975-Z.txt" />
+    <Content Include="JR\805002-T.txt" />
+    <Content Include="JR\805003-T.txt" />
+    <Content Include="JR\805004-T.txt" />
+    <Content Include="JR\805004-Z.txt" />
+    <Content Include="JR\805004S-T.txt" />
+    <Content Include="JR\805004S-Z.txt" />
+    <Content Include="JR\805005-T.txt" />
+    <Content Include="JR\805006-T.txt" />
+    <Content Include="JR\805007-T.txt" />
+    <Content Include="JR\805008-T.txt" />
+    <Content Include="JR\805008-Z.txt" />
+    <Content Include="JR\805009-T.txt" />
+    <Content Include="JR\805009-Z.txt" />
+    <Content Include="JR\Text\100180-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\100180-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802170-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802170-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802180-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802180-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802192-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802192-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802365-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802365-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802366-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802366-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802374-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802374-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802374S-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802374S-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802375-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802375-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802375S-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802375V-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802375V-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802381-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802381-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802956-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802956-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802975-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\802975-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\805002-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\805003-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\805004-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\805004-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\805004S-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\805004S-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\805005-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\805006-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\805007-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\805008-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\805008-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\805009-T.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JR\Text\805009-Z.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
