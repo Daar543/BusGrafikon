@@ -99,24 +99,30 @@ namespace Grafikon_Busy
         /// </summary>
         /// <param name="table"></param>
         /// <param name="kms"></param>
-        /// <returns></returns>
+        /// <returns>True iff the parsing has ended succesfully</returns>
         public bool GetKilometrageTable(out string[][] kms)
         {
             if (ReducedTable == null)
+            {
                 ReducedTable = this.Cutout();
+            }
+                
             List<int> AllowedRows = new List<int>();
-                AllowedRows.Add(1); //Stops
+            AllowedRows.Add(1); //This is the row with stop names
             for (int i = 2; i < ReducedTable.Length; ++i)
             {
-                if (ReducedTable[i][0].Contains(DistanceSign) || ReducedTable[i][1].Contains(DistanceSign))
+                if (ReducedTable[i][0].Contains(DistanceSign) || ReducedTable[i][1].Contains(DistanceSign)) //Add row with "km"
                 {
                     AllowedRows.Add(i);
                 }
             }
             kms = new string[AllowedRows.Count][];
-            if (AllowedRows.Count == 0)
-                return false;
 
+            if (AllowedRows.Count == 0)
+            {
+                return false;
+            }
+               
             int j = 0;
             foreach (int row in AllowedRows)
             {
@@ -126,6 +132,14 @@ namespace Grafikon_Busy
             }
             return true;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="table">Reduced timetable - only kilometrages and stop names </param>
+        /// <param name="normalizingDistance">By how much should stops with same kilometrage differ</param>
+        /// <param name="mirror">If true, the distances will be calculated as complement to the max distance</param>
+        /// <param name="toursNorm">Output with normalized distances from stops (1 tour = 1 inner array)</param>
+        /// <returns></returns>
         public bool ExtractKilometragesFromTable(string[][]table, double normalizingDistance, bool mirror, out Stop[][]toursNorm)
         {
             int[][] tours = new int[table.Length - 1][];

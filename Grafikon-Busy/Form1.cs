@@ -375,7 +375,7 @@ namespace Grafikon_Busy
                 case Direction.Forward:
                     ChosenTimeTable = TimeTableF;
                     FinalizedCG = TableFront;
-                    StopList = ref StopsF;
+                    //StopList = ref StopsF;
                     break;
                 case Direction.Backward:
                     ChosenTimeTable = TimeTableB;
@@ -658,10 +658,6 @@ namespace Grafikon_Busy
 
         }
 
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         private void BusChart_Click(object sender, EventArgs e)
         {
