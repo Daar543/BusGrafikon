@@ -80,7 +80,7 @@
             legend1.Name = "Legend1";
             this.BusChart.Legends.Add(legend1);
             this.BusChart.Location = new System.Drawing.Point(13, 11);
-            this.BusChart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BusChart.Margin = new System.Windows.Forms.Padding(4);
             this.BusChart.Name = "BusChart";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
@@ -95,7 +95,7 @@
             // 
             this.btnRenderBoth.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnRenderBoth.Location = new System.Drawing.Point(203, 473);
-            this.btnRenderBoth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRenderBoth.Margin = new System.Windows.Forms.Padding(4);
             this.btnRenderBoth.Name = "btnRenderBoth";
             this.btnRenderBoth.Size = new System.Drawing.Size(123, 44);
             this.btnRenderBoth.TabIndex = 1;
@@ -123,7 +123,7 @@
             this.textBoxLine.Name = "textBoxLine";
             this.textBoxLine.Size = new System.Drawing.Size(112, 22);
             this.textBoxLine.TabIndex = 3;
-            this.textBoxLine.Text = "JR/Text/805004-T.txt";
+            this.textBoxLine.Text = "JR/Text/802365-T.txt";
             this.textBoxLine.TextChanged += new System.EventHandler(this.textBoxLine_TextChanged);
             // 
             // btnWorkday
@@ -272,7 +272,7 @@
             // slidZoom
             // 
             this.slidZoom.Location = new System.Drawing.Point(187, 386);
-            this.slidZoom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.slidZoom.Margin = new System.Windows.Forms.Padding(4);
             this.slidZoom.Maximum = 50;
             this.slidZoom.Minimum = 1;
             this.slidZoom.Name = "slidZoom";
@@ -285,7 +285,7 @@
             // 
             this.chbToursF.AutoSize = true;
             this.chbToursF.Location = new System.Drawing.Point(304, 276);
-            this.chbToursF.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chbToursF.Margin = new System.Windows.Forms.Padding(4);
             this.chbToursF.Name = "chbToursF";
             this.chbToursF.Size = new System.Drawing.Size(107, 21);
             this.chbToursF.TabIndex = 32;
@@ -296,7 +296,7 @@
             // 
             this.chbToursB.AutoSize = true;
             this.chbToursB.Location = new System.Drawing.Point(123, 276);
-            this.chbToursB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chbToursB.Margin = new System.Windows.Forms.Padding(4);
             this.chbToursB.Name = "chbToursB";
             this.chbToursB.Size = new System.Drawing.Size(107, 21);
             this.chbToursB.TabIndex = 31;
@@ -306,7 +306,7 @@
             // btnLoadDistsF
             // 
             this.btnLoadDistsF.Location = new System.Drawing.Point(283, 240);
-            this.btnLoadDistsF.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnLoadDistsF.Margin = new System.Windows.Forms.Padding(4);
             this.btnLoadDistsF.Name = "btnLoadDistsF";
             this.btnLoadDistsF.Size = new System.Drawing.Size(137, 28);
             this.btnLoadDistsF.TabIndex = 30;
@@ -317,7 +317,7 @@
             // btnLoadDistsB
             // 
             this.btnLoadDistsB.Location = new System.Drawing.Point(123, 240);
-            this.btnLoadDistsB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnLoadDistsB.Margin = new System.Windows.Forms.Padding(4);
             this.btnLoadDistsB.Name = "btnLoadDistsB";
             this.btnLoadDistsB.Size = new System.Drawing.Size(139, 28);
             this.btnLoadDistsB.TabIndex = 29;
@@ -328,7 +328,7 @@
             // slidToursB
             // 
             this.slidToursB.Location = new System.Drawing.Point(123, 295);
-            this.slidToursB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.slidToursB.Margin = new System.Windows.Forms.Padding(4);
             this.slidToursB.Name = "slidToursB";
             this.slidToursB.Size = new System.Drawing.Size(139, 56);
             this.slidToursB.TabIndex = 28;
@@ -336,7 +336,7 @@
             // slidToursF
             // 
             this.slidToursF.Location = new System.Drawing.Point(283, 295);
-            this.slidToursF.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.slidToursF.Margin = new System.Windows.Forms.Padding(4);
             this.slidToursF.Name = "slidToursF";
             this.slidToursF.Size = new System.Drawing.Size(139, 56);
             this.slidToursF.TabIndex = 27;
@@ -345,7 +345,7 @@
             // 
             this.btnRenderFront.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRenderFront.Location = new System.Drawing.Point(427, 478);
-            this.btnRenderFront.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRenderFront.Margin = new System.Windows.Forms.Padding(4);
             this.btnRenderFront.Name = "btnRenderFront";
             this.btnRenderFront.Size = new System.Drawing.Size(112, 39);
             this.btnRenderFront.TabIndex = 26;
@@ -357,7 +357,7 @@
             // 
             this.btnRenderBack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnRenderBack.Location = new System.Drawing.Point(4, 481);
-            this.btnRenderBack.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRenderBack.Margin = new System.Windows.Forms.Padding(4);
             this.btnRenderBack.Name = "btnRenderBack";
             this.btnRenderBack.Size = new System.Drawing.Size(112, 39);
             this.btnRenderBack.TabIndex = 25;
@@ -439,7 +439,7 @@
             this.textBoxLineBack.Name = "textBoxLineBack";
             this.textBoxLineBack.Size = new System.Drawing.Size(112, 22);
             this.textBoxLineBack.TabIndex = 16;
-            this.textBoxLineBack.Text = "JR/Text/805004-Z.txt";
+            this.textBoxLineBack.Text = "JR/Text/802365-Z.txt";
             // 
             // btnSundayBack
             // 
@@ -535,7 +535,7 @@
             this.ClientSize = new System.Drawing.Size(1092, 662);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.BusChart);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.BusChart)).EndInit();

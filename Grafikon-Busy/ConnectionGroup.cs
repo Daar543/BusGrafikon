@@ -27,11 +27,6 @@ namespace Grafikon_Busy
                 this.enabled = value;
             }
         }
-        /*public ConnectionGroup(Dictionary<string, string[]> conn, Color color)
-        {
-            this.Connections = conn;
-            this.ChartColor = color;
-        }*/
         public ConnectionGroup(Dictionary<string, string[]> conn, Color color, bool dir)
         {
             this.Connections = conn;
@@ -138,15 +133,17 @@ namespace Grafikon_Busy
     {
         /// <summary>
         /// In a sorted array, spreads values that are too close together, so their arithmetic mean stays the same. 
-        /// Does not fix numbers that came too close to each other during this algorithm.
         /// </summary>
         /// <param name="arr">Input array, changed in-place</param>
         /// <param name="minDiff">Required difference between numbers in original array</param>
+        /// /// <param name="iterations">How many times will the whole sequence be re-arranged (due to fix the mistakes in previous iteration)</param>
         public static void NormalizeA(ref double[] arr, double minDiff, int iterations)
         {
             bool finished = true;
             int firstInd = 0;
             int secondInd = 1;
+
+            //Idea: Find the longest sequence of numbers which are too close, and rearrange them
             while (secondInd < arr.Length)
             {
                 double differ = arr[secondInd] - arr[firstInd];
@@ -184,11 +181,22 @@ namespace Grafikon_Busy
             }
             return;
         }
-        public static double[] Normalize(int[] arr, double minDiff)
+        /// <summary>
+        /// Scales the array, so the last element is equal to maximumDistance, and also enforces minimal difference between the elements
+        /// </summary>
+        /// <param name="arr">Array to scale</param>
+        /// <param name="minDiff">Minimum difference between adjanced elements</param>
+        /// <param name="maximumDistance">What will the maximum element (last) be scaled to; set 0 to disable scaling</param>
+        /// <returns>Rescaled array</returns>
+        public static double[] Normalize(int[] arr, double minDiff, int maximumDistance)
         {
             double[] result = new double[arr.Length];
             List<double> tempResultList = new List<double>();
             List<int> tempIdx = new List<int>();
+
+            int normalizingRatio = 1;
+            if(maximumDistance > 0)
+                normalizingRatio = maximumDistance / arr[arr.Length - 1];
             for (int i = 0; i < arr.Length; ++i)
             {
                 result[i] = (double)(arr[i]);
@@ -199,19 +207,23 @@ namespace Grafikon_Busy
                 }
             }
             var tempResult = tempResultList.ToArray();
-            NormalizeA(ref tempResult, minDiff, 0);
-            /*for(int spread = 1; spread < tempResult.Length; ++spread)
-            {
-                for(int starting = 0; starting + spread < tempResult.Length; ++starting)
-                {
-                    NormalizeX(ref tempResult, starting, starting + spread, minDiff);
-                }
-            }*/
-            for(int i = 0; i + 1 < tempResult.Length; ++i)
+
+            //As the "real" distance between stops is irrelevant, the unscaled numbers are not saved anywhere
+            NormalizeA(ref tempResult, minDiff/normalizingRatio, 0);
+            //Return the distances to their original size; they will be rescaled once it's time
+            for (int i = 0; i + 1 < tempResult.Length; ++i)
             {
                 if(tempResult[i] < 0)
                     tempResult[i] = 0;
-                tempResult[i + 1] = Math.Max(tempResult[i] + minDiff, tempResult[i + 1]);
+
+                //If the distances could not be spread properly, shift the distances of following stops by the difference
+                tempResult[i + 1] = Math.Max(tempResult[i] + minDiff/normalizingRatio, tempResult[i + 1]);
+            }
+            //The normalization is done at the end - so if the last element gets pushed away, it needs to get fixed
+            if(normalizingRatio!=1)
+            for(int i = 0; i < tempResult.Length; ++i)
+            {
+                tempResult[i] *= normalizingRatio;
             }
 
 

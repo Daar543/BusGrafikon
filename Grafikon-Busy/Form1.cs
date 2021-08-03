@@ -33,6 +33,9 @@ namespace Grafikon_Busy
         Stop[][] StopsDistsB;
         static char[] SignSeparators = new char[] {' '};
         const int directionsCount = 2;
+        const float distanceSpread = 1f; //The extra range between individual Y-labels (stop names) need on chart
+        const float labelRange = distanceSpread / 2 - 0.001f; //Distance from the Y-label's center and edge;
+        const int maxDistance = 0; //How will the distances be rescaled
         static readonly int DayTypeCount = Enum.GetNames(typeof(DayType)).Length;
         IReadOnlyList<CheckBox> CheckBoxesFront { get; }
         IReadOnlyList<CheckBox> CheckBoxesBack { get; }
@@ -70,14 +73,17 @@ namespace Grafikon_Busy
             Chart.AxisX.Minimum = 0 * 60;
             Chart.AxisX.Maximum = 24 * 60;
 
+            //Chart.AxisY.Minimum = 0;
+            //Chart.AxisY.Maximum = maxDistance+distanceSpread;
+
             Chart.AxisX.Interval = 60;
 
             for (int i = (int)Chart.AxisX.Minimum / 60; i < (int)Chart.AxisX.Maximum / 60; i += 1)
             {
                 Chart.AxisX.CustomLabels.Add(new CustomLabel()
                 {
-                    FromPosition = (i - 0.5) * 60,
-                    ToPosition = (i + 0.5) * 60,
+                    FromPosition = (i - 0.5f) * 60,
+                    ToPosition = (i + 0.5f) * 60,
                     Text = i.ToString(),
                 });
             }
@@ -90,11 +96,11 @@ namespace Grafikon_Busy
             Chart.AxisY.CustomLabels.Clear();
         }
         /// <summary>
-        /// 
+        /// Draws the graphicon based on all enabled settings (there should be no error, if the setting is enabled)
         /// </summary>
-        /// <param name="conns"></param>
-        /// <param name="stoplist"></param>
-        /// <param name="stopDists"></param>
+        /// <param name="conns">Collection of connections for a particular line</param>
+        /// <param name="stoplist">Names of all stops, as they are in the timetable</param>
+        /// <param name="stopDists">List of tariff distances for each stops</param>
         /// <param name="priorityDir"></param>
         private void RenderGraphicon(IEnumerable<ConnectionGroup> conns, string[] stoplist, Stop[] stopDists, bool priorityDir)
         {
@@ -102,20 +108,25 @@ namespace Grafikon_Busy
             ClearGraphicon();
 
             var Chart = BusChart.ChartAreas[0];
+
+            //If there are no distances, then spread them by 1
             if (stopDists is null)
             {
+                Chart.AxisY.Minimum = 0;
+                Chart.AxisY.Maximum = stoplist.Length+labelRange;
+
                 Chart.AxisY.CustomLabels.Add(new CustomLabel
                 {
                     FromPosition = 0,
-                    ToPosition = 0.25,
+                    ToPosition = labelRange,
                     Text = stoplist[0],
                 });
                 for (int i = 1; i < stoplist.Length; ++i)
                 {
                     Chart.AxisY.CustomLabels.Add(new CustomLabel
                     {
-                        FromPosition = i - 0.25,
-                        ToPosition = i + 0.25,
+                        FromPosition = i - labelRange,
+                        ToPosition = i + labelRange,
                         Text = stoplist[i],
                     });
                 }
@@ -123,18 +134,21 @@ namespace Grafikon_Busy
             }
             else
             {
+                Chart.AxisY.Minimum = 0;
+                Chart.AxisY.Maximum = stopDists[stopDists.Length - 1].Distance;
+                double normalizingRatio = 1;// maxDistance/ stopDists[stopDists.Length - 1].Distance;
                 Chart.AxisY.CustomLabels.Add(new CustomLabel
                 {
-                    FromPosition = stopDists[0].Distance - 0.25,
-                    ToPosition = stopDists[0].Distance + 0.25,
+                    FromPosition = Math.Max(stopDists[0].Distance * normalizingRatio - labelRange,0),
+                    ToPosition = stopDists[0].Distance * normalizingRatio + labelRange,
                     Text = stoplist[stopDists[0].Order],
                 });
                 for (int i = 1; i < stopDists.Length - 1; ++i)
                 {
                     Chart.AxisY.CustomLabels.Add(new CustomLabel
                     {
-                        FromPosition = stopDists[i].Distance - 0.25,
-                        ToPosition = stopDists[i].Distance + 0.25,
+                        FromPosition = stopDists[i].Distance * normalizingRatio - labelRange,
+                        ToPosition = Math.Min(stopDists[i].Distance * normalizingRatio + labelRange, maxDistance),
                         Text = stoplist[stopDists[i].Order],
                     });
                 }
@@ -142,8 +156,8 @@ namespace Grafikon_Busy
                 {
                     Chart.AxisY.CustomLabels.Add(new CustomLabel
                     {
-                        FromPosition = stopDists[stopDists.Length - 1].Distance - 0.25,
-                        ToPosition = stopDists[stopDists.Length - 1].Distance + 0.25,
+                        FromPosition = stopDists[stopDists.Length - 1].Distance * normalizingRatio - labelRange,
+                        ToPosition = Math.Min(stopDists[stopDists.Length - 1].Distance * normalizingRatio + labelRange,maxDistance),
                         Text = stoplist[stopDists[stopDists.Length - 1].Order],
                     });
                 }
@@ -160,18 +174,20 @@ namespace Grafikon_Busy
             {
                 BusChart.Series["Spoj 3"].Points.AddXY(6*60+connections[i],i);
             }*/
+            
             foreach (ConnectionGroup group in conns)
             {
+                //Skip the disabled days
                 if (group is null || !group.Enabled)
                     continue;
-                List<Series> newS = MakeSeriesForTable(group, stopDists, priorityDir);
+                List<Series> newS = MakeStopSeriesForTable(group, stopDists, priorityDir);
                 foreach (Series s in newS)
                     BusChart.Series.Add(s);
             }
         }
 
 
-        private List<Series> MakeSeriesForTable(ConnectionGroup CG, Stop[] zst, bool priorityDir)
+        private List<Series> MakeStopSeriesForTable(ConnectionGroup CG, Stop[] zst, bool priorityDir)
         {
             List<Series> Ser = new List<Series>();
             foreach (var connName in CG.Connections.Keys)
@@ -410,6 +426,8 @@ namespace Grafikon_Busy
 
             }
             color = TableColoring[(int)day, (int)direction];
+
+            //Make connections from the selected table
             if (!ChosenTimeTable.CreateStopsAndConnections(tempTable,
                 out string[] analyzedStops, out Dictionary<string, string[]> analyzedConnections
                 ))
@@ -620,7 +638,7 @@ namespace Grafikon_Busy
                 return;
             }
 
-            if (!TimeTableF.ExtractKilometragesFromTable(kilometrage, 0.5, false, out Stop[][] Zastavky))
+            if (!TimeTableF.ExtractKilometragesFromTable(kilometrage, distanceSpread,maxDistance, false, out Stop[][] Zastavky))
             {
                 MessageBox.Show("Vzdálenosti nešlo dobře najít", "Chybný vstup", MessageBoxButtons.OK);
                 return;
@@ -641,7 +659,7 @@ namespace Grafikon_Busy
                 return;
             }
 
-            if (!TimeTableB.ExtractKilometragesFromTable(kilometrage, 0.5, true, out Stop[][] Zastavky))
+            if (!TimeTableB.ExtractKilometragesFromTable(kilometrage, distanceSpread, 100,true, out Stop[][] Zastavky))
             {
                 MessageBox.Show("Vzdálenosti nešlo dobře najít", "Chybný vstup", MessageBoxButtons.OK);
                 return;

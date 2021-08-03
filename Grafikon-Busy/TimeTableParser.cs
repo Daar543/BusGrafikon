@@ -118,7 +118,7 @@ namespace Grafikon_Busy
             }
             kms = new string[AllowedRows.Count][];
 
-            if (AllowedRows.Count == 0)
+            if (AllowedRows.Count <= 1)
             {
                 return false;
             }
@@ -136,13 +136,15 @@ namespace Grafikon_Busy
         /// 
         /// </summary>
         /// <param name="table">Reduced timetable - only kilometrages and stop names </param>
-        /// <param name="normalizingDistance">By how much should stops with same kilometrage differ</param>
+        /// <param name="spreadDistance">By how much should stops with same kilometrage differ</param>
         /// <param name="mirror">If true, the distances will be calculated as complement to the max distance</param>
         /// <param name="toursNorm">Output with normalized distances from stops (1 tour = 1 inner array)</param>
         /// <returns></returns>
-        public bool ExtractKilometragesFromTable(string[][]table, double normalizingDistance, bool mirror, out Stop[][]toursNorm)
+        public bool ExtractKilometragesFromTable(string[][]table, double spreadDistance, int maximumDistance, bool mirror, out Stop[][]toursNorm)
         {
             int[][] tours = new int[table.Length - 1][];
+
+            //Determine how many rows need to be scanned
             int len = table[0].Length;
             int diff = 0;
             int i = 0;
@@ -172,11 +174,11 @@ namespace Grafikon_Busy
             toursNorm = new Stop[tours.Length][];
             if (len == 0)
                 return false;
+
+
             for (int j = 0; j < tours.Length; ++j)
             {
-                
-                    
-                double[] toursNormA = ArrayCalculations.Normalize(tours[j], normalizingDistance);
+                double[] toursNormA = ArrayCalculations.Normalize(tours[j], spreadDistance, maximumDistance);
                 if (mirror)
                     toursNormA.MirrorPositives();
                 var zst = new List<Stop>();
@@ -224,10 +226,17 @@ namespace Grafikon_Busy
             }
 
         }
+        /// <summary>
+        /// Scans through the timetable, checking only for working days w/o holiday positive signs
+        /// </summary>
+        /// <returns></returns>
         public string[][] CreateWorkdayTable()
         {
             if (ReducedTable == null)
+            {
                 ReducedTable = this.Cutout();
+            }
+                
 
             List<int> AllowedRows = new List<int>();
             AllowedRows.Add(1); //Second row contains stops
@@ -255,6 +264,7 @@ namespace Grafikon_Busy
                 if (allowed)
                     AllowedRows.Add(i);
             }
+            //Copy content from the selected rows to the new table
             string[][] newTable = new string[AllowedRows.Count][];
             int j = 0;
             foreach (int row in AllowedRows)
