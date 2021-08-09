@@ -128,8 +128,12 @@ namespace Grafikon_Busy
             var Chart = BusChart.ChartAreas[0];
             double lineWidth = PointMarkSize / 200d;
 
+            //Do not measure distance in these cases
+            if (dm == DistanceMode.Neither || rm == RenderMode.Both)
+                stopDists = null;
+
             //If there are no distances, then spread them by 1
-            if (dm==DistanceMode.Neither)
+            if (stopDists is null)
             {
                 Chart.AxisY.Minimum = 0;
                 Chart.AxisY.Maximum = stoplist.Length + labelRange;
@@ -195,8 +199,6 @@ namespace Grafikon_Busy
 
 
             BusChart.Series.Clear();
-
-            
             foreach (ConnectionGroup group in conns)
             {
                 //Skip the disabled days
@@ -208,7 +210,7 @@ namespace Grafikon_Busy
             }
         }
 
-
+        
         private List<Series> MakeStopSeriesForTable(ConnectionGroup CG, Stop[] zst)
         {
             List<Series> Ser = new List<Series>();
@@ -266,14 +268,13 @@ namespace Grafikon_Busy
         }
         private void AddConnection(Series s, string[] connectionTimes, Stop[] stops, bool forward)
         {
-            int first = int.MaxValue;
-            int last = 0;
             //forward = true;
-            foreach (var Z in stops)
+            for(int i = 0; i<stops.Length;++i) 
             {
-                int indx = /*forward ? Z.Order : connectionTimes.Length - 1 - */Z.Order;
-                double dist = forward ? Z.Distance : stops[stops.Length - 1].Distance - Z.Distance;
-                string checkedTime = connectionTimes[indx];
+                int j = forward ? i : stops.Length - 1 - i;
+                Stop Z = stops[j];
+                double dist = forward? Z.Distance : stops[stops.Length-1].Distance-Z.Distance;
+                string checkedTime = connectionTimes[Z.Order];
                 if (checkedTime == "|" || checkedTime == "")
                 {
                     continue; //stops is passed through, has no impact on kilometrage
@@ -315,6 +316,7 @@ namespace Grafikon_Busy
             {
                 string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadExcelInput(line, '\t'));
                 TimeTableF = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
+                btnLoadDistsF.Enabled = true;
             }
             catch (FileNotFoundException)
             {
@@ -324,6 +326,7 @@ namespace Grafikon_Busy
                     string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadExcelInput(line, '\t'));
                     TimeTableF = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
                     textBoxLine.Text = line; //Updates the text so exception has not to be catched again
+                    btnLoadDistsF.Enabled = true;
                 }
                 catch (FileNotFoundException)
                 {
@@ -342,6 +345,7 @@ namespace Grafikon_Busy
             {
                 string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadExcelInput(line, '\t'));
                 TimeTableB = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
+                btnLoadDistsB.Enabled = true;
             }
             catch (FileNotFoundException)
             {
@@ -351,6 +355,7 @@ namespace Grafikon_Busy
                     string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadExcelInput(line, '\t'));
                     TimeTableB = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
                     textBoxLine.Text = line; //Updates the text so exception has not to be catched again
+                    btnLoadDistsB.Enabled = true;
                 }
                 catch (FileNotFoundException)
                 {
@@ -603,7 +608,7 @@ namespace Grafikon_Busy
                     }
                     else
                     {
-                        RenderGraphicon(TableFront.Concat(TableBack), StopsB, StopsDistsB[slidToursB.Value], RenderMode.Both, DistanceMode.Back);
+                        RenderGraphicon(TableFront.Concat(TableBack), StopsF, StopsDistsB[slidToursB.Value], RenderMode.Both, DistanceMode.Back);
                     }
                 }
             }
@@ -655,7 +660,7 @@ namespace Grafikon_Busy
             slidToursB.Enabled = true;
             return;
         }
-        private void slidZoom_Scroll(object sender, EventArgs e)
+        private void slidSpacing_Scroll(object sender, EventArgs e)
         {
 
         }
@@ -664,6 +669,11 @@ namespace Grafikon_Busy
         private void BusChart_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            BusChart.Printing.Print(true);
         }
     }
 }
