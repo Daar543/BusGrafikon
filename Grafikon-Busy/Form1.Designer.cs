@@ -106,10 +106,10 @@
             // btnChooseLine
             // 
             this.btnChooseLine.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnChooseLine.Location = new System.Drawing.Point(427, 9);
+            this.btnChooseLine.Location = new System.Drawing.Point(388, 4);
             this.btnChooseLine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnChooseLine.Name = "btnChooseLine";
-            this.btnChooseLine.Size = new System.Drawing.Size(112, 59);
+            this.btnChooseLine.Size = new System.Drawing.Size(149, 59);
             this.btnChooseLine.TabIndex = 2;
             this.btnChooseLine.Text = "Vyber linku";
             this.btnChooseLine.UseVisualStyleBackColor = true;
@@ -118,10 +118,10 @@
             // textBoxLine
             // 
             this.textBoxLine.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.textBoxLine.Location = new System.Drawing.Point(427, 73);
+            this.textBoxLine.Location = new System.Drawing.Point(388, 73);
             this.textBoxLine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxLine.Name = "textBoxLine";
-            this.textBoxLine.Size = new System.Drawing.Size(112, 22);
+            this.textBoxLine.Size = new System.Drawing.Size(151, 22);
             this.textBoxLine.TabIndex = 3;
             this.textBoxLine.Text = "JR/Text/802365-T.txt";
             this.textBoxLine.TextChanged += new System.EventHandler(this.textBoxLine_TextChanged);
@@ -425,7 +425,7 @@
             this.btnChooseBackLine.Location = new System.Drawing.Point(3, 4);
             this.btnChooseBackLine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnChooseBackLine.Name = "btnChooseBackLine";
-            this.btnChooseBackLine.Size = new System.Drawing.Size(112, 59);
+            this.btnChooseBackLine.Size = new System.Drawing.Size(149, 59);
             this.btnChooseBackLine.TabIndex = 15;
             this.btnChooseBackLine.Text = "Vyber linku (protisměr)";
             this.btnChooseBackLine.UseVisualStyleBackColor = true;
@@ -437,7 +437,7 @@
             this.textBoxLineBack.Location = new System.Drawing.Point(3, 69);
             this.textBoxLineBack.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxLineBack.Name = "textBoxLineBack";
-            this.textBoxLineBack.Size = new System.Drawing.Size(112, 22);
+            this.textBoxLineBack.Size = new System.Drawing.Size(149, 22);
             this.textBoxLineBack.TabIndex = 16;
             this.textBoxLineBack.Text = "JR/Text/802365-Z.txt";
             // 
@@ -459,7 +459,7 @@
             this.btnSchoolHolidayBack.Location = new System.Drawing.Point(3, 161);
             this.btnSchoolHolidayBack.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSchoolHolidayBack.Name = "btnSchoolHolidayBack";
-            this.btnSchoolHolidayBack.Size = new System.Drawing.Size(112, 58);
+            this.btnSchoolHolidayBack.Size = new System.Drawing.Size(113, 58);
             this.btnSchoolHolidayBack.TabIndex = 20;
             this.btnSchoolHolidayBack.Text = "Načti školní prázdniny";
             this.btnSchoolHolidayBack.UseVisualStyleBackColor = true;
@@ -483,7 +483,7 @@
             this.btnWorkdayBack.Location = new System.Drawing.Point(3, 97);
             this.btnWorkdayBack.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnWorkdayBack.Name = "btnWorkdayBack";
-            this.btnWorkdayBack.Size = new System.Drawing.Size(112, 58);
+            this.btnWorkdayBack.Size = new System.Drawing.Size(113, 58);
             this.btnWorkdayBack.TabIndex = 17;
             this.btnWorkdayBack.Text = "Načti pracovní dny";
             this.btnWorkdayBack.UseVisualStyleBackColor = true;
@@ -493,7 +493,7 @@
             // 
             this.textboxInfoHoliday.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.textboxInfoHoliday.Enabled = false;
-            this.textboxInfoHoliday.Location = new System.Drawing.Point(304, 4);
+            this.textboxInfoHoliday.Location = new System.Drawing.Point(210, 4);
             this.textboxInfoHoliday.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textboxInfoHoliday.Multiline = true;
             this.textboxInfoHoliday.Name = "textboxInfoHoliday";
@@ -504,7 +504,7 @@
             // holidayNegativ
             // 
             this.holidayNegativ.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.holidayNegativ.Location = new System.Drawing.Point(361, 172);
+            this.holidayNegativ.Location = new System.Drawing.Point(210, 167);
             this.holidayNegativ.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.holidayNegativ.Multiline = true;
             this.holidayNegativ.Name = "holidayNegativ";
@@ -517,7 +517,7 @@
             // 
             this.holidayPositive.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.holidayPositive.Location = new System.Drawing.Point(361, 118);
+            this.holidayPositive.Location = new System.Drawing.Point(210, 115);
             this.holidayPositive.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.holidayPositive.Multiline = true;
             this.holidayPositive.Name = "holidayPositive";
