@@ -25,16 +25,15 @@ namespace Grafikon_Busy
             CheckBoxesFront = new List<CheckBox>() { chbWorkday, chbSchoolHoliday, chbSaturday, chbSunday, chbToursF }.AsReadOnly();
             CheckBoxesBack = new List<CheckBox>() { chbWorkdayBack, chbSchoolHolidayBack, chbSaturdayBack, chbSundayBack, chbToursB }.AsReadOnly();
         }
-        bool Detection = false; //True version not working yet
 
         string[] StopsF;
         string[] StopsB;
         Stop[][] StopsDistsF;
         Stop[][] StopsDistsB;
-        static char[] SignSeparators = new char[] {' '};
+        static char[] SignSeparators = new char[] { ' ' };
         const int directionsCount = 2;
-        const float distanceSpread = 1f; //The extra range between individual Y-labels (stop names) need on chart
-        const float labelRange = distanceSpread / 2 - 0.001f; //Distance from the Y-label's center and edge;
+        float distanceSpread => (float)nudStopDist.Value; //The extra range between individual Y-labels (stop names) need on chart
+        float labelRange => this.distanceSpread / 2 - 0.001f; //Distance from the Y-label's center and edge;
         const int maxDistance = 0; //How will the distances be rescaled
         const int PointMarkSize = 7;
         static readonly int DayTypeCount = Enum.GetNames(typeof(DayType)).Length;
@@ -108,7 +107,7 @@ namespace Grafikon_Busy
             Chart.AxisX.MajorGrid.Enabled = false;
             Chart.AxisY.MajorGrid.Enabled = false;
 
-            
+
 
             Chart.AxisY.CustomLabels.Clear();
             Chart.AxisY.StripLines.Clear();
@@ -126,7 +125,7 @@ namespace Grafikon_Busy
             ClearGraphicon();
 
             var Chart = BusChart.ChartAreas[0];
-            double lineWidth = PointMarkSize / 200d;
+            
 
             //Do not measure distance in these cases
             if (dm == DistanceMode.Neither || rm == RenderMode.Both)
@@ -137,6 +136,9 @@ namespace Grafikon_Busy
             {
                 Chart.AxisY.Minimum = 0;
                 Chart.AxisY.Maximum = stoplist.Length + labelRange;
+                double lineWidth = PointMarkSize*Chart.AxisY.Maximum / 1600d; 
+                //At smaller charts, the stripline normally gets thicker;
+                //therefore, here I multiply it by the size of chart
 
                 Chart.AxisY.CustomLabels.Add(new CustomLabel
                 {
@@ -168,10 +170,11 @@ namespace Grafikon_Busy
                 var maxDistance = stopDists[stopDists.Length - 1].Distance;
                 Chart.AxisY.Minimum = 0;
                 Chart.AxisY.Maximum = maxDistance;
+                double lineWidth = PointMarkSize * Chart.AxisY.Maximum / 3200d;
 
                 Stop sd;
                 double distance;
-                int order; 
+                int order;
 
                 for (int i = 0; i < stopDists.Length; ++i)
                 {
@@ -186,7 +189,7 @@ namespace Grafikon_Busy
                         FromPosition = distance - labelRange,
                         ToPosition = distance + labelRange,
                         Text = $"({distance:f0}) {stoplist[order]}"
-                    }); 
+                    });
                     Chart.AxisY.StripLines.Add(new StripLine
                     {
                         Interval = 0,
@@ -210,7 +213,7 @@ namespace Grafikon_Busy
             }
         }
 
-        
+
         private List<Series> MakeStopSeriesForTable(ConnectionGroup CG, Stop[] zst)
         {
             List<Series> Ser = new List<Series>();
@@ -226,7 +229,7 @@ namespace Grafikon_Busy
                     MarkerStyle = MarkerStyle.Circle,
                     MarkerSize = PointMarkSize
                 };
-                
+
                 if (zst is null)
                 {
                     AddConnection(Sx, CG.Connections[connName], CG.Direction);
@@ -269,11 +272,11 @@ namespace Grafikon_Busy
         private void AddConnection(Series s, string[] connectionTimes, Stop[] stops, bool forward)
         {
             //forward = true;
-            for(int i = 0; i<stops.Length;++i) 
+            for (int i = 0; i < stops.Length; ++i)
             {
                 int j = forward ? i : stops.Length - 1 - i;
                 Stop Z = stops[j];
-                double dist = forward? Z.Distance : stops[stops.Length-1].Distance-Z.Distance;
+                double dist = forward ? Z.Distance : stops[stops.Length - 1].Distance - Z.Distance;
                 string checkedTime = connectionTimes[Z.Order];
                 if (checkedTime == "|" || checkedTime == "")
                 {
@@ -560,11 +563,11 @@ namespace Grafikon_Busy
             }
             if (chbToursF.Checked)
             {
-                RenderGraphicon(TableFront, StopsF, StopsDistsF[slidToursF.Value], RenderMode.Front,DistanceMode.Front);
+                RenderGraphicon(TableFront, StopsF, StopsDistsF[slidToursF.Value], RenderMode.Front, DistanceMode.Front);
             }
             else
             {
-                RenderGraphicon(TableFront, StopsF, null, RenderMode.Front,DistanceMode.Neither);
+                RenderGraphicon(TableFront, StopsF, null, RenderMode.Front, DistanceMode.Neither);
             }
 
         }
@@ -578,7 +581,7 @@ namespace Grafikon_Busy
             }
             if (chbToursB.Checked)
             {
-                RenderGraphicon(TableBack, StopsB, StopsDistsB[slidToursB.Value], RenderMode.Back,DistanceMode.Back);
+                RenderGraphicon(TableBack, StopsB, StopsDistsB[slidToursB.Value], RenderMode.Back, DistanceMode.Back);
             }
             else
             {
@@ -598,7 +601,7 @@ namespace Grafikon_Busy
             {
                 if (chbToursF.Checked == chbToursB.Checked) //Both distances are checked or unchecked, so no distance measured
                 {
-                    RenderGraphicon(TableFront.Concat(TableBack), StopsF, null, RenderMode.Both,DistanceMode.Neither);
+                    RenderGraphicon(TableFront.Concat(TableBack), StopsF, null, RenderMode.Both, DistanceMode.Neither);
                 }
                 else
                 {
@@ -628,7 +631,7 @@ namespace Grafikon_Busy
                 return;
             }
 
-            if (!TimeTableF.ExtractKilometragesFromTable(kilometrage, distanceSpread,maxDistance, false, out Stop[][] Zastavky))
+            if (!TimeTableF.ExtractKilometragesFromTable(kilometrage, distanceSpread, maxDistance, false, out Stop[][] Zastavky))
             {
                 MessageBox.Show("Vzdálenosti nešlo dobře najít", "Chybný vstup", MessageBoxButtons.OK);
                 return;
@@ -659,16 +662,6 @@ namespace Grafikon_Busy
             slidToursB.Maximum = StopsDistsB.Length - 1;
             slidToursB.Enabled = true;
             return;
-        }
-        private void slidSpacing_Scroll(object sender, EventArgs e)
-        {
-
-        }
-
-
-        private void BusChart_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void btnExport_Click(object sender, EventArgs e)

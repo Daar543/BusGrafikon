@@ -44,6 +44,10 @@
             this.chbSunday = new System.Windows.Forms.CheckBox();
             this.chbSchoolHoliday = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.nudStopDist = new System.Windows.Forms.NumericUpDown();
+            this.btnExport = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.slidZoom = new System.Windows.Forms.TrackBar();
             this.chbToursF = new System.Windows.Forms.CheckBox();
             this.chbToursB = new System.Windows.Forms.CheckBox();
@@ -66,10 +70,9 @@
             this.textboxInfoHoliday = new System.Windows.Forms.TextBox();
             this.holidayNegativ = new System.Windows.Forms.TextBox();
             this.holidayPositive = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.btnExport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.BusChart)).BeginInit();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudStopDist)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slidZoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slidToursB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slidToursF)).BeginInit();
@@ -91,7 +94,6 @@
             this.BusChart.Size = new System.Drawing.Size(539, 528);
             this.BusChart.TabIndex = 0;
             this.BusChart.Text = "BusChart";
-            this.BusChart.Click += new System.EventHandler(this.BusChart_Click);
             // 
             // btnRenderBoth
             // 
@@ -232,6 +234,8 @@
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.nudStopDist);
             this.panel2.Controls.Add(this.btnExport);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.slidZoom);
@@ -273,9 +277,61 @@
             this.panel2.Size = new System.Drawing.Size(541, 526);
             this.panel2.TabIndex = 14;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(120, 337);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(135, 17);
+            this.label2.TabIndex = 37;
+            this.label2.Text = "Rozestup mezi zast.";
+            // 
+            // nudStopDist
+            // 
+            this.nudStopDist.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.nudStopDist.DecimalPlaces = 1;
+            this.nudStopDist.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.nudStopDist.Location = new System.Drawing.Point(123, 358);
+            this.nudStopDist.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.nudStopDist.Name = "nudStopDist";
+            this.nudStopDist.Size = new System.Drawing.Size(120, 22);
+            this.nudStopDist.TabIndex = 36;
+            this.nudStopDist.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            // 
+            // btnExport
+            // 
+            this.btnExport.Location = new System.Drawing.Point(203, 430);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(123, 36);
+            this.btnExport.TabIndex = 35;
+            this.btnExport.Text = "Export jako PDF";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(252, 337);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(143, 17);
+            this.label1.TabIndex = 34;
+            this.label1.Text = "Změna velikosti grafu";
+            // 
             // slidZoom
             // 
-            this.slidZoom.Location = new System.Drawing.Point(187, 386);
+            this.slidZoom.Location = new System.Drawing.Point(242, 358);
             this.slidZoom.Margin = new System.Windows.Forms.Padding(4);
             this.slidZoom.Maximum = 50;
             this.slidZoom.Minimum = 1;
@@ -283,7 +339,6 @@
             this.slidZoom.Size = new System.Drawing.Size(139, 56);
             this.slidZoom.TabIndex = 33;
             this.slidZoom.Value = 1;
-            this.slidZoom.Scroll += new System.EventHandler(this.slidSpacing_Scroll);
             // 
             // chbToursF
             // 
@@ -536,25 +591,6 @@
             this.holidayPositive.Text = "18 19";
             this.holidayPositive.TextChanged += new System.EventHandler(this.holidayPositive_TextChanged);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(200, 365);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(143, 17);
-            this.label1.TabIndex = 34;
-            this.label1.Text = "Změna velikosti grafu";
-            // 
-            // btnExport
-            // 
-            this.btnExport.Location = new System.Drawing.Point(203, 418);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(123, 36);
-            this.btnExport.TabIndex = 35;
-            this.btnExport.Text = "Export jako PDF";
-            this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -570,6 +606,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.BusChart)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudStopDist)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.slidZoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.slidToursB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.slidToursF)).EndInit();
@@ -616,6 +653,8 @@
         private System.Windows.Forms.TrackBar slidZoom;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown nudStopDist;
     }
 }
 
