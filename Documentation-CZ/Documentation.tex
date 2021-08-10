@@ -15,13 +15,19 @@ Jízdní řády, které tato aplikace zpracovává, je nutno předložit jako so
 \item Na stránce portal.radekpapez.cz najděte vybranou (autobusovou) linku.
 \item Vyberte možnost `Stáhnout jako xlxs` a daný soubor otevřete v programu jako např. Microsoft Excel.
 \item Vyberte buňky tak, aby byl vybrán alespoň sloupeček s tarifními čísly (vč. označení `Tč`), názvy zastávek, kilometrickými údaji a jednotlivými spoji včetně záhlaví.
-\item Je možno bez problémů vybrat celou tabulku - nadbytečné údaje jsou ignorovány. Nicméně tabulka by měla mít obdélníkový tvar.  \includegraphics{tabulka.png}
+\item Je možno bez problémů vybrat celou tabulku - nadbytečné údaje jsou ignorovány. Nicméně tabulka by měla mít obdélníkový tvar. 
+
+\begin{center}
+\includegraphics[width=0.5\textwidth]{tabulka.png}
+\end{center}
+
+
 \item Tabulku zkopírujte do textového souboru - bude tedy vypadat jako CSV s tabulátory místo čárek.
 \item Stejným způsobem si můžete upravit nebo vyrobit svůj vlastní jízdní řád.
 \item Vybrané textové soubory pak zkopírujte do místa, kde leží vaše aplikace - budete se na ně odkazovat pomocí relativních cest.
 \end{enumerate}
 
-\subsection Používání aplikace
+\subsection{Používání aplikace}
 
 \begin{enumerate}
 \item Spuštění 
@@ -55,7 +61,7 @@ Použitím tlačítka pro načtení vzdáleností načtete vzdálenosti pro růz
 Jelikož se u zastávek jedná o tarifní (tzn. pro výpočet ceny) vzdálenost a ne skutečnou, bývají vzdálenosti zaokrouhleny na celé kilometry. To může vést k tomu, že více zastávek bude mít uvedeno stejnou vzdálenost. 
 Při vykreslování je však potřeba, aby zastávky mezi sebou měly nějaký rozestup, jinak by splývaly. Tento rozestup můžete změnit v poli označeném `Rozestup mezi zast.` Při opětovném načtení vzdáleností pak bude dodržován tento (změnený) rozestup.
 
-Pro ilustraci: Jsou-li vzdálenosti zastávek `0-3-3-3-5` a rozestup je 0,1, pak budou upravené vzdálenosti vypadat následovně: `0-2,9-3,3,1-5`. Ve výsledném grafikonu se ovšem zaokrouhlují na celá čísla, takže uvedené vzdálenosti budou `0-3-3-3-5`, jen bude změněna vzdálenost mezi body v grafu.
+Pro ilustraci: Jsou-li vzdálenosti zastávek `0 - 3 - 3 - 3 - 5` a rozestup je 0,1, pak budou upravené vzdálenosti vypadat následovně: `0 - 2,9 - 3 - 3,1 - 5`. Ve výsledném grafikonu se ovšem zaokrouhlují na celá čísla, takže uvedené vzdálenosti budou `0 - 3 - 3 - 3 - 5`, jen bude změněna vzdálenost mezi body v grafu.
 
 Po načtení tras je pak možno hýbat s posuvníkem, jehož rozsah hodnot závisí na počtu různých tras. Trasy se však budou vykreslovat pouze při zaškrtnutí příslušného čtverečku.
 
