@@ -1,0 +1,27 @@
+\documentclass[14pt]{article}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\begin{document}
+
+\begin{center}
+  \uppercase{Dokumentace k programu BusGrafikon}
+\end{center}
+
+\section{Uživatelská dokumentace}
+
+\subsection{Nutné soubory}
+Jízdní řády, které tato aplikace zpracovává, je nutno předložit jako soubory v poměrně specifickém formátu. Aktuální jízdní řády v tomto formátu můžete sehnat následujícím způsobem:
+\begin{enumerate}
+\item Na stránce portal.radekpapez.cz najděte vybranou (autobusovou) linku.
+\item Vyberte možnost `Stáhnout jako xlxs` a daný soubor otevřete v programu jako např. Microsoft Excel.
+\item Vyberte buňky tak, aby byl vybrán alespoň sloupeček s tarifními čísly (vč. označení `Tč`), názvy zastávek, kilometrickými údaji a jednotlivými spoji včetně záhlaví.
+\item Je možno bez problémů vybrat celou tabulku - nadbytečné údaje jsou ignorovány. Nicméně tabulka by měla mít obdélníkový tvar.  \includegraphics{tabulka.png}
+\item Tabulku zkopírujte do textového souboru - bude tedy vypadat jako CSV s tabulátory místo čárek.
+\item Stejným způsobem si můžete upravit nebo vyrobit svůj vlastní jízdní řád.
+\item Vybrané textové soubory pak zkopírujte do místa, kde leží vaše aplikace - budete se na ně odkazovat pomocí relativních cest.
+\end{enumerate}
+
+\section{Programátorská dokumentace}
+299a58fae0db7e4eb6eee94a8f9dcfac HO
+
+\end{document}
