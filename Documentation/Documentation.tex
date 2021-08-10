@@ -21,6 +21,76 @@ Jízdní řády, které tato aplikace zpracovává, je nutno předložit jako so
 \item Vybrané textové soubory pak zkopírujte do místa, kde leží vaše aplikace - budete se na ně odkazovat pomocí relativních cest.
 \end{enumerate}
 
+\subsection Používání aplikace
+
+\begin{enumerate}
+\item Spuštění 
+
+Aplikaci spustíte rozkliknutím .exe souboru. Zobrazí se jediné okno s aplikací (doporučuji maximalizovat).
+
+\item Výběr linky
+
+Do textového pole pod jedním z tlačítek `Vyber linku / Vyber linku (protisměr)`napiště relativní cestu k souboru s linkou (relativní oproti umístění aplikace) a stiskněte příslušné tlačítko. 
+Pokud daný soubor existuje a je ve správném formátu, linka by se měla načíst v pořádku a můžete pokračovat dále. Pokud máte soubor uložený jako `.txt` a zapomněli jste tuto příponu přidat, připíše se automaticky.
+Pokud načtení neproběhne správně, aplikace by se neměla rozbít - pouze vypíše chybu a můžete načítat znovu.
+Tlačítka pro protisměr nalevo fungují nezávisle na tlačítcích napravo - rozdíl je jen ve vypisování, popsáno dále.
+
+\item Načtení spojů
+
+Při stisknutí tlačítka pro načtení spojů pro určitý typ dne začne aplikace vyhledávat data v záhlaví spojů, a to zdali obsahují příslušnou značku. 
+Běžná praxe v Česku je označovat pracovní dny značkou `X`, soboty značkou `6` a neděle+svátky značkou `+`. 
+Tak tomu bývá alespoň u krajských či městských linek, pro které má grafikon největší smysl.
+
+Jinak jsou řešeny školní prázdniny. V celostátní databázi JŘ se totiž necharakterizují spoje jako `školní/prázdninové`, ale pouze negativní značkou, příp. se vyvěsí samostatný jízdní řád (např. PID).
+
+Z tohoto důvodu jsou v ovládacím oknu připravena dvě textová pole, kam můžete příslušné značky napsat (oddělené mezerou). Značky v dolním okně slouží pro uvedení spojů, které jezdí v běžné pracovní dny, ale ne o prázdninách.
+Naopak Značky v horním okně slouží pro uvedení spojů, které jedou pouze o prázdninách (tedy nikoli v `běžné` pracovní dny).
+
+Pokud jsou spoje načteny podle očekávání, odemknou se zaškrtávací políčka pro výběr spojů pro vykreslení (viz `Vykreslení`).
+
+\item Načtení vzdáleností (nepovinné)
+
+Použitím tlačítka pro načtení vzdáleností načtete vzdálenosti pro různé trasy spojů (vždy označené `km` v záhlaví), ovšem s malou odlišností oproti skutečnému souboru.
+
+Jelikož se u zastávek jedná o tarifní (tzn. pro výpočet ceny) vzdálenost a ne skutečnou, bývají vzdálenosti zaokrouhleny na celé kilometry. To může vést k tomu, že více zastávek bude mít uvedeno stejnou vzdálenost. 
+Při vykreslování je však potřeba, aby zastávky mezi sebou měly nějaký rozestup, jinak by splývaly. Tento rozestup můžete změnit v poli označeném `Rozestup mezi zast.` Při opětovném načtení vzdáleností pak bude dodržován tento (změnený) rozestup.
+
+Pro ilustraci: Jsou-li vzdálenosti zastávek `0-3-3-3-5` a rozestup je 0,1, pak budou upravené vzdálenosti vypadat následovně: `0-2,9-3,3,1-5`. Ve výsledném grafikonu se ovšem zaokrouhlují na celá čísla, takže uvedené vzdálenosti budou `0-3-3-3-5`, jen bude změněna vzdálenost mezi body v grafu.
+
+Po načtení tras je pak možno hýbat s posuvníkem, jehož rozsah hodnot závisí na počtu různých tras. Trasy se však budou vykreslovat pouze při zaškrtnutí příslušného čtverečku.
+
+\item Vykreslení grafu (jeden směr)
+
+Pro vykreslení grafu (grafikonu) je nutno zaškrtnout dny, které chceme vykreslit, v checkboxech (zaškrtávacích čtverečcích) `Pracovní dny / Školní prázdniny / Sobota / Neděle`. Chceme-li znát vzdálenosti pro určité trasy, zaškrtneme checkbox u tlačítka `Načíst vzdálenosti` a posuvník posuneme na příslušnou trasu 
+(o jakou trasu se konkrétně jedná, zjistíme až po vykreslení, nebo přečtení jízdního řádu).
+
+Pokud je vybraný některý den, pak se zobrazí graf, na jehož ose X jsou uvedeny hodiny a na ose Y jsou uvedeny zastávky. Není-li vybraná trasa, pak jsou uvedeny všechny zastávky v jízdním řádu s uniformními rozestupy. Pokud používáme pravá tlačítka, pak jsou uspořádány zdola nahoru (tedy opačně, než v jízdním řádu), v případě levých tlačítek jsou pak uspořádány shora dolů - zde může být název `protisměr` poněkud matoucí.
+
+V případě, že je vybraná trasa, pak jsou uvedeny pouze zastávky ležící na dané trase a nelevo od názvu zastávky je uvedena příslušná vzdálenost. Jak je uvedeno v sekci `Načtení vzdálenosti`, nemusí odpovídat tarifním ani reálným vzdálenostem - v případě malého rozestupu ovšem zpravidla budou odpovídat.
+
+Každý ze spojů je pak reprezentován jako lomená čára odpovídající barvy (spoje stejného typu dne mají stejnou barvu). Pokud spoje splývají (např. sobota+neděle), jedna barva věteinou nepřekrývá druhou úplně dokonale, což je spíš výhoda (dá se poznat, který spoj jede v sobotu i neděli, který pouze v sobotu, a který pouze v neděli). Spoje vykreslené pomocí pravého tlačítka tak představují rostoucí čáry, spoje vykreslené pomocí levého tlačítka představují klesající čáry.
+
+Zastávky jsou reprezentovány červenými body. Pokud spoj danou zastávku projíždí nebo jede jinudy, bod není vykreslen.
+
+ Poněkud komplikovanější situace nastává v případě, kdy je vybraná konkrétní trasa - vykreslují se totiž i spoje, které danou trasu přímo nenásledují, ale sdílí několik zastávek (byť i jedinou - pak jsou takové spoje zobrazeny jako samostatné body). Do budoucna plánuji připravit možnost vybrat výlučně spoje kopírující danou trasu.
+
+\item Vykreslení grafu (oba směry)
+
+Pokud do aplikace nahrajete jízdní řády obou směrů téže linky, pak je možno vykreslit oba najednou. Aby tato funkce fungovala, je potřeba, aby oba jízdní řády měly skutečně opačné směry zastávek. U běžných jízdních řádů je tato podmínka splněna automaticky, ovšem někdy se stává, že dvojice okružních linek má přímo protisměrné zastávky, je tedy možno použít i tyto dvojice JŘ.
+
+Tlačítko `Vykresli obě`pak ukáže grafy spojů v obou směrech najednou. Algoritmus vykreslování pro tuto možnost není bohužel optimální, takže vždy se vykreslí pouze verze bez udání vzdálenosti (tras).
+
+\item Zvětšení grafu
+
+Windowsí grafy disponují možnosti přiblížení. Horizontálním takžením přes část grafu získáte přiblížení na danou část. Pohybovat se pak můžete pomocí posuvníku pod osou X, případně se vrátit zpět pomocí tlačítka v levém dolním rohu.
+
+Pokud by toto nestačilo, je možno zvětšit celé okno pomocí posuvníku `Změna velikosti grafu`. Tato změna je ovšem poměrně radikální - na $n$-té pozici se velikost okna změní $n$-krát (tedy výška i šířka $\sqrt{n}$-krát) přií dalším vykreslení.
+
+\item Vytisknutí grafu
+
+Tlačítko `Export jako PDF` otevře dialogové okno s tisknutím - graf je tak možno uložit jako PDF nebo přímo vytisknout.
+\end{enumerate}
+
 \section{Programátorská dokumentace}
 299a58fae0db7e4eb6eee94a8f9dcfac HO
 
