@@ -72,9 +72,9 @@ Pro vykreslení grafu (grafikonu) je nutno zaškrtnout dny, které chceme vykres
 
 Pokud je vybraný některý den, pak se zobrazí graf, na jehož ose X jsou uvedeny hodiny a na ose Y jsou uvedeny zastávky. Není-li vybraná trasa, pak jsou uvedeny všechny zastávky v jízdním řádu s uniformními rozestupy. Pokud používáme pravá tlačítka, pak jsou uspořádány zdola nahoru (tedy opačně, než v jízdním řádu), v případě levých tlačítek jsou pak uspořádány shora dolů - zde může být název `protisměr` poněkud matoucí.
 
-V případě, že je vybraná trasa, pak jsou uvedeny pouze zastávky ležící na dané trase a nelevo od názvu zastávky je uvedena příslušná vzdálenost. Jak je uvedeno v sekci `Načtení vzdálenosti`, nemusí odpovídat tarifním ani reálným vzdálenostem - v případě malého rozestupu ovšem zpravidla budou odpovídat.
+V případě, že je vybraná trasa, pak jsou uvedeny pouze zastávky ležící na dané trase a nalevo od názvu zastávky je uvedena příslušná vzdálenost. Jak je uvedeno v sekci `Načtení vzdálenosti`, nemusí odpovídat tarifním ani reálným vzdálenostem - v případě malého rozestupu ovšem zpravidla budou odpovídat.
 
-Každý ze spojů je pak reprezentován jako lomená čára odpovídající barvy (spoje stejného typu dne mají stejnou barvu). Pokud spoje splývají (např. sobota+neděle), jedna barva věteinou nepřekrývá druhou úplně dokonale, což je spíš výhoda (dá se poznat, který spoj jede v sobotu i neděli, který pouze v sobotu, a který pouze v neděli). Spoje vykreslené pomocí pravého tlačítka tak představují rostoucí čáry, spoje vykreslené pomocí levého tlačítka představují klesající čáry.
+Každý ze spojů je pak reprezentován jako lomená čára odpovídající barvy (spoje stejného typu dne mají stejnou barvu). Pokud spoje splývají (např. sobota+neděle), jedna barva většinou nepřekrývá druhou úplně dokonale, což je spíš výhoda (dá se poznat, který spoj jede v sobotu i neděli, který pouze v sobotu, a který pouze v neděli). Spoje vykreslené pomocí pravého tlačítka tak představují rostoucí čáry, spoje vykreslené pomocí levého tlačítka představují klesající čáry.
 
 Zastávky jsou reprezentovány červenými body. Pokud spoj danou zastávku projíždí nebo jede jinudy, bod není vykreslen.
 
@@ -90,7 +90,7 @@ Tlačítko `Vykresli obě`pak ukáže grafy spojů v obou směrech najednou. Alg
 
 Windowsí grafy disponují možnosti přiblížení. Horizontálním takžením přes část grafu získáte přiblížení na danou část. Pohybovat se pak můžete pomocí posuvníku pod osou X, případně se vrátit zpět pomocí tlačítka v levém dolním rohu.
 
-Pokud by toto nestačilo, je možno zvětšit celé okno pomocí posuvníku `Změna velikosti grafu`. Tato změna je ovšem poměrně radikální - na $n$-té pozici se velikost okna změní $n$-krát (tedy výška i šířka $\sqrt{n}$-krát) přií dalším vykreslení.
+Pokud by toto nestačilo, je možno zvětšit celé okno pomocí posuvníku `Změna velikosti grafu`. Tato změna je ovšem poměrně radikální - na $n$-té pozici se velikost okna změní $n$-krát (tedy výška i šířka $\sqrt{n}$-krát) při dalším vykreslení.
 
 \item Vytisknutí grafu
 
@@ -282,7 +282,7 @@ Až zde se konvertují časové údaje na minutové údaje (což může být sla
 
 Zde se rozhoduje, jak je jízdní řád orientovaný (směrem nahoru nebo dolů) a podle toho se rozhoduje, v jaké výšce bude daný bod zaznamenán (tzn. jaké zastávce odpovídá). 
 
-Ukazuje se, že v případě obousměrného řádu s danými vzdálenostmi (trasami) toto rozhodování nestačí - tzn. není možno nastavit zastávky (funkce \textit{ClearGraphicon}) a body (\textit{funkce AddConnection}) aby bylo pokryto všech 7 případů.
+Ukazuje se, že v případě obousměrného řádu s danými vzdálenostmi (trasami) toto rozhodování nestačí - tzn. není možno nastavit zastávky (funkce \textit{ClearGraphicon}) a body (funkce \textit{AddConnection}) aby bylo pokryto všech 7 případů.
 
 Z tohoto důvodu nejsou 2 případy (vzdálenosti zpět + obousměrný / vzdálenosti vpřed + obousměrný) naimplementovány.
 
@@ -290,5 +290,6 @@ Z tohoto důvodu nejsou 2 případy (vzdálenosti zpět + obousměrný / vzdále
 
 \end{enumerate}
 
-- 
+\textit{František Mrkus, 2021}
+
 \end{document}
