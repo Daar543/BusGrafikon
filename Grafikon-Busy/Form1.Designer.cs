@@ -70,6 +70,7 @@
             this.textboxInfoHoliday = new System.Windows.Forms.TextBox();
             this.holidayNegativ = new System.Windows.Forms.TextBox();
             this.holidayPositive = new System.Windows.Forms.TextBox();
+            this.chbHourLine = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.BusChart)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudStopDist)).BeginInit();
@@ -127,8 +128,6 @@
             this.textBoxLine.Name = "textBoxLine";
             this.textBoxLine.Size = new System.Drawing.Size(151, 22);
             this.textBoxLine.TabIndex = 3;
-            this.textBoxLine.Text = "JR/Text/802365-T.txt";
-            this.textBoxLine.TextChanged += new System.EventHandler(this.textBoxLine_TextChanged);
             // 
             // btnWorkday
             // 
@@ -234,6 +233,7 @@
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.chbHourLine);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.nudStopDist);
             this.panel2.Controls.Add(this.btnExport);
@@ -504,7 +504,6 @@
             this.textBoxLineBack.Name = "textBoxLineBack";
             this.textBoxLineBack.Size = new System.Drawing.Size(149, 22);
             this.textBoxLineBack.TabIndex = 16;
-            this.textBoxLineBack.Text = "JR/Text/802365-Z.txt";
             // 
             // btnSundayBack
             // 
@@ -558,7 +557,7 @@
             // 
             this.textboxInfoHoliday.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.textboxInfoHoliday.Enabled = false;
-            this.textboxInfoHoliday.Location = new System.Drawing.Point(210, 4);
+            this.textboxInfoHoliday.Location = new System.Drawing.Point(158, 4);
             this.textboxInfoHoliday.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textboxInfoHoliday.Multiline = true;
             this.textboxInfoHoliday.Name = "textboxInfoHoliday";
@@ -569,7 +568,7 @@
             // holidayNegativ
             // 
             this.holidayNegativ.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.holidayNegativ.Location = new System.Drawing.Point(210, 167);
+            this.holidayNegativ.Location = new System.Drawing.Point(158, 167);
             this.holidayNegativ.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.holidayNegativ.Multiline = true;
             this.holidayNegativ.Name = "holidayNegativ";
@@ -582,7 +581,7 @@
             // 
             this.holidayPositive.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.holidayPositive.Location = new System.Drawing.Point(210, 115);
+            this.holidayPositive.Location = new System.Drawing.Point(158, 115);
             this.holidayPositive.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.holidayPositive.Multiline = true;
             this.holidayPositive.Name = "holidayPositive";
@@ -590,6 +589,16 @@
             this.holidayPositive.TabIndex = 12;
             this.holidayPositive.Text = "18 19";
             this.holidayPositive.TextChanged += new System.EventHandler(this.holidayPositive_TextChanged);
+            // 
+            // chbHourLine
+            // 
+            this.chbHourLine.AutoSize = true;
+            this.chbHourLine.Location = new System.Drawing.Point(275, 212);
+            this.chbHourLine.Name = "chbHourLine";
+            this.chbHourLine.Size = new System.Drawing.Size(145, 21);
+            this.chbHourLine.TabIndex = 39;
+            this.chbHourLine.Text = "Zobraz čáry hodin";
+            this.chbHourLine.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -655,6 +664,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown nudStopDist;
+        private System.Windows.Forms.CheckBox chbHourLine;
     }
 }
 

@@ -30,12 +30,16 @@ namespace Grafikon_Busy
         string[] StopsB;
         Stop[][] StopsDistsF;
         Stop[][] StopsDistsB;
+        TimeTableParser TimeTableF;
+        TimeTableParser TimeTableB;
+        string[][] tempTable;
+
         static char[] SignSeparators = new char[] { ' ' };
         const int directionsCount = 2;
         float distanceSpread => (float)nudStopDist.Value; //The extra range between individual Y-labels (stop names) need on chart
         float labelRange => this.distanceSpread / 2 - 0.001f; //Distance from the Y-label's center and edge;
         const int maxDistance = 0; //How will the distances be rescaled
-        const int PointMarkSize = 7;
+        const int PointMarkSize = 7; // Size of the points on chart
         static readonly int DayTypeCount = Enum.GetNames(typeof(DayType)).Length;
         IReadOnlyList<CheckBox> CheckBoxesFront { get; }
         IReadOnlyList<CheckBox> CheckBoxesBack { get; }
@@ -45,7 +49,7 @@ namespace Grafikon_Busy
         ConnectionGroup[] TableBack = new ConnectionGroup[DayTypeCount];
         //Color[,] TableColoring = new Color[DayTypeCount, directionsCount];
 
-        Color[,] TableColoring = new Color[4, directionsCount]{
+        static readonly Color[,] TableColoring = new Color[4, directionsCount]{
             {Color.Brown,Color.Orange },{Color.Yellow,Color.Green },
             {Color.Blue,Color.DarkCyan },{Color.Magenta,Color.Purple}
         };
@@ -104,7 +108,7 @@ namespace Grafikon_Busy
             Chart.AxisX.MajorGrid.LineWidth = 1;
             Chart.AxisX.MajorGrid.Interval = 60;
 
-            Chart.AxisX.MajorGrid.Enabled = false;
+            Chart.AxisX.MajorGrid.Enabled = chbHourLine.Checked;
             Chart.AxisY.MajorGrid.Enabled = false;
 
 
@@ -224,8 +228,7 @@ namespace Grafikon_Busy
                     ChartType = SeriesChartType.Line,
                     Color = CG.ChartColor,
 
-                    //refactor these
-                    MarkerColor = Color.Red,
+                    MarkerColor = CG.ChartColor,
                     MarkerStyle = MarkerStyle.Circle,
                     MarkerSize = PointMarkSize
                 };
@@ -298,9 +301,7 @@ namespace Grafikon_Busy
                 }
             }
         }
-        TimeTableParser TimeTableF;
-        TimeTableParser TimeTableB;
-        string[][] tempTable;
+        
 
         /// <summary>
         /// Loads the line from a file whose name is specified in text box. If the file with this name does not exist, tries to add ".txt" to the file name. If neither exists, shows error message and ends.
@@ -465,10 +466,6 @@ namespace Grafikon_Busy
             chbSunday.Enabled = succ;
             return;
         }
-        private void textBoxLine_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void chbWorkday_CheckedChanged(object sender, EventArgs e)
         {
@@ -619,7 +616,6 @@ namespace Grafikon_Busy
             {
                 MessageBox.Show("Linky nemají protichůdné zastávky, nebo zastávky ještě nejsou načteny.", "Chybný vstup", MessageBoxButtons.OK);
             }
-            //RenderGraphicon(ArrayExtension.Enumerate<ConnectionGroup>(Tables));
 
         }
         private void btnLoadDistsF_Click(object sender, EventArgs e)

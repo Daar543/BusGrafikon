@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Grafikon_Busy
 {
@@ -11,14 +9,14 @@ namespace Grafikon_Busy
         /// <summary>
         /// The timetable is transposed - one connection is in one row, the first row contains all stops
         /// </summary>
-        private string[][] TimeTable;
+        private readonly string[][] TimeTable;
         private string[][] ReducedTable = null;
 
         const char WorkdaySign = 'X';
         const char SaturdaySign = '6';
         const char SundaySign = '+';
-        static string DistanceSign = "km";
-        static char[] SignSeparators = new char[] { ' ' };
+        const string DistanceSign = "km";
+        static readonly char[] SignSeparators = new char[] { ' ' };
         public string[] HolidayPositiveSigns;
         public string[] HolidayNegativeSigns;
         public TimeTableParser(string[][] tt)
@@ -77,7 +75,7 @@ namespace Grafikon_Busy
             }
             return resultTable;
         }
-        public bool GetStops(out string[]stops)
+        /*public bool GetStops(out string[] stops)
         {
             stops = null;
             if (ReducedTable == null)
@@ -92,7 +90,7 @@ namespace Grafikon_Busy
                 return false;
             }
             return true;
-        }
+        }*/
         /// <summary>
         /// Gets all kilometrage tours from the reduced table
         /// </summary>
@@ -105,7 +103,7 @@ namespace Grafikon_Busy
             {
                 ReducedTable = this.Cutout();
             }
-                
+
             List<int> AllowedRows = new List<int>();
             AllowedRows.Add(1); //This is the row with stop names
             for (int i = 2; i < ReducedTable.Length; ++i)
@@ -121,7 +119,7 @@ namespace Grafikon_Busy
             {
                 return false;
             }
-               
+
             int j = 0;
             foreach (int row in AllowedRows)
             {
@@ -139,7 +137,7 @@ namespace Grafikon_Busy
         /// <param name="mirror">If true, the distances will be calculated as complement to the max distance</param>
         /// <param name="toursNorm">Output with normalized distances from stops (1 tour = 1 inner array)</param>
         /// <returns></returns>
-        public bool ExtractKilometragesFromTable(string[][]table, double spreadDistance, int maximumDistance, bool mirror, out Stop[][]toursNorm)
+        public bool ExtractKilometragesFromTable(string[][] table, double spreadDistance, int maximumDistance, bool mirror, out Stop[][] toursNorm)
         {
             int[][] tours = new int[table.Length - 1][];
 
@@ -147,21 +145,21 @@ namespace Grafikon_Busy
             int len = table[0].Length;
             int diff = 0;
             int i = 0;
-            for(; i<table[0].Length && table[0][i] == ""; ++i)
+            for (; i < table[0].Length && table[0][i] == ""; ++i)
             {
                 len--;
                 diff++;
             }
-            
-            for(int j = 0; j < tours.Length; ++j)
+
+            for (int j = 0; j < tours.Length; ++j)
             {
                 tours[j] = new int[len];
             }
-            for(int j = 0; j < tours.Length; ++j)
+            for (int j = 0; j < tours.Length; ++j)
             {
-                for(i = diff; i < table[0].Length; ++i)
+                for (i = diff; i < table[0].Length; ++i)
                 {
-                    if (int.TryParse(table[j+1][i], out int dist))
+                    if (int.TryParse(table[j + 1][i], out int dist))
                         tours[j][i - diff] = dist;
                     else
                         tours[j][i - diff] = -1;
@@ -179,7 +177,9 @@ namespace Grafikon_Busy
             {
                 double[] toursNormA = ArrayCalculations.Normalize(tours[j], spreadDistance, maximumDistance);
                 if (mirror)
+                {
                     toursNormA.MirrorPositives();
+                }
                 var zst = new List<Stop>();
                 for (int k = 0; k < len; ++k)
                 {
@@ -235,7 +235,7 @@ namespace Grafikon_Busy
             {
                 ReducedTable = this.Cutout();
             }
-                
+
 
             List<int> AllowedRows = new List<int>();
             AllowedRows.Add(1); //Second row contains stops
@@ -245,7 +245,7 @@ namespace Grafikon_Busy
                 bool allowed = true;
                 if (ReducedTable[i][1].Contains(WorkdaySign))
                 {
-                    foreach(string forbiddenString in HolidayPositiveSigns)
+                    foreach (string forbiddenString in HolidayPositiveSigns)
                     {
                         if (forbiddenString == "")
                             continue;
@@ -260,8 +260,12 @@ namespace Grafikon_Busy
                 {
                     allowed = false;
                 }
+
                 if (allowed)
+                {
                     AllowedRows.Add(i);
+                }
+
             }
             //Copy content from the selected rows to the new table
             string[][] newTable = new string[AllowedRows.Count][];
@@ -276,8 +280,10 @@ namespace Grafikon_Busy
         }
         public string[][] CreateWorkHolidayTable()
         {
-            if(ReducedTable == null)
+            if (ReducedTable == null)
+            {
                 ReducedTable = this.Cutout();
+            }
             List<int> AllowedRows = new List<int>();
             AllowedRows.Add(1); //Second row contains stops
 
@@ -300,9 +306,9 @@ namespace Grafikon_Busy
                 else
                 {
                     allowed = false;
-                    foreach(string allowedString in HolidayPositiveSigns)
+                    foreach (string allowedString in HolidayPositiveSigns)
                     {
-                        if(allowedString == "")
+                        if (allowedString == "")
                             continue;
                         if (ReducedTable[i][1].Contains(allowedString))
                         {
@@ -311,7 +317,7 @@ namespace Grafikon_Busy
                         }
                     }
                 }
-                if(allowed)
+                if (allowed)
                     AllowedRows.Add(i);
             }
             string[][] newTable = new string[AllowedRows.Count][];
@@ -374,12 +380,6 @@ namespace Grafikon_Busy
                 ++j;
             }
             return newTable;
-        }
-        public string[][] CreateNationalHolidayTable()
-        {
-            if (ReducedTable == null)
-                ReducedTable = this.Cutout();
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace Grafikon_Busy
@@ -16,7 +13,7 @@ namespace Grafikon_Busy
         /// <param name="filename">CSV filename</param>
         /// <param name="separator">Character for separating values in CSV file (usually TAB)</param>
         /// <returns></returns>
-        public static string[][] ReadExcelInput(string filename, char separator)
+        public static string[][] ReadExcelInput(string filename, char separator='\t')
         {
             string line;
             string[] row;
@@ -26,10 +23,9 @@ namespace Grafikon_Busy
             while (true)
             {
                 line = sr.ReadLine();
-                if (line == null)
-                    break;
-                else if (line == "")
-                    continue; //Empty row eliminated
+                if (line == null) { break; }
+                else if (line == "") { continue; }
+                //Empty row eliminated
                 row = line.Split(separator);
                 table.Add(row);
             }
@@ -61,7 +57,10 @@ namespace Grafikon_Busy
                 }
                 //Ingore empty column
                 if (empty)
+                {
                     continue;
+                }
+
 
                 List<string> col = new List<string>();
 

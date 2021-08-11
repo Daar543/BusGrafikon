@@ -98,6 +98,197 @@ Tlačítko `Export jako PDF` otevře dialogové okno s tisknutím - graf je tak 
 \end{enumerate}
 
 \section{Programátorská dokumentace}
-299a58fae0db7e4eb6eee94a8f9dcfac HO
 
+\subsection{Struktura programu}
+
+\begin{itemize}
+\item Jedná se o běžný projekt okenní aplikace WinForms v jazyce C\#. 
+
+\item Většina ovládacích prvků se nachází v části "Návrh" a jejich vlastnosti se po spuštění programu nemění jinak než na příkaz uživatele.
+
+\item Obslužné funkce tlačítek a většina logiky programu se nechází v souboru "Form1.cs".
+
+\item Část sloužící pro načtení vstupního souboru linky se nachází v souboru "SheetLoader.cs".
+
+\item Část pro rozdělení jízdního řádu je v souboru "TimeTableParser.cs".
+
+\item Část pro přiřazování zastávek a vzdáleností k jednotlivým spojům je v souboru "ConnectionGroup.cs".
+
+\end{itemize} 
+
+\subsection{Soubor SheetLoader.cs}
+
+Kód v tomto souboru se skládá pouze z jedné třídy SheetLoader.
+\begin{enumerate}
+
+\item ReadExcelInput
+
+Tato funkce načte vstupní soubor ve formátu CSV (oddělovač podle parametru \textit{separator}), přičemž přeskočí prázdné řádky.
+
+\item RowifyTable
+
+Pomocí této funkce se načtená tabulka transponuje a případně se zarovnají řádky (přidáním prázdných prvků pole) tak, aby tabulka byla obdélníková.
+
+Tabulka je transponovaná kvůli tomu, že jízdní řády se lépe analyzují po sloupcích (a to platí jak pro časové údaje spojů, tak názvy zastávek a vzdálenosti)
+
+\end{enumerate}
+
+\subsection{Soubor TimeTableParser.cs}
+
+Soubor obsahuje opět jen jednu třídu, TimeTableParser. Jsou zde hard-codované značky pro pracovní dny, soboty, neděle atd. V budoucnu je možno vylepšit toto umožněním uživatelům, aby si dané značky nastavili sami.
+
+\begin{enumerate}
+\item Konstruktor
+
+Třída potřebuje v konstruktoru transponovaný jízdní řád a poté případné seznam negativních značek pro prázdniny. Jízdní řád je získán z předchozí třídy, značky jsou brány jako celý obsah textového pole, do kterého je píše uživatel.
+
+\item Cutout
+
+Tato funkce redukuje jízdní řád na pouze ty řádky, kde by se měla nacházet relevantní data pro jízdní řád. Spoléhá se na to, že v levém horním rohu bude značka "Tč", poté jede volný řádek, a pod touto značkou pak tarifní čísla jednotlivých zastávek. 
+
+\item GetKilometrageTable
+
+Udělá tabulku pouze s řádky (orig. sloupci) obsahující položku "km" a názvy zastávek. Názvy zastávek jsou vždy jako první řádek.
+
+\item ExtractKilometragesFromTable
+
+Z kilometrických údajů v jízdním řádu (které jsou jako string) vytvoří pole polí čísel jakožto vzdáleností.
+
+V první fázi se řetězcové údaje přetvoří na číselné údaje. Pokud je údaj prázdný nebo je uvedeno, že spoj přes zastávku nejede (značkou "<" v kilometrových údajích), pak je tato hodnota zapsána jako -1 - záporné údaje jsou ignorovány (pochopitelně, tarifní vzdálenost je nezáporná, takže v normálním JŘ by se záporná čísla objevovat neměla).
+
+Poté jsou tyto kilometrické údaje tzv. normalizovány - jednak jsou přeškálovány podle určité maximální vzdálenosti (funkci momentálně nepoužívám, ale může se hodit) a dále jsou vzdálenosti posunuty tak, aby mezi zastávkami byly dané rozestupy (více v popisu příslušného souboru ConnectionGroup.cs)
+
+\item CreateStopsAndConnections
+
+Parsuje část jízdního řádu se zastávkami a časy. První dva řádky oříznutého JŘ jsou určeny pro záhlaví - u zastávek se přeskočí, u spojů je první řádek uveden pro označení spoje (např. "Spoj 123"), které je pak použito jako klíč ve slovníku spojů.
+
+\item CreateWorkdayTable (apod.)
+
+Z jízdního řádu vyřízne tu část, která obsahuje názvy zastávek a pro spoje, které jedou v příslušné dny - ty se poznají podle záhlaví v prvním řádku (značky "X" apod.) Význam značek je uveden v uživatelské dokumentaci, pro rozšíření programu je dobré navrhnout nějakou flexibilitu ve volbě značek.
+
+\end{enumerate}
+
+\subsection{Soubor ConnectionGroup.cs}
+
+Soubor obsahuje třídu ConnectionGroup (jako skupina spojů) , Stop (pro záznamy zastávek), statickou třídu ArrayExtensions pro obecné operace s poli (nebudu rozepisovat) a  ArrayCalculations, která slouží pro číselné operace, především úpravy tarifních vzdáleností.
+
+\begin{enumerate}
+\item Třída ConnectionGroup
+
+Tato třída reprezentuje seznam spojů stejného typu; v proměnné Connections jsou uvedeny názvy spojů a seznam časových údajů pro daný název.
+
+Ostatní údaje slouží pro to, jak se bodu dané spoje vykreslovat v grafu - tzn. jakou barvou, zdola nahoru (direction) a zdali vůbec (enabled)
+
+\item Struktura Stop
+
+Tato struktura obsahuje pouze dvě hodnoty: Order (pořadí = tarifní číslo) a Distance (vzdálenost). Název zastávky zde není uložen a dohledává se pomocí tarifního čísla.
+
+\item ArrayCalculations.MirrorPositives
+
+Přepíše všechny kladné hodnoty v poli na doplněk největšího čísla - využívá se pro výpočet vzdáleností u spojů v protisměru.
+
+\item ArrayCalculations.Normalize
+
+Přeškáluje hodnoty v poli (nezáporné hodnoty musí být uspořádané), a to tím způsobem, že největší hodnota v poli bude rovna zadané hodnotě "maximumDistance" (je-li hodnota tohoto parametru nekladná, škálování se neodehrává),a přitom minimální rozdíl mezi sousedními prvky je roven hodnotě minDiff(po škálování).
+
+K vynucení minimálního rozdílu slouží níže zmíněná funkce - ta však nemusí vyřešit všechno, proto hodnoty posouvám směrem nahoru, není-li rozestup ddržen dokonale. (Např. z  0 - 2 - 2 - 3 a rozestupem 1 bych vytvořil 0 - 2 - 3 - 4, pokud bych nepoužíval algoritmus NormalizeA)
+
+\item ArrayCalculations.NormalizeA
+
+Tato funkce vytvoří žádané výše zmíněné rozestupy. Ukazetele "firstInd" a "secondInd" skenují pole, a pokud je rozdíl mezi sousedními prvky malý, ukazetel secondInd se posunuje dále. Jakmile je označen vhodný úsek, spočítá se průměr daného úseku a hodnoty v daném úseku se posunou tak, aby průměr úseku byl zachován a stejně tak dané rozestupy. Další úsek pak začíná na prvním prvku "spravovaného" úseku. Pokud se doběhne na konec pole a bylo třeba něco spravovat, začíná další iterace.
+
+V některých situacích však algoritmus nemusí skončit - je-li rozdíl mezi prvním a posledním prvkem malý, rozestupy jsou velké a prvků je hodně. Z tohoto důvodu algoritmus (pro výpočty vzdáleností zastávek) končím hned po první iteraci a případné nedodělky spravuji tím, že následující číslo přímo zvýším tak, aby byl dodržen rozestup (a neohlížím se tak zpět).
+
+\end{enumerate}
+
+\subsection{Soubor Form1.cs}
+
+Soubor s ústřední třídou celé aplikace. Přiznávám, že je momentálně trochu chaotický. Třída Form1 obsahuje datové položky, vlastnosti, algoritmy vykreslování i obslužné události po kliknutí na jednotlivá tlačítka.
+
+\begin{enumerate}
+
+\item Datové položky a vlastnosti
+
+Některé datové položky jsou uvedeny jako konstanty (\textit{const} nebo \textit{static readonly}) - do budoucna je určitě je možné k nim přiřadit nástroje pro uživatelské rozhraní, ať si je může nastavit uživatel dle svého uvážení (např. barvy nebo velikost bodů zastávek).
+
+Položky, které jsou přiřazeny k uživatelskému rozhraní (např. min. vzdálenost mezi zastávkami) jsou uvedeny jako vlastnosti jen pro čtení - dle mého názoru logický přístup, ale lidé zkušenější v programování UI si mohou myslet něco jiného.
+
+Položky StopsF/StopsB... slouží pro uchovávání dat z načtených JŘ (viz popis funkcí tlačítek, a funkcí z jiných souborů)
+
+\item Události kliknutí
+
+Většina událostí je popsaná zvlášť pro tlačítko pro směr tam i zpět - do budoucna by určitě bylo dobré,aby tyto události volaly tutéž funkci rozlišenou např. parametrem 0/1.
+\begin{enumerate}
+
+\item btnChooseLine\_Click
+
+Načte uvedený JŘ do zmíněných proměnných.
+
+\item btnWorkday\_Click (ap.)
+
+Ořízne JŘ a vytáhne z něj příslušné spoje. V případě úspěšného načtení se odemkne checkbox pro uživatele (takže dané spoje lze připravit k vykreslení).
+
+\item btnLoadDistsF\_Click
+
+Načte možné trasy a přizpůsobí rozsah posuvníku pro výběr tras.
+
+\item chbWorkday\_CheckedChanged
+
+Při zaškrtnutí příslušného checkboxu se změní typ skupiny spojů, zdali se bude vykreslovat či nikoli. Místo události by se také dalo napsat pomocí přístupové vlastnosti u jednotlivé skupiny spojů, já jsem se rozhodl pro momentální řešení.
+
+\item btnRenderFront\_Click
+
+Pokud nebyly žádné spoje vybrány nebo načteny, vyčistí okno (s grafem) a nic se nestane. Jinak zavolá algoritmus pro vykreslování s příslušnými parametry (viz níže). Parametry je myšleno, zdali se bude vykreslovat konkrétní trasa (podle vzdáleností) nebo všechny zastávky, a poté pro který směr se budou spoje vykreslovat.
+
+\item btnExport\_Click
+
+Otevře dialog tisknutí. Funkce tisknutí je přidaná pouze v základní verzi, určitě by se hodilo přidat i možnost vytisknutí ve  větším formátu.
+
+\end{enumerate}
+
+\item Metody (funkce)
+
+\begin{enumerate}
+
+\item ClearGraphicon
+
+Nastaví okno grafu a vyčistí všechny linie.
+
+Sem by měly přijít všechny akce, které nějakým způsobem nastavují vlastnosti okna grafu (tzn. s výjimkou samotných spojů a zastávek). Tato metoda se volá při každém překreslování grafu, a slouží i pro update nastavení od uživatele - veškerá nastavení se projevují až při novém vykreslování grafu, nikoli na již vykresleném.
+
+\item RenderGraphicon
+
+Tato metoda je onou ústřední, která přidá všechny vybrané skupiny spojů do grafu.
+
+Metoda nejprve nastaví graf, zejména přidání zastávek na osu Y (podle předloženého seznamu zastávek a vzdáleností). V případě vykreslování obou směrů je seznam vzdáleností ignorován - sub-algoritmy na toto ještě nejsou ideálně stavěné.
+
+Poté se přejde k samotnému výpočtu jednotlivých bodů a čar (Series), dle níže uvedených metod. Skupiny spojů, které nebyly načteny nebo vybrány, jsou přirozeně ignorovány. Zde však ještě zmíním samotné vykreslování zastávek.
+
+Vzdálenosti jsem nijak neškáloval, takže graf bude vždy v okně roztažený odshora dolů pro všechny zastávky.
+
+Důležité jsou parametry \textit{labelRange} a \textit{lineWidth}. Jelikož se mi nepovedlo přiřadit text k jednomu konkrétnímu bodu na ose Y, tak \textit{labelWidth} určuje, jakou výšku bude zabírat daný text. Z důvodu zaokrouhlovacích chyb je pak od šířky ještě odečtena hodnota 0.01.
+
+Od každé zastávky pak ještě vede horizontální čára (\textit{StripLine}) přes budoucí body (časy zastavení spojů). Důležité je, že šířka této čáry roste lineárně s maximální vzdáleností. Kratší vzdálenost trasy totiž znamená více roztažený graf (aby se vlezl do okna), a díky této úpravě by si čára měla zachovat konstatní velikost.
+
+\item MakeStopSeriesForTable
+
+Vytvoří čáry pro jednu skupinu spojů. Jednomu spoji odpovídá jedna čára (\textit{Series}), přičemž parametry čar, s výjimkou bodů, jsou pro jednu skupinu spojů totožné.
+
+\item AddConnection
+
+Vytvoří body pro danou sérii.
+
+Až zde se konvertují časové údaje na minutové údaje (což může být slabina aplikace, jsou-li jízdní řády zadány nesprávně).
+
+Zde se rozhoduje, jak je jízdní řád orientovaný (směrem nahoru nebo dolů) a podle toho se rozhoduje, v jaké výšce bude daný bod zaznamenán (tzn. jaké zastávce odpovídá). 
+
+Ukazuje se, že v případě obousměrného řádu s danými vzdálenostmi (trasami) toto rozhodování nestačí - tzn. není možno nastavit zastávky (funkce \textit{ClearGraphicon}) a body (\textit{funkce AddConnection}) aby bylo pokryto všech 7 případů.
+
+Z tohoto důvodu nejsou 2 případy (vzdálenosti zpět + obousměrný / vzdálenosti vpřed + obousměrný) naimplementovány.
+
+\end{enumerate}
+
+\end{enumerate}
+
+- 
 \end{document}
