@@ -148,7 +148,7 @@ namespace Grafikon_Busy
             }
             else if (rm == RenderMode.Both)
             {
-                if (stopDistsF is null /*&& stopDistsB is null*/)
+                if (stopDistsF is null && stopDistsB is null)
                 {
                     dm = DistanceMode.Neither;
                 } 
@@ -157,13 +157,11 @@ namespace Grafikon_Busy
                 {
                     dm = DistanceMode.Front;
                     stopDistsB = stopDistsF;
-                    //stopDistsB = Stop.InvertDistances(stoplist,stopDistsF);
                 }
                 else //Maybe add this later
                 {
                     dm = DistanceMode.Back;
                     stopDistsF = stopDistsB;
-                    //stopDistsF = Stop.InvertDistances(stoplist,stopDistsB);
                 }
                     
             }
@@ -187,10 +185,6 @@ namespace Grafikon_Busy
                 default:
                     throw new ArgumentException("Nonexistent distance mode");
             }
-            /*if(rm == RenderMode.Both && dm == DistanceMode.Front)
-            {
-
-            }*/
             //If there are no distances, then spread them by 1
             if (dm == DistanceMode.Neither)
             {
@@ -268,7 +262,7 @@ namespace Grafikon_Busy
                 if (group is null || !group.Enabled)
                     continue;
                 bool invert = false;
-                if(!group.Direction && rm == RenderMode.Both && dm == DistanceMode.Front)
+                if(rm == RenderMode.Both && (!group.Direction &&  dm == DistanceMode.Front) ||(group.Direction && dm == DistanceMode.Back))
                 {
                     invert = true;
                 }
@@ -332,15 +326,17 @@ namespace Grafikon_Busy
         }
         private void AddConnection(Series s, string[] connectionTimes, Stop[] stops, bool forward, bool invert)
         {
+#if DEBUG
             //forward = true;
             if (!forward)
             {
 
             }
+#endif
             for (int i = 0; i < stops.Length; ++i)
             {
                 Stop Z = stops[i];
-                double dist = (forward || invert) ? Z.Distance : stops[stops.Length - 1].Distance - Z.Distance;
+                double dist = (forward ^ invert) ? Z.Distance : stops[stops.Length - 1].Distance - Z.Distance;
                 string checkedTime = connectionTimes[Z.Order];
                 if (checkedTime == "|" || checkedTime == "")
                 {
