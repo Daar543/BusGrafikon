@@ -172,6 +172,8 @@ namespace Grafikon_Busy
                     //stopDists = stopDistsB;
                     stopDists = stopDistsF;
                     break;
+                default:
+                    throw new ArgumentException("Nonexistent distance mode");
             }
             /*if(rm == RenderMode.Both && dm == DistanceMode.Front)
             {
@@ -602,11 +604,11 @@ namespace Grafikon_Busy
             }
             if (chbToursF.Checked)
             {
-                RenderGraphicon(TableFront, StopsF, StopsDistsF[slidToursF.Value], RenderMode.Front, DistanceMode.Front);
+                RenderGraphicon(TableFront, StopsF, StopsDistsF[slidToursF.Value], null, RenderMode.Front);
             }
             else
             {
-                RenderGraphicon(TableFront, StopsF, null, RenderMode.Front, DistanceMode.Neither);
+                RenderGraphicon(TableFront, StopsF, null, null, RenderMode.Front);
             }
 
         }
@@ -620,11 +622,11 @@ namespace Grafikon_Busy
             }
             if (chbToursB.Checked)
             {
-                RenderGraphicon(TableBack, StopsB, StopsDistsB[slidToursB.Value], RenderMode.Back, DistanceMode.Back);
+                RenderGraphicon(TableBack, StopsB, null, StopsDistsB[slidToursB.Value], RenderMode.Back);
             }
             else
             {
-                RenderGraphicon(TableBack, StopsB.Reverse().ToArray(), null, RenderMode.Back, DistanceMode.Neither);
+                RenderGraphicon(TableBack, StopsB.Reverse().ToArray(), null, null, RenderMode.Back);
             }
 
         }
@@ -640,17 +642,17 @@ namespace Grafikon_Busy
             {
                 if (chbToursF.Checked == chbToursB.Checked) //Both distances are checked or unchecked, so no distance measured
                 {
-                    RenderGraphicon(TableFront.Concat(TableBack), StopsF, null, RenderMode.Both, DistanceMode.Neither);
+                    RenderGraphicon(TableFront.Concat(TableBack), StopsF, null, null,RenderMode.Both);
                 }
                 else
                 {
                     if (chbToursF.Checked)
                     {
-                        RenderGraphicon(TableFront.Concat(TableBack), StopsF, StopsDistsF[slidToursF.Value], RenderMode.Both, DistanceMode.Front);
+                        RenderGraphicon(TableFront.Concat(TableBack), StopsF, StopsDistsF[slidToursF.Value], null, RenderMode.Both );
                     }
                     else
                     {
-                        RenderGraphicon(TableFront.Concat(TableBack), StopsF, StopsDistsB[slidToursB.Value], RenderMode.Both, DistanceMode.Back);
+                        RenderGraphicon(TableFront.Concat(TableBack), StopsF, null, StopsDistsB[slidToursB.Value], RenderMode.Both);
                     }
                 }
             }
