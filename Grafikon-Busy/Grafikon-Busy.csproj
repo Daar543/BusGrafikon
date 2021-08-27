@@ -117,6 +117,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="JR\**">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="JR\100180-T.txt" />
     <Content Include="JR\100180-Z.txt" />
     <Content Include="JR\802170-T.txt" />

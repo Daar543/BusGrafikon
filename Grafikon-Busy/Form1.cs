@@ -26,8 +26,8 @@ namespace Grafikon_Busy
             CheckBoxesBack = new List<CheckBox>() { chbWorkdayBack, chbSchoolHolidayBack, chbSaturdayBack, chbSundayBack, chbToursB }.AsReadOnly();
 
 #if DEBUG
-            this.textBoxLineBack.Text = "JR/Text/802365-Z.txt";
-            this.textBoxLine.Text = "JR/Text/802365-T.txt";
+            this.textBoxLineBack.Text = "JR/Text/802360-Z.txt";
+            this.textBoxLine.Text = "JR/Text/802360-T.txt";
 #endif
         }
 
@@ -139,21 +139,33 @@ namespace Grafikon_Busy
             
             if (rm == RenderMode.Front)
             {
-                dm = stopDistsF is null ? DistanceMode.Neither:DistanceMode.Back;
+                dm = stopDistsF is null ? DistanceMode.Neither:DistanceMode.Front;
 
             }
             else if (rm == RenderMode.Back)
             {
-                dm = stopDistsB is null ? DistanceMode.Neither : DistanceMode.Front;
+                dm = stopDistsB is null ? DistanceMode.Neither : DistanceMode.Back;
             }
             else if (rm == RenderMode.Both)
             {
                 if (stopDistsF is null /*&& stopDistsB is null*/)
+                {
                     dm = DistanceMode.Neither;
+                } 
                 else if (stopDistsF != null)
+                    
+                {
                     dm = DistanceMode.Front;
+                    stopDistsB = stopDistsF;
+                    //stopDistsB = Stop.InvertDistances(stoplist,stopDistsF);
+                }
                 else //Maybe add this later
+                {
                     dm = DistanceMode.Back;
+                    stopDistsF = stopDistsB;
+                    //stopDistsF = Stop.InvertDistances(stoplist,stopDistsB);
+                }
+                    
             }
             else
             {
@@ -170,7 +182,7 @@ namespace Grafikon_Busy
                     break;
                 case DistanceMode.Back:
                     //stopDists = stopDistsB;
-                    stopDists = stopDistsF;
+                    stopDists = stopDistsB;
                     break;
                 default:
                     throw new ArgumentException("Nonexistent distance mode");
@@ -255,14 +267,19 @@ namespace Grafikon_Busy
                 //Skip the disabled days
                 if (group is null || !group.Enabled)
                     continue;
-                List<Series> newS = MakeStopSeriesForTable(group, group.Direction?stopDistsF:stopDistsB);
+                bool invert = false;
+                if(!group.Direction && rm == RenderMode.Both && dm == DistanceMode.Front)
+                {
+                    invert = true;
+                }
+                List<Series> newS = MakeStopSeriesForTable(group, group.Direction?stopDistsF:stopDistsB,invert);
                 foreach (Series s in newS)
                     BusChart.Series.Add(s);
             }
         }
 
 
-        private List<Series> MakeStopSeriesForTable(ConnectionGroup CG, Stop[] zst)
+        private List<Series> MakeStopSeriesForTable(ConnectionGroup CG, Stop[] zst, bool inverted = false)
         {
             List<Series> Ser = new List<Series>();
             foreach (var connName in CG.Connections.Keys)
@@ -276,18 +293,15 @@ namespace Grafikon_Busy
                     MarkerStyle = MarkerStyle.Circle,
                     MarkerSize = PointMarkSize
                 };
-
+                string[] connection = inverted ? CG.Connections[connName].Reverse().ToArray() : CG.Connections[connName];
                 if (zst is null)
                 {
-                    AddConnection(Sx, CG.Connections[connName], CG.Direction);
+                    AddConnection(Sx, connection, CG.Direction);
                 }
                 else
                 {
-                    AddConnection(Sx, CG.Connections[connName], zst, CG.Direction);
+                    AddConnection(Sx, connection, zst, CG.Direction, inverted);
                 }
-
-
-
                 Ser.Add(Sx);
             }
             return Ser;
@@ -316,14 +330,17 @@ namespace Grafikon_Busy
                 }
             }
         }
-        private void AddConnection(Series s, string[] connectionTimes, Stop[] stops, bool forward)
+        private void AddConnection(Series s, string[] connectionTimes, Stop[] stops, bool forward, bool invert)
         {
             //forward = true;
+            if (!forward)
+            {
+
+            }
             for (int i = 0; i < stops.Length; ++i)
             {
-                int j = forward ? i : stops.Length - 1 - i;
-                Stop Z = stops[j];
-                double dist = forward ? Z.Distance : stops[stops.Length - 1].Distance - Z.Distance;
+                Stop Z = stops[i];
+                double dist = (forward || invert) ? Z.Distance : stops[stops.Length - 1].Distance - Z.Distance;
                 string checkedTime = connectionTimes[Z.Order];
                 if (checkedTime == "|" || checkedTime == "")
                 {

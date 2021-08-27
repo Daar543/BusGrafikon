@@ -33,11 +33,26 @@ namespace Grafikon_Busy
             this.ChartColor = color;
             this.Direction = dir;
         }
+        
     }
     public struct Stop
     {
         public int Order;
         public double Distance;
+        public static Stop[] InvertDistances(string[] names, Stop[] original)
+        {
+            int maxAmount = names.Length;
+            double maxDist = original[original.Length - 1].Distance;
+            Stop[] result = new Stop[original.Length];
+            for(int i = 0; i < original.Length; ++i)
+            {
+                int order = original[i].Order;
+                double distance = original[original.Length-i-1].Distance;
+                result[i] = new Stop { Order = order, Distance = distance };
+            }
+            return result;
+        }
+        
     }
 
     public static class ArrayExtensions
@@ -263,8 +278,6 @@ namespace Grafikon_Busy
             }
             return result;
         }
-        
-        
     }
     
 }
