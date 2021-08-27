@@ -24,6 +24,11 @@ namespace Grafikon_Busy
 
             CheckBoxesFront = new List<CheckBox>() { chbWorkday, chbSchoolHoliday, chbSaturday, chbSunday, chbToursF }.AsReadOnly();
             CheckBoxesBack = new List<CheckBox>() { chbWorkdayBack, chbSchoolHolidayBack, chbSaturdayBack, chbSundayBack, chbToursB }.AsReadOnly();
+
+#if DEBUG
+            this.textBoxLineBack.Text = "JR/Text/802365-Z.txt";
+            this.textBoxLine.Text = "JR/Text/802365-T.txt";
+#endif
         }
 
         string[] StopsF;
@@ -123,24 +128,61 @@ namespace Grafikon_Busy
         /// <param name="stoplist">Names of all stops, as they are in the timetable</param>
         /// <param name="stopDists">List of tariff distances for each stops</param>
         /// <param name="priorityDir"></param>
-        private void RenderGraphicon(IEnumerable<ConnectionGroup> conns, string[] stoplist, Stop[] stopDists, RenderMode rm, DistanceMode dm)
+        private void RenderGraphicon(IEnumerable<ConnectionGroup> conns, string[] stoplist, Stop[] stopDistsF, Stop[]stopDistsB, RenderMode rm)
         {
 
             ClearGraphicon();
 
             var Chart = BusChart.ChartAreas[0];
+
+            DistanceMode dm;
             
+            if (rm == RenderMode.Front)
+            {
+                dm = stopDistsF is null ? DistanceMode.Neither:DistanceMode.Back;
 
-            //Do not measure distance in these cases
-            if (dm == DistanceMode.Neither || rm == RenderMode.Both)
-                stopDists = null;
+            }
+            else if (rm == RenderMode.Back)
+            {
+                dm = stopDistsB is null ? DistanceMode.Neither : DistanceMode.Front;
+            }
+            else if (rm == RenderMode.Both)
+            {
+                if (stopDistsF is null /*&& stopDistsB is null*/)
+                    dm = DistanceMode.Neither;
+                else if (stopDistsF != null)
+                    dm = DistanceMode.Front;
+                else //Maybe add this later
+                    dm = DistanceMode.Back;
+            }
+            else
+            {
+                throw new ArgumentException("Nonexistent distance mode");
+            }
+            Stop[] stopDists;
+            switch (dm)
+            {
+                case DistanceMode.Neither:
+                    stopDists = null;
+                    break;
+                case DistanceMode.Front:
+                    stopDists = stopDistsF;
+                    break;
+                case DistanceMode.Back:
+                    //stopDists = stopDistsB;
+                    stopDists = stopDistsF;
+                    break;
+            }
+            /*if(rm == RenderMode.Both && dm == DistanceMode.Front)
+            {
 
+            }*/
             //If there are no distances, then spread them by 1
-            if (stopDists is null)
+            if (dm == DistanceMode.Neither)
             {
                 Chart.AxisY.Minimum = 0;
                 Chart.AxisY.Maximum = stoplist.Length + labelRange;
-                double lineWidth = PointMarkSize*Chart.AxisY.Maximum / 1600d; 
+                double lineWidth = PointMarkSize*Chart.AxisY.Maximum / 3200d; 
                 //At smaller charts, the stripline normally gets thicker;
                 //therefore, here I multiply it by the size of chart
 
@@ -211,7 +253,7 @@ namespace Grafikon_Busy
                 //Skip the disabled days
                 if (group is null || !group.Enabled)
                     continue;
-                List<Series> newS = MakeStopSeriesForTable(group, stopDists);
+                List<Series> newS = MakeStopSeriesForTable(group, group.Direction?stopDistsF:stopDistsB);
                 foreach (Series s in newS)
                     BusChart.Series.Add(s);
             }
