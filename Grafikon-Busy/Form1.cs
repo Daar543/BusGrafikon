@@ -373,6 +373,12 @@ namespace Grafikon_Busy
             StopsF = null;
             TableFront = new ConnectionGroup[DayTypeCount];
             string line = textBoxLine.Text;
+
+            if (line == "")
+            {
+                MessageBox.Show("Linka neexistuje", "Chybný vstup", MessageBoxButtons.RetryCancel);
+                return;
+            }
             try
             {
                 string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadExcelInput(line, '\t'));
@@ -402,6 +408,11 @@ namespace Grafikon_Busy
             StopsB = null;
             TableBack = new ConnectionGroup[DayTypeCount];
             string line = textBoxLineBack.Text;
+            if (line == "")
+            {
+                MessageBox.Show("Linka neexistuje", "Chybný vstup", MessageBoxButtons.RetryCancel);
+                return;
+            }
             try
             {
                 string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadExcelInput(line, '\t'));
