@@ -50,7 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="ConnectionGroup.cs" />
     <Compile Include="ControlExtensions.cs" />
     <Compile Include="Form1.cs">
@@ -118,7 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="JR\**">
-		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="JR\100180-T.txt" />
     <Content Include="JR\100180-Z.txt" />
