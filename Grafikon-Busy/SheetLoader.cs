@@ -13,7 +13,7 @@ namespace Grafikon_Busy
         /// <param name="filename">CSV filename</param>
         /// <param name="separator">Character for separating values in CSV file (usually TAB)</param>
         /// <returns></returns>
-        public static string[][] ReadExcelInput(string filename, char separator='\t')
+        public static string[][] ReadCsvInput(string filename, char separator='\t')
         {
             string line;
             string[] row;

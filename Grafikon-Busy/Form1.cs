@@ -381,7 +381,7 @@ namespace Grafikon_Busy
             }
             try
             {
-                string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadExcelInput(line, '\t'));
+                string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadCsvInput(line, '\t'));
                 TimeTableF = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
                 btnLoadDistsF.Enabled = true;
             }
@@ -390,7 +390,7 @@ namespace Grafikon_Busy
                 line += ".txt";
                 try
                 {
-                    string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadExcelInput(line, '\t'));
+                    string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadCsvInput(line, '\t'));
                     TimeTableF = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
                     textBoxLine.Text = line; //Updates the text so exception has not to be catched again
                     btnLoadDistsF.Enabled = true;
@@ -415,7 +415,7 @@ namespace Grafikon_Busy
             }
             try
             {
-                string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadExcelInput(line, '\t'));
+                string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadCsvInput(line, '\t'));
                 TimeTableB = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
                 btnLoadDistsB.Enabled = true;
             }
@@ -424,7 +424,7 @@ namespace Grafikon_Busy
                 line += ".txt";
                 try
                 {
-                    string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadExcelInput(line, '\t'));
+                    string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadCsvInput(line, '\t'));
                     TimeTableB = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
                     textBoxLine.Text = line; //Updates the text so exception has not to be catched again
                     btnLoadDistsB.Enabled = true;
