@@ -95,18 +95,42 @@ namespace Grafikon_Busy
                 .ThenBy(zasp => zasp.Dopredu? zasp.TarifniCislo : int.MaxValue - zasp.TarifniCislo) // = vzestupne podle sledu zastavek
                 .ToArray();
         }
-        public string[][] PostavTabulku(ValueTuple<int,int>linka) //toto je v podstate uplne nejhloupejsi reseni - nadela tabulku z tech spoju, ktere jsme parsovali v jdf... ale kdyz funguje...
+        public string[][] PostavTabulku(ValueTuple<int,int>linka,bool dopredu) //toto je v podstate uplne nejhloupejsi reseni - nadela tabulku z tech spoju, ktere jsme parsovali v jdf... ale kdyz funguje...
         {
             string[][] vysledek = default;
             //throw new NotImplementedException();
             //rozmery tabulky:
             //2 + pocet zastavek (radky)
             //2 + pocet spoju (sloupce)
-            var zastLinky = from zl in ZasLinky where zl.IdLinky == linka
+            var zastLinky = (from zl in ZasLinky
+                            where zl.IdLinky == linka
                             join za in Zastavky on zl.IdZastavky equals za.CisloZastavky
-                            select new { zl.TarifniCislo, za.JmenoZastavky};
-            int pocetZastavek = zastLinky.Count();
-            
+                            select za.JmenoZastavky)
+                            .ToArray();
+            int pocetZastavek = zastLinky.Length;
+
+            var spojeTam = from sp in Spoje where sp.IdLinky == linka && sp.Dopredu == dopredu
+                           select sp.CisloSpoje;
+            var pocetSpojuTam = spojeTam.Count();
+
+            var TabulkaTam = new List<string[]>();
+
+            TabulkaTam.Add(Enumerable.Range(0, pocetZastavek + 1).Cast<string>().ToArray());
+            TabulkaTam[0][0] = "Tč";
+
+            TabulkaTam.Add(new string[pocetZastavek + 1]);
+            Array.Copy(zastLinky, 0, TabulkaTam[1], 1, pocetZastavek);
+            int j = 2;
+            foreach(var sp in spojeTam)
+            {
+                var casyTam = 
+                from zs in ZasSpoje
+                where zs.IdLinky == linka && sp == zs.CisloSpoje //neni potreba volat znovu orderby
+                select zs.Cas;
+                TabulkaTam[j++] = casyTam.ToArray();
+            }
+            TabulkaTam[0][0] = "Tč";
+
             return vysledek;
         }
     }

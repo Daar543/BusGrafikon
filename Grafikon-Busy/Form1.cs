@@ -736,6 +736,8 @@ namespace Grafikon_Busy
             Parser.VytvorObjekty();
             Parser.MapujPevneKody();
             Parser.SeradVse();
+            Parser.PostavTabulku((805008, 1),true);
         }
+
     }
 }
