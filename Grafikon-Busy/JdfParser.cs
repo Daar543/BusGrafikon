@@ -40,22 +40,22 @@ namespace Grafikon_Busy
                 Zastavky[i] = new Zastavka(XZastavky[i]);
             }
             ZasSpoje = new ZasSpoj[XZasSpoje.Length];
-            for (int i = 0; i < XZastavky.Length; ++i)
+            for (int i = 0; i < ZasSpoje.Length; ++i)
             {
                 ZasSpoje[i] = new ZasSpoj(XZasSpoje[i]);
             }
             ZasLinky = new ZasLinka[XZasLinky.Length];
-            for (int i = 0; i < XZasLinky.Length; ++i)
+            for (int i = 0; i < ZasLinky.Length; ++i)
             {
                 ZasLinky[i] = new ZasLinka(XZasLinky[i]);
             }
             Spoje = new Spoj[XSpoje.Length];
-            for (int i = 0; i < XSpoje.Length; ++i)
+            for (int i = 0; i < Spoje.Length; ++i)
             {
                 Spoje[i] = new Spoj(XSpoje[i]);
             }
             Linky = new Linka[XLinky.Length];
-            for (int i = 0; i < XLinky.Length; ++i)
+            for (int i = 0; i < Linky.Length; ++i)
             {
                 Linky[i] = new Linka(XLinky[i]);
             }
@@ -88,7 +88,26 @@ namespace Grafikon_Busy
             //serad spoje
             //serad zastavky pod linkou
             Linky = this.Linky.OrderBy(linka => linka.IdLinky).ToArray();
-            Spoje = this.Spoje.OrderBy(spoj => spoj.IdLinky).ThenBy(spoj => !spoj.Dopredu).ThenBy(spoj => spoj.CisloSpoje).ToArray();
+            Spoje = this.Spoje.OrderBy(spoj => spoj.IdLinky).ThenByDescending(spoj => spoj.Dopredu)
+                .ThenBy(spoj => spoj.CisloSpoje).ToArray();
+            ZasLinky = this.ZasLinky.OrderBy(zasl => zasl.IdLinky).ThenBy(zasl => zasl.TarifniCislo).ToArray();
+            ZasSpoje = this.ZasSpoje.OrderBy(zasp => zasp.IdLinky).ThenBy(zasp => zasp.CisloSpoje)
+                .ThenBy(zasp => zasp.Dopredu? zasp.TarifniCislo : int.MaxValue - zasp.TarifniCislo) // = vzestupne podle sledu zastavek
+                .ToArray();
+        }
+        public string[][] PostavTabulku(ValueTuple<int,int>linka) //toto je v podstate uplne nejhloupejsi reseni - nadela tabulku z tech spoju, ktere jsme parsovali v jdf... ale kdyz funguje...
+        {
+            string[][] vysledek = default;
+            //throw new NotImplementedException();
+            //rozmery tabulky:
+            //2 + pocet zastavek (radky)
+            //2 + pocet spoju (sloupce)
+            var zastLinky = from zl in ZasLinky where zl.IdLinky == linka
+                            join za in Zastavky on zl.IdZastavky equals za.CisloZastavky
+                            select new { zl.TarifniCislo, za.JmenoZastavky};
+            int pocetZastavek = zastLinky.Count();
+            
+            return vysledek;
         }
     }
     interface IDLinka
@@ -112,17 +131,21 @@ namespace Grafikon_Busy
     class Zastavka
     {
 
-        int CisloZastavky { get; }
+        public int CisloZastavky { get; }
         string nazevObec { get; }
         string nazevCastObce { get; }
         string nazevBlizsiMisto { get; }
-        string JmenoZastavky { get => $"{nazevObec},{nazevCastObce},{nazevBlizsiMisto}".Trim(','); }
+        public string JmenoZastavky { get => $"{nazevObec},{nazevCastObce},{nazevBlizsiMisto}".Trim(','); }
         public Zastavka(string[] zast)
         {
             CisloZastavky = int.Parse(zast[0]);
             nazevObec = zast[1];
             nazevCastObce = zast[2];
             nazevBlizsiMisto = zast[3];
+        }
+        public override string ToString()
+        {
+            return this.JmenoZastavky;
         }
     }
     class Spoj : IDLinka
@@ -175,6 +198,7 @@ namespace Grafikon_Busy
         public int RozliseniLinky { get; }
         public (int, int) IdLinky { get; }
         public int CisloSpoje { get; }
+        public bool Dopredu { get => CisloSpoje % 2 == 1; }
         public int TarifniCislo { get; }
         public int IdZastavky { get; }
         public string Cas { get; }
@@ -189,4 +213,5 @@ namespace Grafikon_Busy
             Cas = zasp[11];
         }
     }
+
 }

@@ -41,8 +41,6 @@ namespace Grafikon_Busy
         public double Distance;
         public static Stop[] InvertDistances(string[] names, Stop[] original)
         {
-            int maxAmount = names.Length;
-            double maxDist = original[original.Length - 1].Distance;
             Stop[] result = new Stop[original.Length];
             for(int i = 0; i < original.Length; ++i)
             {

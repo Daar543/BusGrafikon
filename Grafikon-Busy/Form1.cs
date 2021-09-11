@@ -327,13 +327,6 @@ namespace Grafikon_Busy
         }
         private void AddConnection(Series s, string[] connectionTimes, Stop[] stops, bool forward, bool invert)
         {
-#if DEBUG
-            //forward = true;
-            if (!forward)
-            {
-
-            }
-#endif
             for (int i = 0; i < stops.Length; ++i)
             {
                 Stop Z = stops[i];
