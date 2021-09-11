@@ -737,8 +737,12 @@ namespace Grafikon_Busy
         private void btnJdfLoad_Click(object sender, EventArgs e)
         {
             var Parser = new JdfParser();
-            Parser.NactiVse(txbJdfLoad.Text);
-
+            string folder = txbJdfLoad.Text;
+            //check if folder exists
+            Parser.NactiVse(folder);
+            Parser.VytvorObjekty();
+            Parser.MapujPevneKody();
+            Parser.SeradVse();
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Grafikon_Busy
 {
     class JdfParser
     {
+        string[][] XLinky;
         string[][] XZastavky;
         string[][] XSpoje;
         string[][] XZasLinky;
@@ -16,19 +17,20 @@ namespace Grafikon_Busy
         string[][] PevneKody;
         Dictionary<string, string> PevneKodyDict;
 
+        Linka[] Linky;
         Zastavka[] Zastavky;
         Spoj[] Spoje;
         ZasLinka[] ZasLinky;
         ZasSpoj[] ZasSpoje;
         public void NactiVse(string slozka)
         {
-            XZastavky = SheetLoader.ReadCsvInput(slozka + "/Zastavky.txt", ';');
-            XZasSpoje = SheetLoader.ReadCsvInput(slozka + "/Zasspoje.txt", ';');
-            XZasLinky = SheetLoader.ReadCsvInput(slozka + "/Zaslinky.txt", ';');
-            PevneKody = SheetLoader.ReadCsvInput(slozka + "/Pevnykod.txt", ';');
-            XSpoje = SheetLoader.ReadCsvInput(slozka + "/Spoje.txt", ';');
+            XZastavky = SheetLoader.ReadCsvInput(slozka + "/Zastavky.txt", ',',';');
+            XZasSpoje = SheetLoader.ReadCsvInput(slozka + "/Zasspoje.txt", ',', ';');
+            XZasLinky = SheetLoader.ReadCsvInput(slozka + "/Zaslinky.txt", ',', ';');
+            PevneKody = SheetLoader.ReadCsvInput(slozka + "/Pevnykod.txt", ',', ';');
+            XSpoje = SheetLoader.ReadCsvInput(slozka + "/Spoje.txt", ',', ';');
+            XLinky = SheetLoader.ReadCsvInput(slozka + "/Linky.txt", ',', ';');
 
-            
         }
         public void VytvorObjekty()
         {
@@ -51,6 +53,11 @@ namespace Grafikon_Busy
             for (int i = 0; i < XSpoje.Length; ++i)
             {
                 Spoje[i] = new Spoj(XSpoje[i]);
+            }
+            Linky = new Linka[XLinky.Length];
+            for (int i = 0; i < XLinky.Length; ++i)
+            {
+                Linky[i] = new Linka(XLinky[i]);
             }
             /*Zastavky = new Zastavka[XZastavky.Length];
             for (int i = 0; i < XZastavky.Length; ++i)
@@ -75,12 +82,32 @@ namespace Grafikon_Busy
                 }
             }
         }
+        public void SeradVse()
+        {
+            //seard linky
+            //serad spoje
+            //serad zastavky pod linkou
+            Linky = this.Linky.OrderBy(linka => linka.IdLinky).ToArray();
+            Spoje = this.Spoje.OrderBy(spoj => spoj.IdLinky).ThenBy(spoj => !spoj.Dopredu).ThenBy(spoj => spoj.CisloSpoje).ToArray();
+        }
     }
     interface IDLinka
     {
         int CisloLinky { get; }
         int RozliseniLinky { get; }
         (int, int) IdLinky { get; }
+    }
+    class Linka : IDLinka
+    {
+        public int CisloLinky { get; }
+        public int RozliseniLinky { get; }
+        public (int, int) IdLinky { get => new ValueTuple<int, int>(CisloLinky, RozliseniLinky); }
+
+        public Linka(string[] link)
+        {
+            CisloLinky = int.Parse(link[0]);
+            RozliseniLinky = int.Parse(link[18]);
+        }
     }
     class Zastavka
     {
@@ -120,6 +147,10 @@ namespace Grafikon_Busy
                     Kody.Add(spoj[i]);
                 }
             }
+        }
+        public override string ToString()
+        {
+            return $"Spoj {IdLinky}/{CisloSpoje}";
         }
     }
     class ZasLinka : IDLinka
