@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.BusChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btnRenderBoth = new System.Windows.Forms.Button();
             this.btnChooseLine = new System.Windows.Forms.Button();
@@ -44,6 +44,7 @@
             this.chbSunday = new System.Windows.Forms.CheckBox();
             this.chbSchoolHoliday = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.chbHourLine = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.nudStopDist = new System.Windows.Forms.NumericUpDown();
             this.btnExport = new System.Windows.Forms.Button();
@@ -70,7 +71,8 @@
             this.textboxInfoHoliday = new System.Windows.Forms.TextBox();
             this.holidayNegativ = new System.Windows.Forms.TextBox();
             this.holidayPositive = new System.Windows.Forms.TextBox();
-            this.chbHourLine = new System.Windows.Forms.CheckBox();
+            this.btnJdfLoad = new System.Windows.Forms.Button();
+            this.txbJdfLoad = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.BusChart)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudStopDist)).BeginInit();
@@ -81,17 +83,17 @@
             // 
             // BusChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.BusChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.BusChart.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.BusChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.BusChart.Legends.Add(legend1);
             this.BusChart.Location = new System.Drawing.Point(13, 11);
             this.BusChart.Margin = new System.Windows.Forms.Padding(4);
             this.BusChart.Name = "BusChart";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.BusChart.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.BusChart.Series.Add(series1);
             this.BusChart.Size = new System.Drawing.Size(539, 528);
             this.BusChart.TabIndex = 0;
             this.BusChart.Text = "BusChart";
@@ -233,6 +235,8 @@
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.txbJdfLoad);
+            this.panel2.Controls.Add(this.btnJdfLoad);
             this.panel2.Controls.Add(this.chbHourLine);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.nudStopDist);
@@ -276,6 +280,16 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(541, 526);
             this.panel2.TabIndex = 14;
+            // 
+            // chbHourLine
+            // 
+            this.chbHourLine.AutoSize = true;
+            this.chbHourLine.Location = new System.Drawing.Point(275, 212);
+            this.chbHourLine.Name = "chbHourLine";
+            this.chbHourLine.Size = new System.Drawing.Size(145, 21);
+            this.chbHourLine.TabIndex = 39;
+            this.chbHourLine.Text = "Zobraz čáry hodin";
+            this.chbHourLine.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -555,7 +569,7 @@
             // 
             // textboxInfoHoliday
             // 
-            this.textboxInfoHoliday.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.textboxInfoHoliday.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.textboxInfoHoliday.Enabled = false;
             this.textboxInfoHoliday.Location = new System.Drawing.Point(158, 4);
             this.textboxInfoHoliday.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -567,7 +581,7 @@
             // 
             // holidayNegativ
             // 
-            this.holidayNegativ.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.holidayNegativ.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.holidayNegativ.Location = new System.Drawing.Point(158, 167);
             this.holidayNegativ.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.holidayNegativ.Multiline = true;
@@ -579,8 +593,7 @@
             // 
             // holidayPositive
             // 
-            this.holidayPositive.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.holidayPositive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.holidayPositive.Location = new System.Drawing.Point(158, 115);
             this.holidayPositive.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.holidayPositive.Multiline = true;
@@ -590,15 +603,24 @@
             this.holidayPositive.Text = "18 19";
             this.holidayPositive.TextChanged += new System.EventHandler(this.holidayPositive_TextChanged);
             // 
-            // chbHourLine
+            // btnJdfLoad
             // 
-            this.chbHourLine.AutoSize = true;
-            this.chbHourLine.Location = new System.Drawing.Point(275, 212);
-            this.chbHourLine.Name = "chbHourLine";
-            this.chbHourLine.Size = new System.Drawing.Size(145, 21);
-            this.chbHourLine.TabIndex = 39;
-            this.chbHourLine.Text = "Zobraz čáry hodin";
-            this.chbHourLine.UseVisualStyleBackColor = true;
+            this.btnJdfLoad.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnJdfLoad.Location = new System.Drawing.Point(275, 4);
+            this.btnJdfLoad.Name = "btnJdfLoad";
+            this.btnJdfLoad.Size = new System.Drawing.Size(106, 59);
+            this.btnJdfLoad.TabIndex = 40;
+            this.btnJdfLoad.Text = "Načti JDF složku";
+            this.btnJdfLoad.UseVisualStyleBackColor = true;
+            this.btnJdfLoad.Click += new System.EventHandler(this.btnJdfLoad_Click);
+            // 
+            // txbJdfLoad
+            // 
+            this.txbJdfLoad.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.txbJdfLoad.Location = new System.Drawing.Point(280, 73);
+            this.txbJdfLoad.Name = "txbJdfLoad";
+            this.txbJdfLoad.Size = new System.Drawing.Size(100, 22);
+            this.txbJdfLoad.TabIndex = 41;
             // 
             // Form1
             // 
@@ -665,6 +687,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown nudStopDist;
         private System.Windows.Forms.CheckBox chbHourLine;
+        private System.Windows.Forms.TextBox txbJdfLoad;
+        private System.Windows.Forms.Button btnJdfLoad;
     }
 }
 

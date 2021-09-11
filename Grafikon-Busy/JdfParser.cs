@@ -20,8 +20,7 @@ namespace Grafikon_Busy
         Spoj[] Spoje;
         ZasLinka[] ZasLinky;
         ZasSpoj[] ZasSpoje;
-
-        private void NactiVse(string slozka)
+        public void NactiVse(string slozka)
         {
             XZastavky = SheetLoader.ReadCsvInput(slozka + "/Zastavky.txt", ';');
             XZasSpoje = SheetLoader.ReadCsvInput(slozka + "/Zasspoje.txt", ';');
@@ -31,7 +30,7 @@ namespace Grafikon_Busy
 
             
         }
-        private void VytvorObjekty()
+        public void VytvorObjekty()
         {
             Zastavky = new Zastavka[XZastavky.Length];
             for(int i = 0; i<XZastavky.Length;++i)
@@ -59,12 +58,12 @@ namespace Grafikon_Busy
                 Zastavky[i] = new Zastavka(XZastavky[i]);
             }*/
         }
-        private void MapujPevneKody()
+        public void MapujPevneKody()
         {
-            PevneKodyDict = new Dictionary<int, string>();
+            PevneKodyDict = new Dictionary<string, string>();
             foreach(string[]line in PevneKody)
             {
-                int kod = int.Parse(line[0]);
+                string kod = line[0];
                 string znacka = line[1];
                 PevneKodyDict[kod] = znacka;
             }

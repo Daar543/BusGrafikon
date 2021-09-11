@@ -26,8 +26,9 @@ namespace Grafikon_Busy
             CheckBoxesBack = new List<CheckBox>() { chbWorkdayBack, chbSchoolHolidayBack, chbSaturdayBack, chbSundayBack, chbToursB }.AsReadOnly();
 
 #if DEBUG
-            this.textBoxLineBack.Text = "JR/Text/802360-Z.txt";
-            this.textBoxLine.Text = "JR/Text/802360-T.txt";
+            this.textBoxLineBack.Text = "JR/Text/802365-Z.txt";
+            this.textBoxLine.Text = "JR/Text/802365-T.txt";
+            this.txbJdfLoad.Text = "JR/Jdf/805008-2021";
 #endif
         }
 
@@ -731,6 +732,13 @@ namespace Grafikon_Busy
         private void btnExport_Click(object sender, EventArgs e)
         {
             BusChart.Printing.Print(true);
+        }
+
+        private void btnJdfLoad_Click(object sender, EventArgs e)
+        {
+            var Parser = new JdfParser();
+            Parser.NactiVse(txbJdfLoad.Text);
+
         }
     }
 }
