@@ -160,6 +160,16 @@
     <Content Include="JR\805008-Z.txt" />
     <Content Include="JR\805009-T.txt" />
     <Content Include="JR\805009-Z.txt" />
+    <Content Include="JR\Jdf\805008-2021\Caskody.txt" />
+    <Content Include="JR\Jdf\805008-2021\Dopravci.txt" />
+    <Content Include="JR\Jdf\805008-2021\Linky.txt" />
+    <Content Include="JR\Jdf\805008-2021\Pevnykod.txt" />
+    <Content Include="JR\Jdf\805008-2021\Spoje.txt" />
+    <Content Include="JR\Jdf\805008-2021\Udaje.txt" />
+    <Content Include="JR\Jdf\805008-2021\VerzeJDF.txt" />
+    <Content Include="JR\Jdf\805008-2021\Zaslinky.txt" />
+    <Content Include="JR\Jdf\805008-2021\Zasspoje.txt" />
+    <Content Include="JR\Jdf\805008-2021\Zastavky.txt" />
     <Content Include="JR\Text\100180-T.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

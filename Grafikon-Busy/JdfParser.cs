@@ -24,7 +24,7 @@ namespace Grafikon_Busy
         ZasSpoj[] ZasSpoje;
         public void NactiVse(string slozka)
         {
-            XZastavky = SheetLoader.ReadCsvInput(slozka + "/Zastavky.txt", ',',';');
+            XZastavky = SheetLoader.ReadCsvInput(slozka + "/Zastavky.txt", ',', ';');
             XZasSpoje = SheetLoader.ReadCsvInput(slozka + "/Zasspoje.txt", ',', ';');
             XZasLinky = SheetLoader.ReadCsvInput(slozka + "/Zaslinky.txt", ',', ';');
             PevneKody = SheetLoader.ReadCsvInput(slozka + "/Pevnykod.txt", ',', ';');
@@ -32,51 +32,43 @@ namespace Grafikon_Busy
             XLinky = SheetLoader.ReadCsvInput(slozka + "/Linky.txt", ',', ';');
 
         }
+        /// <summary>
+        /// Converts csv into array of objects; 
+        /// due to C# inability to provide non-default constructor for generic arguments, uses factory method as delegate
+        /// </summary>
+        /// <typeparam name="O"></typeparam>
+        /// <param name="csv"></param>
+        /// <param name="Create"></param>
+        /// <returns></returns>
+        public O[] NahazejObjekt<O>(string[][] csv, Func<string[], O> Create)
+        {
+            var vysledek = new O[csv.Length];
+            for (int i = 0; i < csv.Length; ++i)
+            {
+                vysledek[i] = Create(csv[i]);
+            }
+            return vysledek;
+        }
         public void VytvorObjekty()
         {
-            Zastavky = new Zastavka[XZastavky.Length];
-            for(int i = 0; i<XZastavky.Length;++i)
-            {
-                Zastavky[i] = new Zastavka(XZastavky[i]);
-            }
-            ZasSpoje = new ZasSpoj[XZasSpoje.Length];
-            for (int i = 0; i < ZasSpoje.Length; ++i)
-            {
-                ZasSpoje[i] = new ZasSpoj(XZasSpoje[i]);
-            }
-            ZasLinky = new ZasLinka[XZasLinky.Length];
-            for (int i = 0; i < ZasLinky.Length; ++i)
-            {
-                ZasLinky[i] = new ZasLinka(XZasLinky[i]);
-            }
-            Spoje = new Spoj[XSpoje.Length];
-            for (int i = 0; i < Spoje.Length; ++i)
-            {
-                Spoje[i] = new Spoj(XSpoje[i]);
-            }
-            Linky = new Linka[XLinky.Length];
-            for (int i = 0; i < Linky.Length; ++i)
-            {
-                Linky[i] = new Linka(XLinky[i]);
-            }
-            /*Zastavky = new Zastavka[XZastavky.Length];
-            for (int i = 0; i < XZastavky.Length; ++i)
-            {
-                Zastavky[i] = new Zastavka(XZastavky[i]);
-            }*/
+            Linky = NahazejObjekt(XLinky, Linka.Create);
+            Zastavky = NahazejObjekt(XZastavky, Zastavka.Create);
+            Spoje = NahazejObjekt(XSpoje, Spoj.Create);
+            ZasLinky = NahazejObjekt(XZasLinky, ZasLinka.Create);
+            ZasSpoje = NahazejObjekt(XZasSpoje, ZasSpoj.Create);
         }
         public void MapujPevneKody()
         {
             PevneKodyDict = new Dictionary<string, string>();
-            foreach(string[]line in PevneKody)
+            foreach (string[] line in PevneKody)
             {
                 string kod = line[0];
                 string znacka = line[1];
                 PevneKodyDict[kod] = znacka;
             }
-            foreach(var sp in Spoje)
+            foreach (var sp in Spoje)
             {
-                for(int i = 0; i < sp.Kody.Count; ++i)
+                for (int i = 0; i < sp.Kody.Count; ++i)
                 {
                     sp.Kody[i] = PevneKodyDict[sp.Kody[i]];
                 }
@@ -108,6 +100,7 @@ namespace Grafikon_Busy
                             select za.JmenoZastavky)
                             .ToArray();
             int pocetZastavek = zastLinky.Length;
+            int velikostRadku = pocetZastavek + 2;
 
             var spojeTam = from sp in Spoje where sp.IdLinky == linka && sp.Dopredu == dopredu
                            select sp.CisloSpoje;
@@ -115,21 +108,59 @@ namespace Grafikon_Busy
 
             var TabulkaTam = new List<string[]>();
 
-            TabulkaTam.Add(Enumerable.Range(0, pocetZastavek + 1).Cast<string>().ToArray());
+            TabulkaTam.Add(Enumerable.Range(0, pocetZastavek + 1).Select(x=>x.ToString()).ToArray());
             TabulkaTam[0][0] = "Tč";
 
             TabulkaTam.Add(new string[pocetZastavek + 1]);
             Array.Copy(zastLinky, 0, TabulkaTam[1], 1, pocetZastavek);
-            int j = 2;
-            foreach(var sp in spojeTam)
+
+            var zacatkySpoju = (
+                from zs in ZasSpoje
+                where zs.IdLinky == linka
+                group zs by zs.CisloSpoje into zsp
+                select zsp.Min(zp => zp.Dopredu ? zp.TarifniCislo : pocetZastavek + 1 - zp.TarifniCislo)
+                ).ToArray();
+
+            var konceSpoju = (
+                from zs in ZasSpoje
+                where zs.IdLinky == linka
+                group zs by zs.CisloSpoje into zsp
+                select zsp.Max(zp => zp.Dopredu ? zp.TarifniCislo : pocetZastavek + 1 - zp.TarifniCislo)
+                ).ToArray();
+            foreach (var x in zacatkySpoju)
+            {
+                Console.WriteLine(x);
+            }
+            foreach (var y in konceSpoju)
+            {
+                Console.WriteLine(y);
+            }
+
+            int i = 0x00;
+            foreach (var sp in spojeTam)
             {
                 var casyTam = 
                 from zs in ZasSpoje
                 where zs.IdLinky == linka && sp == zs.CisloSpoje //neni potreba volat znovu orderby
                 select zs.Cas;
-                TabulkaTam[j++] = casyTam.ToArray();
+
+                var zacatek = zacatkySpoju[i]+1;
+                var konec = konceSpoju[i++]+1;
+
+                var radek = new string[velikostRadku];
+
+                int j = zacatek;
+                foreach(var x in casyTam)
+                {
+                    radek[j++] = x;
+                }
+                if (j != konec + 1)
+                {
+                    throw new IndexOutOfRangeException("Spoj neni kompletne uveden v tabulce");
+                }
+                TabulkaTam.Add(radek);
             }
-            TabulkaTam[0][0] = "Tč";
+            
 
             return vysledek;
         }
@@ -151,6 +182,11 @@ namespace Grafikon_Busy
             CisloLinky = int.Parse(link[0]);
             RozliseniLinky = int.Parse(link[18]);
         }
+
+        internal static Linka Create(string[] arg)
+        {
+            return new Linka(arg);
+        }
     }
     class Zastavka
     {
@@ -170,6 +206,11 @@ namespace Grafikon_Busy
         public override string ToString()
         {
             return this.JmenoZastavky;
+        }
+
+        internal static Zastavka Create(string[] arg)
+        {
+            return new Zastavka(arg);
         }
     }
     class Spoj : IDLinka
@@ -199,6 +240,11 @@ namespace Grafikon_Busy
         {
             return $"Spoj {IdLinky}/{CisloSpoje}";
         }
+
+        internal static Spoj Create(string[] arg)
+        {
+            return new Spoj(arg);
+        }
     }
     class ZasLinka : IDLinka
     {
@@ -215,6 +261,11 @@ namespace Grafikon_Busy
             TarifniCislo = int.Parse(zasl[1]);
             IdZastavky = int.Parse(zasl[3]);
         }
+
+        internal static ZasLinka Create(string[] arg)
+        {
+            return new ZasLinka(arg);
+        }
     }
     class ZasSpoj : IDLinka
     {
@@ -226,6 +277,7 @@ namespace Grafikon_Busy
         public int TarifniCislo { get; }
         public int IdZastavky { get; }
         public string Cas { get; }
+        public string Kilometry { get; }
         public ZasSpoj(string[] zasp)
         {
             CisloLinky = int.Parse(zasp[0]);
@@ -234,7 +286,20 @@ namespace Grafikon_Busy
             CisloSpoje = int.Parse(zasp[1]);
             TarifniCislo = int.Parse(zasp[2]);
             IdZastavky = int.Parse(zasp[3]);
-            Cas = zasp[11];
+            Kilometry = zasp[9];
+
+            if (zasp[11] != "")
+                Cas = zasp[11];
+            else if (zasp[10] != "")
+                Cas = zasp[10];
+            else
+                throw new ArgumentException("Neni cas uveden");
+            
+        }
+
+        internal static ZasSpoj Create(string[] arg)
+        {
+            return new ZasSpoj(arg);
         }
     }
 
