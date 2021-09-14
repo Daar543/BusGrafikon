@@ -55,7 +55,14 @@ namespace Grafikon_Busy
 
     public static class ArrayExtensions
     {
-
+        public static T[] PopulateWith<T>(this T[]arr,T content)
+        {
+            for(int i = 0; i < arr.Length; ++i)
+            {
+                arr[i] = content;
+            }
+            return arr;
+        }
         /// <summary>
         /// Enumerate 2D array by rows
         /// </summary>
@@ -74,8 +81,15 @@ namespace Grafikon_Busy
         /// <param name="target"></param>
         /// <param name="compared"></param>
         /// <returns></returns>
-        public static bool Equals<T>(this T[]target, T[] compared)
+        public static bool IsEqualTo<T>(this T[]target, T[] compared)
         {
+            if(target is null)
+            {
+                if (compared is null)
+                    return true;
+                else 
+                    return false;
+            }
             if (target.Length != compared.Length)
                 return false;
             for (int i = 0; i < target.Length; ++i)
@@ -132,8 +146,19 @@ namespace Grafikon_Busy
             return subString.Equals(checkArray);
         }
     }
-    
 
+    public class ArrayComparisons<ItemType> : IEqualityComparer<ItemType[]>
+    {
+        public bool Equals(ItemType[] x, ItemType[] y)
+        {
+            return x.IsEqualTo(y);
+        }
+
+        public int GetHashCode(ItemType[] obj)
+        {
+            return obj.GetHashCode();
+        }
+    }
     public static class ArrayCalculations
     {
         /// <summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -29,6 +30,9 @@ namespace Grafikon_Busy
             this.textBoxLineBack.Text = "JR/Text/802365-Z.txt";
             this.textBoxLine.Text = "JR/Text/802365-T.txt";
             this.txbJdfLoad.Text = "JR/Jdf/805008-2021";
+
+            Thread.Sleep(1000);
+            btnJdfLoad_Click(null, EventArgs.Empty);
 #endif
         }
 

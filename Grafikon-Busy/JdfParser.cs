@@ -89,18 +89,17 @@ namespace Grafikon_Busy
         }
         public string[][] PostavTabulku(ValueTuple<int,int>linka,bool dopredu) //toto je v podstate uplne nejhloupejsi reseni - nadela tabulku z tech spoju, ktere jsme parsovali v jdf... ale kdyz funguje...
         {
-            string[][] vysledek = default;
-            //throw new NotImplementedException();
             //rozmery tabulky:
             //2 + pocet zastavek (radky)
             //2 + pocet spoju (sloupce)
+            const int velikostZahlavi = 2;
             var zastLinky = (from zl in ZasLinky
                             where zl.IdLinky == linka
                             join za in Zastavky on zl.IdZastavky equals za.CisloZastavky
                             select za.JmenoZastavky)
                             .ToArray();
             int pocetZastavek = zastLinky.Length;
-            int velikostRadku = pocetZastavek + 2;
+            int velikostRadku = pocetZastavek + velikostZahlavi;
 
             var spojeTam = from sp in Spoje where sp.IdLinky == linka && sp.Dopredu == dopredu
                            select sp.CisloSpoje;
@@ -108,61 +107,70 @@ namespace Grafikon_Busy
 
             var TabulkaTam = new List<string[]>();
 
-            TabulkaTam.Add(Enumerable.Range(0, pocetZastavek + 1).Select(x=>x.ToString()).ToArray());
+            TabulkaTam.Add(Enumerable.Range(1 - velikostZahlavi, velikostRadku).Select(x=>x.ToString()).ToArray());
             TabulkaTam[0][0] = "Tč";
 
-            TabulkaTam.Add(new string[pocetZastavek + 1]);
+            TabulkaTam.Add(new string[velikostRadku].PopulateWith(""));
             Array.Copy(zastLinky, 0, TabulkaTam[1], 1, pocetZastavek);
 
             var zacatkySpoju = (
                 from zs in ZasSpoje
-                where zs.IdLinky == linka
+                where zs.IdLinky == linka && zs.Dopredu == dopredu //orderby zs.CisloSpoje
                 group zs by zs.CisloSpoje into zsp
                 select zsp.Min(zp => zp.Dopredu ? zp.TarifniCislo : pocetZastavek + 1 - zp.TarifniCislo)
                 ).ToArray();
 
             var konceSpoju = (
                 from zs in ZasSpoje
-                where zs.IdLinky == linka
+                where zs.IdLinky == linka && zs.Dopredu == dopredu //orderby zs.CisloSpoje
                 group zs by zs.CisloSpoje into zsp
                 select zsp.Max(zp => zp.Dopredu ? zp.TarifniCislo : pocetZastavek + 1 - zp.TarifniCislo)
                 ).ToArray();
-            foreach (var x in zacatkySpoju)
-            {
-                Console.WriteLine(x);
-            }
-            foreach (var y in konceSpoju)
-            {
-                Console.WriteLine(y);
-            }
 
-            int i = 0x00;
+            //Pro kazdy spoj nyni udelame casove a kilometricke udaje (km udaje mohou byt stejne pro ruzne spoje
+            //proto nejprve delam  hashset), prvni dva radky nechame prazdne
+
+            var kilometraze = new HashSet<string[]>(new ArrayComparisons<string>()); //pole je ref typ, takze musim dat vlastni porovnani
+
+            int i = 0;
             foreach (var sp in spojeTam)
             {
                 var casyTam = 
                 from zs in ZasSpoje
-                where zs.IdLinky == linka && sp == zs.CisloSpoje //neni potreba volat znovu orderby
-                select zs.Cas;
+                where zs.IdLinky == linka && sp == zs.CisloSpoje
+                select new { zs.TarifniCislo, zs.Cas, zs.Kilometry };
 
                 var zacatek = zacatkySpoju[i]+1;
                 var konec = konceSpoju[i++]+1;
 
-                var radek = new string[velikostRadku];
+                var radek = new string[velikostRadku].PopulateWith("");
+                var kilometry = new string[velikostRadku].PopulateWith("");
+                kilometry[0] = "km";// for (int j = zacatek; j <= konec; ++j) kilometry[j] = "<";
 
-                int j = zacatek;
                 foreach(var x in casyTam)
                 {
-                    radek[j++] = x;
-                }
-                if (j != konec + 1)
-                {
-                    throw new IndexOutOfRangeException("Spoj neni kompletne uveden v tabulce");
+                    int j = dopredu ? x.TarifniCislo + velikostZahlavi - 1 : pocetZastavek - x.TarifniCislo - 1 + velikostZahlavi;
+                    radek[j] = x.Cas;
+                    kilometry[j] = x.Kilometry==""?"<":x.Kilometry;
                 }
                 TabulkaTam.Add(radek);
+                kilometraze.Add(kilometry);
             }
-            
+            foreach(var km in kilometraze)
+            {
+                TabulkaTam.Add(km);
+            }
 
-            return vysledek;
+            //Pridej zahlavi
+            i = 2;
+            foreach(var csp in spojeTam)
+            {
+                TabulkaTam[i][0] = "Spoj " + csp.ToString();
+            }
+
+            //Pridej omezeni
+
+            return TabulkaTam.ToArray();
         }
     }
     interface IDLinka
