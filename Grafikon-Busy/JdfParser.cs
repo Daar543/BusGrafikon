@@ -130,7 +130,7 @@ namespace Grafikon_Busy
             //Pro kazdy spoj nyni udelame casove a kilometricke udaje (km udaje mohou byt stejne pro ruzne spoje
             //proto nejprve delam  hashset), prvni dva radky nechame prazdne
 
-            var kilometraze = new HashSet<string[]>(new ArrayComparisons<string>()); //pole je ref typ, takze musim dat vlastni porovnani
+            var kilometraze = new HashSet<string[]>(new StringArrComparer()); //pole je ref typ, takze musim dat vlastni porovnani
 
             int i = 0;
             foreach (var sp in spojeTam)

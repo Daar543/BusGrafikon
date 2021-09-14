@@ -147,16 +147,40 @@ namespace Grafikon_Busy
         }
     }
 
-    public class ArrayComparisons<ItemType> : IEqualityComparer<ItemType[]>
+    public class StringArrComparer: IEqualityComparer<string[]>
     {
-        public bool Equals(ItemType[] x, ItemType[] y)
+        public bool Equals(string[] x, string[] y)
         {
             return x.IsEqualTo(y);
         }
 
-        public int GetHashCode(ItemType[] obj)
+        public int GetHashCode(string[] arr)
         {
-            return obj.GetHashCode();
+            int maxLength = Math.Min(30,arr.Length); //Max x iterations, so the hc is not calculated that long
+            int hc = 17;
+            for(int i = 0; i<maxLength;++i)
+            {
+                string str = arr[i];
+                int x;
+                int y;
+                if (str is null)
+                {
+                    x = 0; y = 1;
+                }
+                else if (str == "")
+                {
+                    x = 2; y = 3;
+                }
+                else
+                {
+                    x = str[0];
+                    y = str[str.Length - 1];
+                }
+                
+                hc *= 37;
+                hc += x + 11 * y;
+            }
+            return hc;
         }
     }
     public static class ArrayCalculations
