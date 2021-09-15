@@ -674,7 +674,7 @@ namespace Grafikon_Busy
                     }
                     else
                     {
-                        RenderGraphicon(TableFront.Concat(TableBack), StopsF, null, StopsDistsB[slidToursB.Value], RenderMode.Both);
+                        RenderGraphicon(TableFront.Concat(TableBack), StopsB, null, StopsDistsB[slidToursB.Value], RenderMode.Both);
                     }
                 }
             }
@@ -736,11 +736,22 @@ namespace Grafikon_Busy
             var Parser = new JdfParser();
             string folder = txbJdfLoad.Text;
             //check if folder exists
-            Parser.NactiVse(folder);
-            Parser.VytvorObjekty();
-            Parser.MapujPevneKody();
-            Parser.SeradVse();
-            /*/var tabulka1 = Parser.PostavTabulku((805008, 1), true);
+            Parser.NactiAPriprav(folder);
+            string[] linky = Parser.VypisLinky();
+            if (linky is null || linky.Length==0)
+            {
+                MessageBox.Show("Žádnou linku z JDF se nepodařilo načíst", "Chybný vstup", MessageBoxButtons.OK);
+                return;
+            }
+            cbxVyberLinky.BeginUpdate();
+            foreach(var ln in linky)
+            {
+                cbxVyberLinky.Items.Add(ln);
+            }
+            cbxVyberLinky.EndUpdate();
+
+            /**/
+            var tabulka1 = Parser.PostavTabulku((805008, 1), true);
             TimeTableF = new TimeTableParser(tabulka1, holidayPositive.Text, holidayNegativ.Text);
             btnLoadDistsF.Enabled = true;/**/
 

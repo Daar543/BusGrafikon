@@ -22,7 +22,7 @@ namespace Grafikon_Busy
         Spoj[] Spoje;
         ZasLinka[] ZasLinky;
         ZasSpoj[] ZasSpoje;
-        public void NactiVse(string slozka)
+        private void NactiVse(string slozka)
         {
             XZastavky = SheetLoader.ReadCsvInput(slozka + "/Zastavky.txt", ',', ';');
             XZasSpoje = SheetLoader.ReadCsvInput(slozka + "/Zasspoje.txt", ',', ';');
@@ -40,7 +40,7 @@ namespace Grafikon_Busy
         /// <param name="csv"></param>
         /// <param name="Create"></param>
         /// <returns></returns>
-        public O[] NahazejObjekt<O>(string[][] csv, Func<string[], O> Create)
+        public static O[] NahazejObjekt<O>(string[][] csv, Func<string[], O> Create)
         {
             var vysledek = new O[csv.Length];
             for (int i = 0; i < csv.Length; ++i)
@@ -49,7 +49,7 @@ namespace Grafikon_Busy
             }
             return vysledek;
         }
-        public void VytvorObjekty()
+        private void VytvorObjekty()
         {
             Linky = NahazejObjekt(XLinky, Linka.Create);
             Zastavky = NahazejObjekt(XZastavky, Zastavka.Create);
@@ -57,7 +57,7 @@ namespace Grafikon_Busy
             ZasLinky = NahazejObjekt(XZasLinky, ZasLinka.Create);
             ZasSpoje = NahazejObjekt(XZasSpoje, ZasSpoj.Create);
         }
-        public void MapujPevneKody()
+        private void MapujPevneKody()
         {
             PevneKodyDict = new Dictionary<string, string>();
             foreach (string[] line in PevneKody)
@@ -74,11 +74,12 @@ namespace Grafikon_Busy
                 }
             }
         }
-        public void SeradVse()
+        private void SeradVse()
         {
             //seard linky
             //serad spoje
             //serad zastavky pod linkou
+            //serad zastavky na spojich
             Linky = this.Linky.OrderBy(linka => linka.IdLinky).ToArray();
             Spoje = this.Spoje.OrderBy(spoj => spoj.IdLinky).ThenByDescending(spoj => spoj.Dopredu)
                 .ThenBy(spoj => spoj.CisloSpoje).ToArray();
@@ -86,6 +87,17 @@ namespace Grafikon_Busy
             ZasSpoje = this.ZasSpoje.OrderBy(zasp => zasp.IdLinky).ThenBy(zasp => zasp.CisloSpoje)
                 .ThenBy(zasp => zasp.Dopredu? zasp.TarifniCislo : int.MaxValue - zasp.TarifniCislo) // = vzestupne podle sledu zastavek
                 .ToArray();
+        }
+        public string[] VypisLinky()
+        {
+            if (this.Linky == null)
+                return null;
+            string[] ln = new string[Linky.Length];
+            for(int i = 0; i < Linky.Length; ++i)
+            {
+                ln[i] = Linky[i].ToString();
+            }
+            return ln;
         }
         public string[][] PostavTabulku(ValueTuple<int,int>linka,bool dopredu) //toto je v podstate uplne nejhloupejsi reseni - nadela tabulku z tech spoju, ktere jsme parsovali v jdf... ale kdyz funguje...
         {
@@ -179,9 +191,20 @@ namespace Grafikon_Busy
                 i += 1;
             }
 
-            //Pridej omezeni
-
             return TabulkaTam.ToArray();
+        }
+        /// <summary>
+        /// Nacte cely JDF podle jednotlivych funkci
+        /// </summary>
+        /// <returns></returns>
+        public bool NactiAPriprav(string slozka)
+        {
+            NactiVse(slozka);
+            VytvorObjekty();
+            MapujPevneKody();
+            SeradVse();
+
+            return true;
         }
     }
     interface IDLinka
@@ -205,6 +228,10 @@ namespace Grafikon_Busy
         internal static Linka Create(string[] arg)
         {
             return new Linka(arg);
+        }
+        public override string ToString()
+        {
+            return IdLinky.ToString();
         }
     }
     class Zastavka

@@ -73,6 +73,8 @@
             this.textboxInfoHoliday = new System.Windows.Forms.TextBox();
             this.holidayNegativ = new System.Windows.Forms.TextBox();
             this.holidayPositive = new System.Windows.Forms.TextBox();
+            this.btnChooseJdfLine = new System.Windows.Forms.Button();
+            this.cbxVyberLinky = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.BusChart)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudStopDist)).BeginInit();
@@ -233,6 +235,8 @@
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.cbxVyberLinky);
+            this.panel2.Controls.Add(this.btnChooseJdfLine);
             this.panel2.Controls.Add(this.txbJdfLoad);
             this.panel2.Controls.Add(this.btnJdfLoad);
             this.panel2.Controls.Add(this.chbHourLine);
@@ -592,7 +596,7 @@
             this.textboxInfoHoliday.Name = "textboxInfoHoliday";
             this.textboxInfoHoliday.Size = new System.Drawing.Size(88, 88);
             this.textboxInfoHoliday.TabIndex = 14;
-            this.textboxInfoHoliday.Text = "Značky pro prázdniny (odděluj mezerou): nahoře pozitivní, dole negativní";
+            this.textboxInfoHoliday.Text = "Značky pro prázdniny (odděluj mezerou): nahoře \"jede\", dole \"nejede\"\r\n";
             // 
             // holidayNegativ
             // 
@@ -617,6 +621,23 @@
             this.holidayPositive.TabIndex = 12;
             this.holidayPositive.Text = "18 19";
             this.holidayPositive.TextChanged += new System.EventHandler(this.holidayPositive_TextChanged);
+            // 
+            // btnChooseJdfLine
+            // 
+            this.btnChooseJdfLine.Location = new System.Drawing.Point(210, 82);
+            this.btnChooseJdfLine.Name = "btnChooseJdfLine";
+            this.btnChooseJdfLine.Size = new System.Drawing.Size(74, 44);
+            this.btnChooseJdfLine.TabIndex = 42;
+            this.btnChooseJdfLine.Text = "Zvol linku z JDF";
+            this.btnChooseJdfLine.UseVisualStyleBackColor = true;
+            // 
+            // cbxVyberLinky
+            // 
+            this.cbxVyberLinky.FormattingEnabled = true;
+            this.cbxVyberLinky.Location = new System.Drawing.Point(189, 131);
+            this.cbxVyberLinky.Name = "cbxVyberLinky";
+            this.cbxVyberLinky.Size = new System.Drawing.Size(121, 21);
+            this.cbxVyberLinky.TabIndex = 43;
             // 
             // Form1
             // 
@@ -684,6 +705,8 @@
         private System.Windows.Forms.CheckBox chbHourLine;
         private System.Windows.Forms.TextBox txbJdfLoad;
         private System.Windows.Forms.Button btnJdfLoad;
+        private System.Windows.Forms.ComboBox cbxVyberLinky;
+        private System.Windows.Forms.Button btnChooseJdfLine;
     }
 }
 
