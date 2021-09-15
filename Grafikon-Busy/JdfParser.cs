@@ -88,14 +88,25 @@ namespace Grafikon_Busy
                 .ThenBy(zasp => zasp.Dopredu? zasp.TarifniCislo : int.MaxValue - zasp.TarifniCislo) // = vzestupne podle sledu zastavek
                 .ToArray();
         }
-        public string[] VypisLinky()
+        public string[] VypisLinkyStr()
         {
             if (this.Linky == null)
                 return null;
-            string[] ln = new string[Linky.Length];
+            var ln = new string[Linky.Length];
             for(int i = 0; i < Linky.Length; ++i)
             {
                 ln[i] = Linky[i].ToString();
+            }
+            return ln;
+        }
+        public (int,int)[] VypisLinkyInt()
+        {
+            if (this.Linky == null)
+                return null;
+            var ln = new (int,int)[Linky.Length];
+            for (int i = 0; i < Linky.Length; ++i)
+            {
+                ln[i] = Linky[i].IdLinky;
             }
             return ln;
         }

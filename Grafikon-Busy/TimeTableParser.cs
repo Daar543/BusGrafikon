@@ -104,22 +104,6 @@ namespace Grafikon_Busy
             }
             return resultTable;
         }
-        /*public bool GetStops(out string[] stops)
-        {
-            stops = null;
-            if (ReducedTable == null)
-                ReducedTable = this.Cutout();
-            try
-            {
-                stops = new string[ReducedTable[1].Length - 2];
-                Array.Copy(ReducedTable[1], 2, stops, 0, stops.Length);
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
-        }*/
         /// <summary>
         /// Gets all kilometrage tours from the reduced table
         /// </summary>

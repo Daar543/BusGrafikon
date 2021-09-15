@@ -43,6 +43,7 @@ namespace Grafikon_Busy
         TimeTableParser TimeTableF;
         TimeTableParser TimeTableB;
         string[][] tempTable;
+        JdfParser Parser;
 
         static char[] SignSeparators = new char[] { ' ' };
         const int directionsCount = 2;
@@ -733,22 +734,24 @@ namespace Grafikon_Busy
 
         private void btnJdfLoad_Click(object sender, EventArgs e)
         {
-            var Parser = new JdfParser();
+            btnChooseJdfLine.Enabled = false;
+            Parser = new JdfParser();
             string folder = txbJdfLoad.Text;
             //check if folder exists
             Parser.NactiAPriprav(folder);
-            string[] linky = Parser.VypisLinky();
+            (int,int)[] linky = Parser.VypisLinkyInt();
             if (linky is null || linky.Length==0)
             {
                 MessageBox.Show("Žádnou linku z JDF se nepodařilo načíst", "Chybný vstup", MessageBoxButtons.OK);
                 return;
             }
             cbxVyberLinky.BeginUpdate();
-            foreach(var ln in linky)
+            foreach((int,int) ln in linky)
             {
                 cbxVyberLinky.Items.Add(ln);
             }
             cbxVyberLinky.EndUpdate();
+            btnChooseJdfLine.Enabled = true;
 
             /**/
             var tabulka1 = Parser.PostavTabulku((805008, 1), true);
@@ -760,5 +763,28 @@ namespace Grafikon_Busy
             btnLoadDistsB.Enabled = true;/**/
         }
 
+        private void btnChooseJdfLine_Click(object sender, EventArgs e)
+        {
+            object x = cbxVyberLinky.SelectedItem;
+            if(x is null)
+            {
+                MessageBox.Show("Žádná linka není vybrána", "Chybný vstup", MessageBoxButtons.OK);
+                return;
+            }
+            /*/string linkaTxt = (string)x;
+            var spl = linkaTxt.Split(',');
+            (int, int) linka = new ValueTuple<int, int>(int.Parse(spl[0]), int.Parse(spl[1]));/**/
+            (int,int) linka = ((int, int))x;
+
+            var tabulka1 = Parser.PostavTabulku(linka, true);
+            
+            TimeTableF = new TimeTableParser(tabulka1, holidayPositive.Text, holidayNegativ.Text);
+            btnLoadDistsF.Enabled = true;
+
+            var tabulka2 = Parser.PostavTabulku(linka, false);
+
+            TimeTableB = new TimeTableParser(tabulka2, holidayPositive.Text, holidayNegativ.Text);
+            btnLoadDistsB.Enabled = true;
+        }
     }
 }

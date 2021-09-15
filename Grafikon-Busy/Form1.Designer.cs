@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.BusChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btnRenderBoth = new System.Windows.Forms.Button();
             this.btnChooseLine = new System.Windows.Forms.Button();
@@ -85,16 +85,16 @@
             // 
             // BusChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.BusChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.BusChart.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.BusChart.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.BusChart.Legends.Add(legend3);
             this.BusChart.Location = new System.Drawing.Point(10, 9);
             this.BusChart.Name = "BusChart";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.BusChart.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.BusChart.Series.Add(series3);
             this.BusChart.Size = new System.Drawing.Size(404, 429);
             this.BusChart.TabIndex = 0;
             this.BusChart.Text = "BusChart";
@@ -624,12 +624,14 @@
             // 
             // btnChooseJdfLine
             // 
+            this.btnChooseJdfLine.Enabled = false;
             this.btnChooseJdfLine.Location = new System.Drawing.Point(210, 82);
             this.btnChooseJdfLine.Name = "btnChooseJdfLine";
             this.btnChooseJdfLine.Size = new System.Drawing.Size(74, 44);
             this.btnChooseJdfLine.TabIndex = 42;
             this.btnChooseJdfLine.Text = "Zvol linku z JDF";
             this.btnChooseJdfLine.UseVisualStyleBackColor = true;
+            this.btnChooseJdfLine.Click += new System.EventHandler(this.btnChooseJdfLine_Click);
             // 
             // cbxVyberLinky
             // 
