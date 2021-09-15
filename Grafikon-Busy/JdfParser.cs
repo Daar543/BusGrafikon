@@ -24,12 +24,13 @@ namespace Grafikon_Busy
         ZasSpoj[] ZasSpoje;
         private void NactiVse(string slozka)
         {
-            XZastavky = SheetLoader.ReadCsvInput(slozka + "/Zastavky.txt", ',', ';');
-            XZasSpoje = SheetLoader.ReadCsvInput(slozka + "/Zasspoje.txt", ',', ';');
-            XZasLinky = SheetLoader.ReadCsvInput(slozka + "/Zaslinky.txt", ',', ';');
-            PevneKody = SheetLoader.ReadCsvInput(slozka + "/Pevnykod.txt", ',', ';');
-            XSpoje = SheetLoader.ReadCsvInput(slozka + "/Spoje.txt", ',', ';');
-            XLinky = SheetLoader.ReadCsvInput(slozka + "/Linky.txt", ',', ';');
+            XLinky = SheetLoader.ReadQuotedCSV(slozka + "/Linky.txt", ',', ';');
+            XZastavky = SheetLoader.ReadQuotedCSV(slozka + "/Zastavky.txt", ',', ';');
+            XZasSpoje = SheetLoader.ReadQuotedCSV(slozka + "/Zasspoje.txt", ',', ';');
+            XZasLinky = SheetLoader.ReadQuotedCSV(slozka + "/Zaslinky.txt", ',', ';');
+            PevneKody = SheetLoader.ReadQuotedCSV(slozka + "/Pevnykod.txt", ',', ';');
+            XSpoje = SheetLoader.ReadQuotedCSV(slozka + "/Spoje.txt", ',', ';');
+            
 
         }
         /// <summary>
@@ -233,7 +234,7 @@ namespace Grafikon_Busy
         public Linka(string[] link)
         {
             CisloLinky = int.Parse(link[0]);
-            RozliseniLinky = int.Parse(link[18]);
+            RozliseniLinky = int.Parse(link[16]);
         }
 
         internal static Linka Create(string[] arg)

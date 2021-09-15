@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="RozvrhBusu">
       <HintPath>..\..\RozvrhBusu\RozvrhBusu\bin\Debug\netcoreapp3.1\RozvrhBusu.dll</HintPath>
     </Reference>
@@ -170,6 +171,22 @@
     <Content Include="JR\Jdf\805008-2021\Zaslinky.txt" />
     <Content Include="JR\Jdf\805008-2021\Zasspoje.txt" />
     <Content Include="JR\Jdf\805008-2021\Zastavky.txt" />
+    <Content Include="JR\Jdf\JDFBUS_POVED\Altdop.txt" />
+    <Content Include="JR\Jdf\JDFBUS_POVED\Altlinky.txt" />
+    <Content Include="JR\Jdf\JDFBUS_POVED\Caskody.txt" />
+    <Content Include="JR\Jdf\JDFBUS_POVED\Dopravci.txt" />
+    <Content Include="JR\Jdf\JDFBUS_POVED\LinExt.txt" />
+    <Content Include="JR\Jdf\JDFBUS_POVED\Linky.txt" />
+    <Content Include="JR\Jdf\JDFBUS_POVED\Mistenky.txt" />
+    <Content Include="JR\Jdf\JDFBUS_POVED\Navaznosti.txt" />
+    <Content Include="JR\Jdf\JDFBUS_POVED\Pevnykod.txt" />
+    <Content Include="JR\Jdf\JDFBUS_POVED\Spoje.txt" />
+    <Content Include="JR\Jdf\JDFBUS_POVED\Spojskup.txt" />
+    <Content Include="JR\Jdf\JDFBUS_POVED\Udaje.txt" />
+    <Content Include="JR\Jdf\JDFBUS_POVED\VerzeJDF.txt" />
+    <Content Include="JR\Jdf\JDFBUS_POVED\Zaslinky.txt" />
+    <Content Include="JR\Jdf\JDFBUS_POVED\Zasspoje.txt" />
+    <Content Include="JR\Jdf\JDFBUS_POVED\Zastavky.txt" />
     <Content Include="JR\Text\100180-T.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

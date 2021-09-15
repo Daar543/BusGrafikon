@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using Microsoft.VisualBasic.FileIO;
 
 namespace Grafikon_Busy
 {
@@ -14,7 +15,7 @@ namespace Grafikon_Busy
         /// <param name="filename">CSV filename</param>
         /// <param name="separator">Character for separating values in CSV file (usually TAB)</param>
         /// <returns></returns>
-        public static string[][] ReadCsvInput(string filename, char separator='\t',char endline = '\0')
+        public static string[][] ReadSheetInput(string filename, char separator='\t')
         {
             string line;
             string[] row;
@@ -32,10 +33,47 @@ namespace Grafikon_Busy
                 {
                     row[i] = Regex.Replace(row[i], "\"", string.Empty);
                 }
-                row[row.Length-1] = row[row.Length - 1].Trim(endline);
                 table.Add(row);
             }
             return table.ToArray();
+        }
+        /// <summary>
+        /// Reads CSV with quoted fields (and no other quotes inside) - this allows for easier parsing, ignoring separators
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="separator"></param>
+        /// <param name="endline"></param>
+        /// <returns></returns>
+        public static string[][]ReadQuotedCSV(string filename,char separator = ',',char endline = ';')
+        {
+            string sep = separator.ToString();
+            string endl = endline.ToString();
+            List<string[]> data = new List<string[]>();
+            using (var sr = new StreamReader(filename, System.Text.Encoding.UTF8))
+            {
+                while(true)
+                {
+                    var line = sr.ReadLine();
+                    if (line == null) break;
+                    else if (line == "") continue;
+                    var row = line.Split('\"');
+                    var modRow = new List<string>();
+                    for(int i = 1; i<row.Length;++i) //Skip the first item, as the line starts with quotes
+                    {
+                        string x = row[i];
+                        if (x == sep)
+                            continue;
+                        else if (x == endl)
+                            break;
+                        else
+                            modRow.Add(x);
+                    }
+                    data.Add(modRow.ToArray());
+                }
+                
+            }
+           
+            return data.ToArray();
         }
         /// <summary>
         /// Transposes table while also removing empty rows and padding columns

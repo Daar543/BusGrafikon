@@ -29,7 +29,7 @@ namespace Grafikon_Busy
 #if DEBUG
             this.textBoxLineBack.Text = "JR/Text/805008-Z.txt";
             this.textBoxLine.Text = "JR/Text/805008-T.txt";
-            this.txbJdfLoad.Text = "JR/Jdf/805008-2021";
+            this.txbJdfLoad.Text = "JR/Jdf/JDFBUS_POVED";
 
             Thread.Sleep(1000);
             btnJdfLoad_Click(null, EventArgs.Empty);
@@ -380,7 +380,7 @@ namespace Grafikon_Busy
             }
             try
             {
-                string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadCsvInput(line, '\t'));
+                string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadSheetInput(line, '\t'));
                 TimeTableF = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
                 btnLoadDistsF.Enabled = true;
             }
@@ -389,7 +389,7 @@ namespace Grafikon_Busy
                 line += ".txt";
                 try
                 {
-                    string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadCsvInput(line, '\t'));
+                    string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadSheetInput(line, '\t'));
                     TimeTableF = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
                     textBoxLine.Text = line; //Updates the text so exception has not to be catched again
                     btnLoadDistsF.Enabled = true;
@@ -414,7 +414,7 @@ namespace Grafikon_Busy
             }
             try
             {
-                string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadCsvInput(line, '\t'));
+                string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadSheetInput(line, '\t'));
                 TimeTableB = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
                 btnLoadDistsB.Enabled = true;
             }
@@ -423,7 +423,7 @@ namespace Grafikon_Busy
                 line += ".txt";
                 try
                 {
-                    string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadCsvInput(line, '\t'));
+                    string[][] initTable = SheetLoader.RowifyTable(SheetLoader.ReadSheetInput(line, '\t'));
                     TimeTableB = new TimeTableParser(initTable, holidayPositive.Text, holidayNegativ.Text);
                     textBoxLine.Text = line; //Updates the text so exception has not to be catched again
                     btnLoadDistsB.Enabled = true;
