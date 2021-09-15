@@ -102,16 +102,24 @@ namespace Grafikon_Busy
             int velikostRadku = pocetZastavek + velikostZahlavi;
 
             var spojeTam = from sp in Spoje where sp.IdLinky == linka && sp.Dopredu == dopredu
-                           select sp.CisloSpoje;
+                           select new { sp.CisloSpoje, sp.Kody };
             var pocetSpojuTam = spojeTam.Count();
 
             var TabulkaTam = new List<string[]>();
-
-            TabulkaTam.Add(Enumerable.Range(1 - velikostZahlavi, velikostRadku).Select(x=>x.ToString()).ToArray());
+            if (dopredu)
+            {
+                TabulkaTam.Add(Enumerable.Range(1 - velikostZahlavi, velikostRadku).Select(x => x.ToString()).ToArray());
+            }
+            else
+            {
+                TabulkaTam.Add(Enumerable.Range(1, velikostRadku).Select(x => x.ToString()).Reverse().ToArray());
+            }
+            
             TabulkaTam[0][0] = "Tč";
+            TabulkaTam[0][1] = "";
 
             TabulkaTam.Add(new string[velikostRadku].PopulateWith(""));
-            Array.Copy(zastLinky, 0, TabulkaTam[1], 1, pocetZastavek);
+            Array.Copy(dopredu?zastLinky:zastLinky.Reverse().ToArray(), 0, TabulkaTam[1], 2, pocetZastavek);
 
             var zacatkySpoju = (
                 from zs in ZasSpoje
@@ -137,7 +145,7 @@ namespace Grafikon_Busy
             {
                 var casyTam = 
                 from zs in ZasSpoje
-                where zs.IdLinky == linka && sp == zs.CisloSpoje
+                where zs.IdLinky == linka && sp.CisloSpoje == zs.CisloSpoje
                 select new { zs.TarifniCislo, zs.Cas, zs.Kilometry };
 
                 var zacatek = zacatkySpoju[i]+1;
@@ -149,7 +157,8 @@ namespace Grafikon_Busy
 
                 foreach(var x in casyTam)
                 {
-                    int j = dopredu ? x.TarifniCislo + velikostZahlavi - 1 : pocetZastavek - x.TarifniCislo - 1 + velikostZahlavi;
+                    int j = dopredu ? x.TarifniCislo + velikostZahlavi - 1 
+                        : pocetZastavek - x.TarifniCislo + velikostZahlavi;
                     radek[j] = x.Cas;
                     kilometry[j] = x.Kilometry==""?"<":x.Kilometry;
                 }
@@ -163,9 +172,11 @@ namespace Grafikon_Busy
 
             //Pridej zahlavi
             i = 2;
-            foreach(var csp in spojeTam)
+            foreach(var sp in spojeTam)
             {
-                TabulkaTam[i][0] = "Spoj " + csp.ToString();
+                TabulkaTam[i][0] = "Spoj " + sp.CisloSpoje.ToString();
+                TabulkaTam[i][1] = String.Join(" ", sp.Kody);
+                i += 1;
             }
 
             //Pridej omezeni
@@ -302,6 +313,8 @@ namespace Grafikon_Busy
                 Cas = zasp[10];
             else
                 throw new ArgumentException("Neni cas uveden");
+            if(3 <= Cas.Length && Cas.Length <= 4)
+                Cas = Cas.Insert(Cas.Length - 2, ":");
             
         }
 

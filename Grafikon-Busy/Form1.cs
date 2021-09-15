@@ -27,8 +27,8 @@ namespace Grafikon_Busy
             CheckBoxesBack = new List<CheckBox>() { chbWorkdayBack, chbSchoolHolidayBack, chbSaturdayBack, chbSundayBack, chbToursB }.AsReadOnly();
 
 #if DEBUG
-            this.textBoxLineBack.Text = "JR/Text/802365-Z.txt";
-            this.textBoxLine.Text = "JR/Text/802365-T.txt";
+            this.textBoxLineBack.Text = "JR/Text/805008-Z.txt";
+            this.textBoxLine.Text = "JR/Text/805008-T.txt";
             this.txbJdfLoad.Text = "JR/Jdf/805008-2021";
 
             Thread.Sleep(1000);
@@ -740,7 +740,13 @@ namespace Grafikon_Busy
             Parser.VytvorObjekty();
             Parser.MapujPevneKody();
             Parser.SeradVse();
-            Parser.PostavTabulku((805008, 1),true);
+            /*/var tabulka1 = Parser.PostavTabulku((805008, 1), true);
+            TimeTableF = new TimeTableParser(tabulka1, holidayPositive.Text, holidayNegativ.Text);
+            btnLoadDistsF.Enabled = true;/**/
+
+            /**/var tabulka2 = Parser.PostavTabulku((805008, 1), false);
+            TimeTableB = new TimeTableParser(tabulka2, holidayPositive.Text, holidayNegativ.Text);
+            btnLoadDistsB.Enabled = true;/**/
         }
 
     }
