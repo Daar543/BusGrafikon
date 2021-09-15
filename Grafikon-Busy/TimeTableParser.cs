@@ -52,6 +52,7 @@ namespace Grafikon_Busy
         {
             this.TimeTable = tt;
         }
+        
         public TimeTableParser(string[][] tt, string HolidayPositive, string HolidayNegative)
         {
             this.TimeTable = tt;

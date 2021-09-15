@@ -32,7 +32,7 @@ namespace Grafikon_Busy
             this.txbJdfLoad.Text = "JR/Jdf/JDFBUS_POVED";
 
             Thread.Sleep(1000);
-            btnJdfLoad_Click(null, EventArgs.Empty);
+            //btnJdfLoad_Click(null, EventArgs.Empty);
 #endif
         }
 
@@ -134,7 +134,7 @@ namespace Grafikon_Busy
         /// <param name="stoplist">Names of all stops, as they are in the timetable</param>
         /// <param name="stopDists">List of tariff distances for each stops</param>
         /// <param name="priorityDir"></param>
-        private void RenderGraphicon(IEnumerable<ConnectionGroup> conns, string[] stoplist, Stop[] stopDistsF, Stop[]stopDistsB, RenderMode rm)
+        private void RenderGraphicon(IEnumerable<ConnectionGroup> conns, string[] stoplist, Stop[] stopDistsF, Stop[] stopDistsB, RenderMode rm)
         {
 
             ClearGraphicon();
@@ -142,10 +142,10 @@ namespace Grafikon_Busy
             var Chart = BusChart.ChartAreas[0];
 
             DistanceMode dm;
-            
+
             if (rm == RenderMode.Front)
             {
-                dm = stopDistsF is null ? DistanceMode.Neither:DistanceMode.Front;
+                dm = stopDistsF is null ? DistanceMode.Neither : DistanceMode.Front;
 
             }
             else if (rm == RenderMode.Back)
@@ -157,9 +157,9 @@ namespace Grafikon_Busy
                 if (stopDistsF is null && stopDistsB is null)
                 {
                     dm = DistanceMode.Neither;
-                } 
+                }
                 else if (stopDistsF != null)
-                    
+
                 {
                     dm = DistanceMode.Front;
                     stopDistsB = stopDistsF;
@@ -169,7 +169,7 @@ namespace Grafikon_Busy
                     dm = DistanceMode.Back;
                     stopDistsF = stopDistsB;
                 }
-                    
+
             }
             else
             {
@@ -196,7 +196,7 @@ namespace Grafikon_Busy
             {
                 Chart.AxisY.Minimum = 0;
                 Chart.AxisY.Maximum = stoplist.Length + labelRange;
-                double lineWidth = PointMarkSize*Chart.AxisY.Maximum / 3200d; 
+                double lineWidth = PointMarkSize * Chart.AxisY.Maximum / 3200d;
                 //At smaller charts, the stripline normally gets thicker;
                 //therefore, here I multiply it by the size of chart
 
@@ -266,15 +266,20 @@ namespace Grafikon_Busy
             {
                 //Skip the disabled days
                 if (group is null || !group.Enabled)
+                {
                     continue;
+                }
+
                 bool invert = false;
-                if(rm == RenderMode.Both && (!group.Direction &&  dm == DistanceMode.Front) ||(group.Direction && dm == DistanceMode.Back))
+                if (rm == RenderMode.Both && (!group.Direction && dm == DistanceMode.Front) || (group.Direction && dm == DistanceMode.Back))
                 {
                     invert = true;
                 }
-                List<Series> newS = MakeStopSeriesForTable(group, group.Direction?stopDistsF:stopDistsB,invert);
+                List<Series> newS = MakeStopSeriesForTable(group, group.Direction ? stopDistsF : stopDistsB, invert);
                 foreach (Series s in newS)
+                {
                     BusChart.Series.Add(s);
+                }
             }
         }
 
@@ -357,7 +362,7 @@ namespace Grafikon_Busy
                 }
             }
         }
-        
+
 
         /// <summary>
         /// Loads the line from a file whose name is specified in text box. If the file with this name does not exist, tries to add ".txt" to the file name. If neither exists, shows error message and ends.
@@ -366,11 +371,7 @@ namespace Grafikon_Busy
         /// <param name="e"></param>
         private void btnChooseLine_Click(object sender, EventArgs e)
         {
-            CheckBoxesFront.DisableAll();
-            slidToursF.Enabled = false;
-
-            StopsF = null;
-            TableFront = new ConnectionGroup[DayTypeCount];
+            ResetFront();
             string line = textBoxLine.Text;
 
             if (line == "")
@@ -400,12 +401,24 @@ namespace Grafikon_Busy
                 }
             }
         }
-        private void btnChooseBackLine_Click(object sender, EventArgs e)
+        private void ResetFront()
+        {
+            CheckBoxesFront.DisableAll();
+            slidToursF.Enabled = false;
+
+            StopsF = null;
+            TableFront = new ConnectionGroup[DayTypeCount];
+        }
+        private void ResetBack()
         {
             CheckBoxesBack.DisableAll();
             slidToursB.Enabled = false;
             StopsB = null;
             TableBack = new ConnectionGroup[DayTypeCount];
+        }
+        private void btnChooseBackLine_Click(object sender, EventArgs e)
+        {
+            ResetBack();
             string line = textBoxLineBack.Text;
             if (line == "")
             {
@@ -503,7 +516,9 @@ namespace Grafikon_Busy
             FinalizedCG[(int)day] = new ConnectionGroup(analyzedConnections, color, direction == Direction.Forward);
             //bool ss = ChosenTimeTable.GetStops(out this.stops);
             if (StopList is null)
+            {
                 StopList = analyzedStops;
+            }
 
             return true;
         }
@@ -557,14 +572,20 @@ namespace Grafikon_Busy
         private void holidayPositive_TextChanged(object sender, EventArgs e)
         {
             if (TimeTableF is null)
+            {
                 return;
+            }
+
             TimeTableF.HolidayPositiveSigns = holidayPositive.Text.Split(SignSeparators);
         }
         //Fix this taking too much time when changing text
         private void holidayNegative_TextChanged(object sender, EventArgs e)
         {
             if (TimeTableF is null)
+            {
                 return;
+            }
+
             TimeTableF.HolidayNegativeSigns = holidayNegativ.Text.Split(SignSeparators);
         }
 
@@ -665,13 +686,13 @@ namespace Grafikon_Busy
             {
                 if (chbToursF.Checked == chbToursB.Checked) //Both distances are checked or unchecked, so no distance measured
                 {
-                    RenderGraphicon(TableFront.Concat(TableBack), StopsF, null, null,RenderMode.Both);
+                    RenderGraphicon(TableFront.Concat(TableBack), StopsF, null, null, RenderMode.Both);
                 }
                 else
                 {
                     if (chbToursF.Checked)
                     {
-                        RenderGraphicon(TableFront.Concat(TableBack), StopsF, StopsDistsF[slidToursF.Value], null, RenderMode.Both );
+                        RenderGraphicon(TableFront.Concat(TableBack), StopsF, StopsDistsF[slidToursF.Value], null, RenderMode.Both);
                     }
                     else
                     {
@@ -739,35 +760,30 @@ namespace Grafikon_Busy
             string folder = txbJdfLoad.Text;
             //check if folder exists
             Parser.NactiAPriprav(folder);
-            (int,int)[] linky = Parser.VypisLinkyInt();
-            if (linky is null || linky.Length==0)
+            (int, int)[] linky = Parser.VypisLinkyInt();
+            if (linky is null || linky.Length == 0)
             {
                 MessageBox.Show("Žádnou linku z JDF se nepodařilo načíst", "Chybný vstup", MessageBoxButtons.OK);
                 return;
             }
             cbxVyberLinky.BeginUpdate();
             cbxVyberLinky.Items.Clear();
-            foreach((int,int) ln in linky)
+            foreach ((int, int) ln in linky)
             {
                 cbxVyberLinky.Items.Add(ln);
             }
+            cbxVyberLinky.SelectedIndex = 0;
             cbxVyberLinky.EndUpdate();
             btnChooseJdfLine.Enabled = true;
 
-            /**/
-            var tabulka1 = Parser.PostavTabulku((805008, 1), true);
-            TimeTableF = new TimeTableParser(tabulka1, holidayPositive.Text, holidayNegativ.Text);
-            btnLoadDistsF.Enabled = true;/**/
-
-            /**/var tabulka2 = Parser.PostavTabulku((805008, 1), false);
-            TimeTableB = new TimeTableParser(tabulka2, holidayPositive.Text, holidayNegativ.Text);
-            btnLoadDistsB.Enabled = true;/**/
         }
 
         private void btnChooseJdfLine_Click(object sender, EventArgs e)
         {
+            ResetFront();
+            ResetBack();
             object x = cbxVyberLinky.SelectedItem;
-            if(x is null)
+            if (x is null)
             {
                 MessageBox.Show("Žádná linka není vybrána", "Chybný vstup", MessageBoxButtons.OK);
                 return;
@@ -775,14 +791,33 @@ namespace Grafikon_Busy
             /*/string linkaTxt = (string)x;
             var spl = linkaTxt.Split(',');
             (int, int) linka = new ValueTuple<int, int>(int.Parse(spl[0]), int.Parse(spl[1]));/**/
-            (int,int) linka = ((int, int))x;
+            (int, int) linka = ((int, int))x;
 
-            var tabulka1 = Parser.PostavTabulku(linka, true);
-            
+            string[][] tabulka1 = null;
+            string[][] tabulka2 = null;
+            try
+            {
+                tabulka1 = Parser.PostavTabulku(linka, true);
+            }
+            catch (Exception) { }
+            if (tabulka1 is null)
+            {
+                MessageBox.Show("Linku se nepovedlo spravne nacist", "Chybny vstup", MessageBoxButtons.OK);
+                return;
+            }
             TimeTableF = new TimeTableParser(tabulka1, holidayPositive.Text, holidayNegativ.Text);
             btnLoadDistsF.Enabled = true;
 
-            var tabulka2 = Parser.PostavTabulku(linka, false);
+            try
+            {
+                tabulka2 = Parser.PostavTabulku(linka, false);
+            }
+            catch (Exception) { }
+            if (tabulka2 is null)
+            {
+                MessageBox.Show("Linku se nepovedlo spravne nacist", "Chybny vstup", MessageBoxButtons.OK);
+                return;
+            }
 
             TimeTableB = new TimeTableParser(tabulka2, holidayPositive.Text, holidayNegativ.Text);
             btnLoadDistsB.Enabled = true;
