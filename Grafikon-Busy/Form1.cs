@@ -746,6 +746,7 @@ namespace Grafikon_Busy
                 return;
             }
             cbxVyberLinky.BeginUpdate();
+            cbxVyberLinky.Items.Clear();
             foreach((int,int) ln in linky)
             {
                 cbxVyberLinky.Items.Add(ln);
