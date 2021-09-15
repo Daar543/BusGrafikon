@@ -1,0 +1,2 @@
+Grafikon-Busy/bin
+Grafikon-Busy/obj

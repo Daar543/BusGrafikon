@@ -1,0 +1,2 @@
+"805008","1","Na lince platí Tarif MAD a Smluvní pøepravní podmínky vyhlášené ÈSAD BUS Uh. Hradištì a.s., informace jsou zveøejnìny ve vozidlech na lince.","1";
+"805008","2","všechny spoje jsou obsluhovány nízkokapacitním autobusem","1";

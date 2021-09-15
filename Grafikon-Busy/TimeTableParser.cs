@@ -35,19 +35,25 @@ namespace Grafikon_Busy
     }
     class TimeTableParser
     {
+        public string[] HolidayNegativeSigns;
+
+        public string[] HolidayPositiveSigns;
+
+        const string DistanceSign = "km";
+
+        const char SaturdaySign = '6';
+
+        const char SundaySign = '+';
+
+        const char WorkdaySign = 'X';
+
+        static readonly char[] SignSeparators = new char[] { ' ' };
+
         /// <summary>
         /// The timetable is transposed - one connection is in one row, the first row contains all stops
         /// </summary>
         private readonly string[][] TimeTable;
         private string[][] ReducedTable = null;
-
-        const char WorkdaySign = 'X';
-        const char SaturdaySign = '6';
-        const char SundaySign = '+';
-        const string DistanceSign = "km";
-        static readonly char[] SignSeparators = new char[] { ' ' };
-        public string[] HolidayPositiveSigns;
-        public string[] HolidayNegativeSigns;
         public TimeTableParser(string[][] tt)
         {
             this.TimeTable = tt;
@@ -59,6 +65,200 @@ namespace Grafikon_Busy
             this.HolidayPositiveSigns = HolidayPositive.Split(SignSeparators);
             this.HolidayNegativeSigns = HolidayNegative.Split(SignSeparators);
         }
+        public string[][] CreateSaturdayTable()
+        {
+            if (ReducedTable == null)
+                ReducedTable = this.Cutout();
+
+            List<int> AllowedRows = new List<int>();
+            AllowedRows.Add(1); //Second row contains stops
+
+            for (int i = 2; i < ReducedTable.Length; ++i)
+            {
+                if (ReducedTable[i][1].Contains(SaturdaySign))
+                {
+                    AllowedRows.Add(i);
+                }
+            }
+            string[][] newTable = new string[AllowedRows.Count][];
+            int j = 0;
+            foreach (int row in AllowedRows)
+            {
+                newTable[j] = new string[ReducedTable[row].Length];
+                Array.Copy(ReducedTable[row], newTable[j], ReducedTable[row].Length);
+                ++j;
+            }
+            return newTable;
+        }
+
+        /// <summary>
+        /// Parses the weekday/holiday.. table into array of stops and dictionary of connections->times
+        /// </summary>
+        /// <param name="table">Initial table, already without ballast</param>
+        /// <param name="stops">All stops on the way</param>
+        /// <param name="connections">Dictionary, where keys are connection names, and values are array of times (of stopping at given stops)</param>
+        /// <returns>Indicator if the conversion has fully succeeded</returns>
+        public bool CreateStopsAndConnections(string[][] table, out string[] stops, out Dictionary<string, string[]> connections)
+        {
+            stops = new string[table[0].Length - 2];
+            connections = new Dictionary<string, string[]>();
+
+            try
+            {
+                Array.Copy(table[0], 2, stops, 0, stops.Length);
+                for (int i = 1; i < table.Length; ++i)
+                {
+                    string[] times = new string[table[i].Length - 2];
+                    string name = table[i][0];
+                    Array.Copy(table[i], 2, times, 0, times.Length);
+                    connections.Add(name, times);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                if (ex is IndexOutOfRangeException || ex is ArgumentException)
+                    return false;
+                else
+                    throw;
+            }
+
+        }
+
+        public string[][] CreateSundayTable()
+        {
+            if (ReducedTable == null)
+                ReducedTable = this.Cutout();
+
+            List<int> AllowedRows = new List<int>();
+            AllowedRows.Add(1); //Second row contains stops
+
+            for (int i = 2; i < ReducedTable.Length; ++i)
+            {
+                if (ReducedTable[i][1].Contains(SundaySign))
+                {
+                    AllowedRows.Add(i);
+                }
+            }
+            string[][] newTable = new string[AllowedRows.Count][];
+            int j = 0;
+            foreach (int row in AllowedRows)
+            {
+                newTable[j] = new string[ReducedTable[row].Length];
+                Array.Copy(ReducedTable[row], newTable[j], ReducedTable[row].Length);
+                ++j;
+            }
+            return newTable;
+        }
+
+        /// <summary>
+        /// Scans through the timetable, checking only for working days w/o holiday positive signs
+        /// </summary>
+        /// <returns></returns>
+        public string[][] CreateWorkdayTable()
+        {
+            if (ReducedTable == null)
+            {
+                ReducedTable = this.Cutout();
+            }
+
+
+            List<int> AllowedRows = new List<int>();
+            AllowedRows.Add(1); //Second row contains stops
+
+            for (int i = 2; i < ReducedTable.Length; ++i)
+            {
+                bool allowed = true;
+                if (ReducedTable[i][1].Contains(WorkdaySign))
+                {
+                    foreach (string forbiddenString in HolidayPositiveSigns)
+                    {
+                        if (forbiddenString == "")
+                            continue;
+                        else if (ReducedTable[i][1].Contains(forbiddenString))
+                        {
+                            allowed = false;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    allowed = false;
+                }
+
+                if (allowed)
+                {
+                    AllowedRows.Add(i);
+                }
+
+            }
+            //Copy content from the selected rows to the new table
+            string[][] newTable = new string[AllowedRows.Count][];
+            int j = 0;
+            foreach (int row in AllowedRows)
+            {
+                newTable[j] = new string[ReducedTable[row].Length];
+                Array.Copy(ReducedTable[row], newTable[j], ReducedTable[row].Length);
+                ++j;
+            }
+            return newTable;
+        }
+
+        public string[][] CreateWorkHolidayTable()
+        {
+            if (ReducedTable == null)
+            {
+                ReducedTable = this.Cutout();
+            }
+            List<int> AllowedRows = new List<int>();
+            AllowedRows.Add(1); //Second row contains stops
+
+            for (int i = 2; i < ReducedTable.Length; ++i)
+            {
+                bool allowed = true;
+                if (ReducedTable[i][1].Contains(WorkdaySign))
+                {
+                    foreach (string forbiddenString in HolidayNegativeSigns)
+                    {
+                        if (forbiddenString == "")
+                            continue;
+                        else if (ReducedTable[i][1].Contains(forbiddenString))
+                        {
+                            allowed = false;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    allowed = false;
+                    foreach (string allowedString in HolidayPositiveSigns)
+                    {
+                        if (allowedString == "")
+                            continue;
+                        if (ReducedTable[i][1].Contains(allowedString))
+                        {
+                            allowed = true;
+                            break;
+                        }
+                    }
+                }
+                if (allowed)
+                    AllowedRows.Add(i);
+            }
+            string[][] newTable = new string[AllowedRows.Count][];
+            int j = 0;
+            foreach (int row in AllowedRows)
+            {
+                newTable[j] = new string[ReducedTable[row].Length];
+                Array.Copy(ReducedTable[row], newTable[j], ReducedTable[row].Length);
+                ++j;
+            }
+            return newTable;
+            throw new NotImplementedException();
+        }
+
         public string[][] Cutout()
         {
             string[][] origTable = this.TimeTable;
@@ -104,44 +304,6 @@ namespace Grafikon_Busy
                 ++i;
             }
             return resultTable;
-        }
-        /// <summary>
-        /// Gets all kilometrage tours from the reduced table
-        /// </summary>
-        /// <param name="table"></param>
-        /// <param name="kms"></param>
-        /// <returns>True iff the parsing has ended succesfully</returns>
-        public bool GetKilometrageTable(out string[][] kms)
-        {
-            if (ReducedTable == null)
-            {
-                ReducedTable = this.Cutout();
-            }
-
-            List<int> AllowedRows = new List<int>();
-            AllowedRows.Add(1); //This is the row with stop names
-            for (int i = 2; i < ReducedTable.Length; ++i)
-            {
-                if (ReducedTable[i][0].Contains(DistanceSign) || ReducedTable[i][1].Contains(DistanceSign)) //Add row with "km"
-                {
-                    AllowedRows.Add(i);
-                }
-            }
-            kms = new string[AllowedRows.Count][];
-
-            if (AllowedRows.Count <= 1)
-            {
-                return false;
-            }
-
-            int j = 0;
-            foreach (int row in AllowedRows)
-            {
-                kms[j] = new string[ReducedTable[row].Length];
-                Array.Copy(ReducedTable[row], kms[j], ReducedTable[row].Length);
-                ++j;
-            }
-            return true;
         }
         /// <summary>
         /// 
@@ -206,194 +368,44 @@ namespace Grafikon_Busy
             }
             return true;
         }
+
         /// <summary>
-        /// Parses the weekday/holiday.. table into array of stops and dictionary of connections->times
+        /// Gets all kilometrage tours from the reduced table
         /// </summary>
-        /// <param name="table">Initial table, already without ballast</param>
-        /// <param name="stops">All stops on the way</param>
-        /// <param name="connections">Dictionary, where keys are connection names, and values are array of times (of stopping at given stops)</param>
-        /// <returns>Indicator if the conversion has fully succeeded</returns>
-        public bool CreateStopsAndConnections(string[][] table, out string[] stops, out Dictionary<string, string[]> connections)
-        {
-            stops = new string[table[0].Length - 2];
-            connections = new Dictionary<string, string[]>();
-
-            try
-            {
-                Array.Copy(table[0], 2, stops, 0, stops.Length);
-                for (int i = 1; i < table.Length; ++i)
-                {
-                    string[] times = new string[table[i].Length - 2];
-                    string name = table[i][0];
-                    Array.Copy(table[i], 2, times, 0, times.Length);
-                    connections.Add(name, times);
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                if (ex is IndexOutOfRangeException || ex is ArgumentException)
-                    return false;
-                else
-                    throw;
-            }
-
-        }
-        /// <summary>
-        /// Scans through the timetable, checking only for working days w/o holiday positive signs
-        /// </summary>
-        /// <returns></returns>
-        public string[][] CreateWorkdayTable()
+        /// <param name="table"></param>
+        /// <param name="kms"></param>
+        /// <returns>True iff the parsing has ended succesfully</returns>
+        public bool GetKilometrageTable(out string[][] kms)
         {
             if (ReducedTable == null)
             {
                 ReducedTable = this.Cutout();
             }
 
-
             List<int> AllowedRows = new List<int>();
-            AllowedRows.Add(1); //Second row contains stops
-
+            AllowedRows.Add(1); //This is the row with stop names
             for (int i = 2; i < ReducedTable.Length; ++i)
             {
-                bool allowed = true;
-                if (ReducedTable[i][1].Contains(WorkdaySign))
-                {
-                    foreach (string forbiddenString in HolidayPositiveSigns)
-                    {
-                        if (forbiddenString == "")
-                            continue;
-                        else if (ReducedTable[i][1].Contains(forbiddenString))
-                        {
-                            allowed = false;
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    allowed = false;
-                }
-
-                if (allowed)
-                {
-                    AllowedRows.Add(i);
-                }
-
-            }
-            //Copy content from the selected rows to the new table
-            string[][] newTable = new string[AllowedRows.Count][];
-            int j = 0;
-            foreach (int row in AllowedRows)
-            {
-                newTable[j] = new string[ReducedTable[row].Length];
-                Array.Copy(ReducedTable[row], newTable[j], ReducedTable[row].Length);
-                ++j;
-            }
-            return newTable;
-        }
-        public string[][] CreateWorkHolidayTable()
-        {
-            if (ReducedTable == null)
-            {
-                ReducedTable = this.Cutout();
-            }
-            List<int> AllowedRows = new List<int>();
-            AllowedRows.Add(1); //Second row contains stops
-
-            for (int i = 2; i < ReducedTable.Length; ++i)
-            {
-                bool allowed = true;
-                if (ReducedTable[i][1].Contains(WorkdaySign))
-                {
-                    foreach (string forbiddenString in HolidayNegativeSigns)
-                    {
-                        if (forbiddenString == "")
-                            continue;
-                        else if (ReducedTable[i][1].Contains(forbiddenString))
-                        {
-                            allowed = false;
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    allowed = false;
-                    foreach (string allowedString in HolidayPositiveSigns)
-                    {
-                        if (allowedString == "")
-                            continue;
-                        if (ReducedTable[i][1].Contains(allowedString))
-                        {
-                            allowed = true;
-                            break;
-                        }
-                    }
-                }
-                if (allowed)
-                    AllowedRows.Add(i);
-            }
-            string[][] newTable = new string[AllowedRows.Count][];
-            int j = 0;
-            foreach (int row in AllowedRows)
-            {
-                newTable[j] = new string[ReducedTable[row].Length];
-                Array.Copy(ReducedTable[row], newTable[j], ReducedTable[row].Length);
-                ++j;
-            }
-            return newTable;
-            throw new NotImplementedException();
-        }
-        public string[][] CreateSaturdayTable()
-        {
-            if (ReducedTable == null)
-                ReducedTable = this.Cutout();
-
-            List<int> AllowedRows = new List<int>();
-            AllowedRows.Add(1); //Second row contains stops
-
-            for (int i = 2; i < ReducedTable.Length; ++i)
-            {
-                if (ReducedTable[i][1].Contains(SaturdaySign))
+                if (ReducedTable[i][0].Contains(DistanceSign) || ReducedTable[i][1].Contains(DistanceSign)) //Add row with "km"
                 {
                     AllowedRows.Add(i);
                 }
             }
-            string[][] newTable = new string[AllowedRows.Count][];
+            kms = new string[AllowedRows.Count][];
+
+            if (AllowedRows.Count <= 1)
+            {
+                return false;
+            }
+
             int j = 0;
             foreach (int row in AllowedRows)
             {
-                newTable[j] = new string[ReducedTable[row].Length];
-                Array.Copy(ReducedTable[row], newTable[j], ReducedTable[row].Length);
+                kms[j] = new string[ReducedTable[row].Length];
+                Array.Copy(ReducedTable[row], kms[j], ReducedTable[row].Length);
                 ++j;
             }
-            return newTable;
-        }
-        public string[][] CreateSundayTable()
-        {
-            if (ReducedTable == null)
-                ReducedTable = this.Cutout();
-
-            List<int> AllowedRows = new List<int>();
-            AllowedRows.Add(1); //Second row contains stops
-
-            for (int i = 2; i < ReducedTable.Length; ++i)
-            {
-                if (ReducedTable[i][1].Contains(SundaySign))
-                {
-                    AllowedRows.Add(i);
-                }
-            }
-            string[][] newTable = new string[AllowedRows.Count][];
-            int j = 0;
-            foreach (int row in AllowedRows)
-            {
-                newTable[j] = new string[ReducedTable[row].Length];
-                Array.Copy(ReducedTable[row], newTable[j], ReducedTable[row].Length);
-                ++j;
-            }
-            return newTable;
+            return true;
         }
     }
 }

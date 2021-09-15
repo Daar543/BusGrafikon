@@ -1,0 +1,51 @@
+Linka číslo 802975		Uherský Brod-Vsetín-Ostrava		
+Platí od 1. 1. 2021 do 31. 12. 2021		opačný směr		
+Tč			Spoj 252	km
+			+ 25	
+45	Ostrava,,ÚAN	odjezd	18:00	0
+44	Ostrava,Hrabůvka,Dřevoprodej		18:05	5
+43	Frýdek-Místek,Místek,Anenská		18:20	20
+42	Příbor,,u pošty		<	<
+41	Příbor,,u kostela		18:40	36
+40	Nový Jičín,,aut.nádr.		18:55	48
+39	Hodslavice,,nákup.stř.		19:05	57
+38	Kozlovice,,střed		<	<
+37	Frenštát p.Radh.,,u škol		<	<
+36	Rožnov p.Radh.,,rest.U eroplánu		<	<
+35	Rožnov p.Radh.,,aut.st.		<	<
+34	Zubří,,žel.st.		<	<
+33	Zašová,,žel.st.		<	<
+32	Valašské Meziříčí,,aut.st.		19:20	66
+31	Valašské Meziříčí,,Vsetínská		19:22	67
+30	Bystřička,,žel.st.		19:30	73
+29	Jablůnka,,rest.Na papírně		19:35	77
+28	Vsetín,Bobrky		<	<
+27	Vsetín,,aut.nádr.		19:55	86
+26	Vsetín,Rokytnice		19:57	88
+25	Lhota u Vsetína		20:02	92
+24	Liptál,,střed		20:05	95
+23	Jasenná,,Syrákov		|	98
+22	Jasenná,,horní zast.		|	100
+21	Jasenná,,dolní zast.		20:11	100
+20	Lutonina		20:14	103
+19	Vizovice,,náměstí		20:19	106
+18	Horní Lhota		20:29	117
+17	Horní Lhota,,Motorest		|	118
+16	Dolní Lhota		20:31	119
+15	Dolní Lhota,,zast.		20:32	120
+14	Pozlovice,,Lipská		|	121
+13	Pozlovice,,Nad přehradou		|	122
+12	Luhačovice,,zotavovna Fontána		20:35	123
+11	Luhačovice,,garáže		|	124
+10	Luhačovice,,pošta		20:38	125
+9	Luhačovice,,aut.st.		20:43	126
+8	Luhačovice,,u zámku		20:44	127
+7	Luhačovice,,provozovna		20:46	128
+6	Biskupice,,rozc.0.2		|	130
+5	Luhačovice,Polichno		20:49	132
+4	Uherský Brod,Újezdec		20:54	136
+3	Uherský Brod,Těšov		20:55	137
+2	Uherský Brod,,Neradice		20:57	139
+1	Uherský Brod,,dopravní terminál	příjezd	21:00	140
+				
+Přepravu zajišťuje: ČSAD BUS Uherské Hradiště a.s., Malinovského 874, 686 19 Uherské Hradiště, www.csaduh.cz				

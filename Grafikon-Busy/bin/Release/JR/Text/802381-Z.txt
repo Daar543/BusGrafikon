@@ -1,0 +1,37 @@
+Linka číslo 802381		Uherské Hradiště-Březolupy-Zlámanec																				
+Platí od 7. 3. 2021 do 31. 12. 2021		opačný směr																				
+Tč			Spoj 2	Spoj 6	Spoj 202	Spoj 8	Spoj 10	Spoj 12	Spoj 14	Spoj 16	Spoj 18	Spoj 20	Spoj 22	km	km	km	km	km	km	km	km	km
+			X	X	6 34	X 29	X	X	X	X	X 31	X 31	X 27									
+31	Zlámanec	odjezd	4:25	5:10		6:15	7:00	12:55	15:20	15:50	18:00	20:35		0	0	0	0	0	0	0		
+30	Svárov,,Pod Svárovem		|	|		6:18	7:03	12:57	15:22	15:53	18:03	|		2	2	2	2	2	2	2		
+29	Svárov		4:30	5:15		<	7:05	<	<	<	<	20:39		3	3	<	3	<	<	3		
+28	Svárov,,Pod Svárovem		4:33	5:17		<	7:07	<	<	<	<	20:41		4	4	<	4	<	<	4		
+27	Svárov,,paseky		4:36	5:20		6:20	7:10	13:00	15:25	|	18:07	20:44		6	6	4	6	4	4	6		
+26	Březolupy,,škola		<	<		<	7:14	<	<	<	<	<		<	<	<	8	<	<	<		
+25	Březolupy,,zámek		4:42	5:25	5:50	6:23	7:16	13:05	15:28	15:58	18:10	20:48	22:05	8	8	6	8	6	6	8	0	0
+24	Březolupy,,škola		<	<	<	<	<	<	<	<	<	<	<	<	<	<	<	<	<	<	<	<
+23	Březolupy,,Zápolí		4:44	5:26	5:52	6:25	7:18	13:07	15:30	15:59	18:12	20:49	22:07	9	9	7	9	7	7	9	1	1
+22	Bílovice,,mm-cité		4:46	5:28	5:54	6:27	7:20	13:09	15:33	16:01	18:14	20:51	22:09	11	11	9	11	9	9	11	3	3
+21	Bílovice,,st.č.2		<	<	<	<	|	<	<	16:04	18:16	20:53	<	<	<	<	12	<	10	12	<	<
+20	Bílovice,,točna		<	<	<	<	7:24	<	<				<	<	<	<	12	<			<	<
+19	Bílovice,,st.č.1		4:50	5:30	6:00	6:28	7:27	13:15	15:35				22:11	12	12	10	12	10			4	4
+18	Bílovice,Včelary		4:51	5:32	6:01	6:29	7:29	13:16	15:36				22:12	13	13	11	13	11			5	5
+17	Mistřice,,rozc.1.0		4:52	5:33	6:02	6:30	7:30	13:17	15:37				22:13	13	13	11	13	11			5	5
+16	Mistřice,,dol.konec		<	<	|	<	<	<	<				<	<	<	<	<	<			<	6
+15	Mistřice		<	<	<	<	<	<	<				<	<	<	<	<	<			<	<
+14	Mistřice,,Pod Lipkami		<	<	<	<	<	<	<				<	<	<	<	<	<			<	<
+13	Mistřice,Javorovec		<	<	<	<	<	<	<				<	<	<	<	<	<			<	<
+12	Mistřice,,Pod Lipkami		<	<	<	<	<	<	<				<	<	<	<	<	<			<	<
+11	Mistřice		<	<	6:05	<	<	<	<				<	<	<	<	<	<			<	6
+10	Mistřice,,dol.konec		<	<	6:06	<	<	<	<				<	<	<	<	<	<			<	6
+9	Mistřice,,rozc.1.0		<	<	6:07	<	<	<	<				<	<	<	<	<	<			<	7
+8	Kněžpole		4:53	<	6:09	6:31	<	<	<				<	14	<	12	<	<			<	8
+7	Kněžpole,,vodárna		|	5:35	|	6:32	7:32	13:19	15:39				22:15	15	14	13	14	12			6	9
+6	Uherské Hradiště,Jarošov,Blaně		4:55	5:36	6:11	|	|	13:20	15:40				22:17	16	15	14	15	13			7	10
+5	Uherské Hradiště,Jarošov,pivovar		4:56	5:37	6:12	6:35	7:35	13:21	15:41				22:18	17	16	15	16	14			8	11
+4	Uherské Hradiště,Jarošov,U Bagru		|	5:38	6:13	6:36	7:36	13:22	15:42				22:19	18	17	16	17	15			9	12
+3	Uherské Hradiště,Mařatice,Jaktáře		4:58	5:39	6:14	6:38	7:38	13:23	15:43				22:20	18	17	16	17	15			9	12
+2	Uherské Hradiště,Mařatice,Mesit		4:59	5:41	6:15	6:40	7:40	13:24	15:44				22:21	19	18	17	18	16			10	13
+1	Uherské Hradiště,,aut.nádr.	příjezd	5:03	5:45	6:20	6:44	7:44	13:29	15:50				22:26	21	20	19	20	18			12	15
+																						
+Přepravu zajišťuje: ČSAD BUS Uherské Hradiště a.s., Malinovského 874, 686 19 Uherské Hradiště, www.csaduh.cz																						

@@ -1,0 +1,18 @@
+"1","Uherské Hradištì","","aut.nádr.","","","19","","","","","";
+"2","Uherské Hradištì","","žel.st.","","","","","","","","";
+"3","Uherské Hradištì","","nemocnice","","","19","","","","","";
+"4","Uherské Hradištì","Štìpnice","Zahrádky","","","","","","","","";
+"5","Uherské Hradištì","Maøatice","Derflanská","","","","","","","","";
+"6","Uherské Hradištì","Maøatice","ZŠ Vìtrná","","","","","","","","";
+"7","Uherské Hradištì","","Jiøího z Podìbrad","","","","","","","","";
+"8","Uherské Hradištì","Maøatice","dol.konec","","","","","","","","";
+"9","Uherské Hradištì","Maøatice","hor.konec","","","","","","","","";
+"10","Uherské Hradištì","Maøatice","høbitov","","","","","","","","";
+"11","Uherské Hradištì","Maøatice","R.Kubíèka","","","","","","","","";
+"12","Uherské Hradištì","Maøatice","škola","","","","","","","","";
+"13","Uherské Hradištì","Štìpnice","Zahradní","","","","","","","","";
+"14","Uherské Hradištì","Štìpnice","U Olšávky","","","","","","","","";
+"15","Uherské Hradištì","","Stará Tenice","","","","","","","","";
+"16","Uherské Hradištì","","Purkyòova","","","19","","","","","";
+"17","Uherské Hradištì","Maøatice","høbitov toèna","","","","","","","","";
+"18","Uherské Hradištì","","Svatojiøské nábøeží","","","","","","","","";

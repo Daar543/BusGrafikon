@@ -1,0 +1,41 @@
+Linka číslo 802360		Uherské Hradiště-Buchlovice-Koryčany/Velehrad													
+Platí od 9. 5. 2021 do 31. 12. 2021															
+Tč			Spoj 21	Spoj 23	Spoj 1	Spoj 3	Spoj 201	Spoj 5	Spoj 7	Spoj 9	km	km	km	km	km
+			X	X	X 20	X 29	+ 32	X 29	X	X 29					
+1	Uherské Hradiště,,aut.nádr.	odjezd	5:05	6:25		9:15	9:15	12:05	14:45	15:10		0	0	0	0
+2	Staré Město,,hřbitov		|	|		|	9:18	|	|	|		2	2	2	2
+3	Staré Město,,Lidový dům		5:08	6:28		9:19	9:19	12:09	14:50	15:14		2	2	2	2
+4	Staré Město,,sokolovna		5:09	6:29		9:20	9:20	12:10	|	|		2	2	2	2
+5	Staré Město,,Finská čtvrť		5:10	6:30		9:21	9:21	12:11	|	|		3	3	3	3
+6	Staré Město,,rozc.k žel.st.0.4		5:11	6:32		9:22	9:22	12:12	|	15:16		4	4	4	4
+7	Staré Město,,žel.st.		<	<		<	9:24	12:15	14:54	<		4	<	<	4
+8	Staré Město,,Zlechovská		|	|		9:23	|	|	14:56	|		5	5	5	5
+9	Zlechov,Olší		<	|		9:26	9:27	12:20	14:58	|		7	<	7	7
+10	Zlechov,,křiž.		<	6:37		9:28	<	12:22	15:00	15:20		7	<	7	<
+11	Boršice,,rozc.2.0		<	|		9:30	<	|	|	|		9	<	9	<
+12	Buchlovice,,Lúčky		<	|		9:33	<	12:27	15:05	15:25		11	<	11	<
+13	Buchlovice,,náměstí		<	6:42	7:30	9:34	<	12:29	15:07	15:26	0	12	<	12	<
+14	Buchlovice,,Podvinohradí		<	<	<		<		<		<	<	<	<	<
+15	Buchlovice,,Zahrady		<	<	<		<		<		<	<	<	<	<
+16	Zlechov,,křiž.		<	<	7:36		9:29		<		4	<	<	<	7
+17	Zlechov,,keramika		<	<	7:37		9:30		<		5	<	<	<	8
+18	Tupesy		<	<	7:41		9:34		<		6	<	<	<	9
+19	Velehrad,,náměstí		<	<	7:45		9:39		<		9	<	<	<	12
+20	Buchlovice,,rozc.		5:20	|					15:09			13	12	13	
+21	Buchlovice,,Újezda		|	|					15:11			15	14	15	
+22	Buchlovice,,hrad Buchlov rozc.1.5		|	|					15:14			16	15	16	
+23	Staré Hutě,,hor.zast.		5:26	6:49					15:17			19	18	19	
+24	Stupava,,samota		<	<					<			<	<	<	
+25	Staré Hutě,,u kříže		<	6:53					15:21			22	<	22	
+26	Staré Hutě,,Obecní úřad		<	6:55					15:22			22	<	22	
+27	Staré Hutě,,u kříže		<										<		
+28	Stupava,,samota		5:28										19		
+29	Stupava,,u kříže		5:30										19		
+30	Stupava,,náves		5:32										19		
+31	Stupava,,na kopečku		5:33										19		
+32	Koryčany,,přehrada		5:38										25		
+33	Koryčany,,autoservis		5:40										26		
+34	Koryčany,,závod		5:41										27		
+35	Koryčany,,nám.	příjezd	5:42										28		
+															
+Přepravu zajišťuje: ČSAD BUS Uherské Hradiště a.s., Malinovského 874, 686 19 Uherské Hradiště, www.csaduh.cz															

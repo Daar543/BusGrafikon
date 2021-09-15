@@ -10,6 +10,45 @@ namespace Grafikon_Busy
     {
 
         /// <summary>
+        /// Reads CSV with quoted fields (and no other quotes inside) - this allows for easier parsing, ignoring separators
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="separator"></param>
+        /// <param name="endline"></param>
+        /// <returns></returns>
+        public static string[][] ReadQuotedCSV(string filename, char separator = ',', char endline = ';')
+        {
+            string sep = separator.ToString();
+            string endl = endline.ToString();
+            List<string[]> data = new List<string[]>();
+            using (var sr = new StreamReader(filename, System.Text.Encoding.UTF8))
+            {
+                while (true)
+                {
+                    var line = sr.ReadLine();
+                    if (line == null) break;
+                    else if (line == "") continue;
+                    var row = line.Split('\"');
+                    var modRow = new List<string>();
+                    for (int i = 1; i < row.Length; ++i) //Skip the first item, as the line starts with quotes
+                    {
+                        string x = row[i];
+                        if (x == sep)
+                            continue;
+                        else if (x == endl)
+                            break;
+                        else
+                            modRow.Add(x);
+                    }
+                    data.Add(modRow.ToArray());
+                }
+
+            }
+
+            return data.ToArray();
+        }
+
+        /// <summary>
         /// Reads the values from excel, loads into 2D jagged array of strings
         /// </summary>
         /// <param name="filename">CSV filename</param>
@@ -36,44 +75,6 @@ namespace Grafikon_Busy
                 table.Add(row);
             }
             return table.ToArray();
-        }
-        /// <summary>
-        /// Reads CSV with quoted fields (and no other quotes inside) - this allows for easier parsing, ignoring separators
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="separator"></param>
-        /// <param name="endline"></param>
-        /// <returns></returns>
-        public static string[][]ReadQuotedCSV(string filename,char separator = ',',char endline = ';')
-        {
-            string sep = separator.ToString();
-            string endl = endline.ToString();
-            List<string[]> data = new List<string[]>();
-            using (var sr = new StreamReader(filename, System.Text.Encoding.UTF8))
-            {
-                while(true)
-                {
-                    var line = sr.ReadLine();
-                    if (line == null) break;
-                    else if (line == "") continue;
-                    var row = line.Split('\"');
-                    var modRow = new List<string>();
-                    for(int i = 1; i<row.Length;++i) //Skip the first item, as the line starts with quotes
-                    {
-                        string x = row[i];
-                        if (x == sep)
-                            continue;
-                        else if (x == endl)
-                            break;
-                        else
-                            modRow.Add(x);
-                    }
-                    data.Add(modRow.ToArray());
-                }
-                
-            }
-           
-            return data.ToArray();
         }
         /// <summary>
         /// Transposes table while also removing empty rows and padding columns
