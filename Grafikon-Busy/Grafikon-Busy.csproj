@@ -120,76 +120,7 @@
   <ItemGroup>
     <Content Include="JR\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="JR\100180-T.txt" />
-    <Content Include="JR\100180-Z.txt" />
-    <Content Include="JR\802170-T.txt" />
-    <Content Include="JR\802170-Z.txt" />
-    <Content Include="JR\802180-T.txt" />
-    <Content Include="JR\802180-Z.txt" />
-    <Content Include="JR\802192-T.txt" />
-    <Content Include="JR\802192-Z.txt" />
-    <Content Include="JR\802365-T.txt" />
-    <Content Include="JR\802365-Z.txt" />
-    <Content Include="JR\802366-T.txt" />
-    <Content Include="JR\802366-Z.txt" />
-    <Content Include="JR\802374-T.txt" />
-    <Content Include="JR\802374-Z.txt" />
-    <Content Include="JR\802374S-T.txt" />
-    <Content Include="JR\802374S-Z.txt" />
-    <Content Include="JR\802375-T.txt" />
-    <Content Include="JR\802375-Z.txt" />
-    <Content Include="JR\802375S-T.txt" />
-    <Content Include="JR\802375V-T.txt" />
-    <Content Include="JR\802375V-Z.txt" />
-    <Content Include="JR\802381-T.txt" />
-    <Content Include="JR\802381-Z.txt" />
-    <Content Include="JR\802956-T.txt" />
-    <Content Include="JR\802956-Z.txt" />
-    <Content Include="JR\802975-T.txt" />
-    <Content Include="JR\802975-Z.txt" />
-    <Content Include="JR\805002-T.txt" />
-    <Content Include="JR\805003-T.txt" />
-    <Content Include="JR\805004-T.txt" />
-    <Content Include="JR\805004-Z.txt" />
-    <Content Include="JR\805004S-T.txt" />
-    <Content Include="JR\805004S-Z.txt" />
-    <Content Include="JR\805005-T.txt" />
-    <Content Include="JR\805006-T.txt" />
-    <Content Include="JR\805007-T.txt" />
-    <Content Include="JR\805008-T.txt" />
-    <Content Include="JR\805008-Z.txt" />
-    <Content Include="JR\805009-T.txt" />
-    <Content Include="JR\805009-Z.txt" />
-    <Content Include="JR\Jdf\805008-2021\Caskody.txt" />
-    <Content Include="JR\Jdf\805008-2021\Dopravci.txt" />
-    <Content Include="JR\Jdf\805008-2021\Linky.txt" />
-    <Content Include="JR\Jdf\805008-2021\Pevnykod.txt" />
-    <Content Include="JR\Jdf\805008-2021\Spoje.txt" />
-    <Content Include="JR\Jdf\805008-2021\Udaje.txt" />
-    <Content Include="JR\Jdf\805008-2021\VerzeJDF.txt" />
-    <Content Include="JR\Jdf\805008-2021\Zaslinky.txt" />
-    <Content Include="JR\Jdf\805008-2021\Zasspoje.txt" />
-    <Content Include="JR\Jdf\805008-2021\Zastavky.txt" />
-    <Content Include="JR\Jdf\JDFBUS_POVED\Altdop.txt" />
-    <Content Include="JR\Jdf\JDFBUS_POVED\Altlinky.txt" />
-    <Content Include="JR\Jdf\JDFBUS_POVED\Caskody.txt" />
-    <Content Include="JR\Jdf\JDFBUS_POVED\Dopravci.txt" />
-    <Content Include="JR\Jdf\JDFBUS_POVED\LinExt.txt" />
-    <Content Include="JR\Jdf\JDFBUS_POVED\Linky.txt" />
-    <Content Include="JR\Jdf\JDFBUS_POVED\Mistenky.txt" />
-    <Content Include="JR\Jdf\JDFBUS_POVED\Navaznosti.txt" />
-    <Content Include="JR\Jdf\JDFBUS_POVED\Pevnykod.txt" />
-    <Content Include="JR\Jdf\JDFBUS_POVED\Spoje.txt" />
-    <Content Include="JR\Jdf\JDFBUS_POVED\Spojskup.txt" />
-    <Content Include="JR\Jdf\JDFBUS_POVED\Udaje.txt" />
-    <Content Include="JR\Jdf\JDFBUS_POVED\VerzeJDF.txt" />
-    <Content Include="JR\Jdf\JDFBUS_POVED\Zaslinky.txt" />
-    <Content Include="JR\Jdf\JDFBUS_POVED\Zasspoje.txt" />
-    <Content Include="JR\Jdf\JDFBUS_POVED\Zastavky.txt" />
-    <Content Include="JR\Text\100180-T.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </Content
     <Content Include="JR\Text\100180-Z.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
