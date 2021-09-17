@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using Microsoft.VisualBasic.FileIO;
 
 namespace Grafikon_Busy
 {
@@ -54,12 +53,12 @@ namespace Grafikon_Busy
         /// <param name="filename">CSV filename</param>
         /// <param name="separator">Character for separating values in CSV file (usually TAB)</param>
         /// <returns></returns>
-        public static string[][] ReadSheetInput(string filename, char separator='\t')
+        public static string[][] ReadSheetInput(string filename, char separator = '\t')
         {
             string line;
             string[] row;
             List<string[]> table = new List<string[]>();
-            StreamReader sr = new StreamReader(filename,System.Text.Encoding.UTF8);
+            StreamReader sr = new StreamReader(filename, System.Text.Encoding.UTF8);
 
             while (true)
             {
@@ -68,7 +67,7 @@ namespace Grafikon_Busy
                 else if (line == "") { continue; }
                 //Empty row eliminated
                 row = line.Split(separator);
-                for(int i = 0; i<row.Length;++i)
+                for (int i = 0; i < row.Length; ++i)
                 {
                     row[i] = Regex.Replace(row[i], "\"", string.Empty);
                 }

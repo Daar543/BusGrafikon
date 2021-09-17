@@ -10,7 +10,12 @@
 \section{Uživatelská dokumentace}
 
 \subsection{Nutné soubory}
+
+
 Jízdní řády, které tato aplikace zpracovává, je nutno předložit jako soubory v poměrně specifickém formátu. Aktuální jízdní řády v tomto formátu můžete sehnat následujícím způsobem:
+\begin{enumerate}[label=(\alph*)]
+\item Excel $\rightarrow$ CSV
+
 \begin{enumerate}
 \item Na stránce portal.radekpapez.cz najděte vybranou (autobusovou) linku.
 \item Vyberte možnost `Stáhnout jako xlxs` a daný soubor otevřete v programu jako např. Microsoft Excel.
@@ -26,6 +31,27 @@ Jízdní řády, které tato aplikace zpracovává, je nutno předložit jako so
 \item Stejným způsobem si můžete upravit nebo vyrobit svůj vlastní jízdní řád.
 \item Vybrané textové soubory pak zkopírujte do místa, kde leží vaše aplikace - budete se na ně odkazovat pomocí relativních cest.
 \end{enumerate}
+\item JDF
+
+Formát JDF je oficiální datový formát pro české jízdní řády. Konkrétní formát lze najít např. na stránce https://ksp.mff.cuni.cz/h/ulohy/32/serial-jr/data/jdf-1.11.pdf .
+
+Účelem této aplikace však není nutno zpracovat všechny soubory patřící do JDF, ale pouze dostat data ekvivalentní s excelovskou tabulkou (viz výše). Konkrétně se jedná o následující soubory:
+\begin{itemize}
+\item Linky.txt
+\item Zastavky.txt
+\item Zaslinky.txt
+\item Spoje.txt
+\item Zasspoje.txt
+\item Pevnykod.txt
+\end{itemize}
+Získat je můžete takto:
+\begin{enumerate}
+\item Na stránce portal.radekpapez.cz najděte vybranou (autobusovou) linku.
+\item Vyberte možnost "Stáhnout jako jdf", čímž stáhnete komprimovaný archiv.
+\item Vyberte z archivu (alespoň) výše zmíněné soubory a extrahujte je do jedné složky (tam, kde leží vaše aplikace). Na tuto složku se pak budete v programu odkazovat pomocí relativní cesty.
+\end{enumerate}
+
+\end{enumerate}
 
 \subsection{Používání aplikace}
 
@@ -34,12 +60,28 @@ Jízdní řády, které tato aplikace zpracovává, je nutno předložit jako so
 
 Aplikaci spustíte rozkliknutím .exe souboru. Zobrazí se jediné okno s aplikací (doporučuji maximalizovat).
 
-\item Výběr linky
+\item Výběr linky (Excel $\rightarrow$ CSV)
 
-Do textového pole pod jedním z tlačítek `Vyber linku / Vyber linku (protisměr)`napiště relativní cestu k souboru s linkou (relativní oproti umístění aplikace) a stiskněte příslušné tlačítko. 
+Do textového pole pod jedním z tlačítek `Vyber linku / Vyber linku (protisměr)`napiště relativní cestu k souboru s linkou (relativní oproti umístění aplikace) a stiskněte příslušné tlačítko.
+ 
 Pokud daný soubor existuje a je ve správném formátu, linka by se měla načíst v pořádku a můžete pokračovat dále. Pokud máte soubor uložený jako `.txt` a zapomněli jste tuto příponu přidat, připíše se automaticky.
+
 Pokud načtení neproběhne správně, aplikace by se neměla rozbít - pouze vypíše chybu a můžete načítat znovu.
+
 Tlačítka pro protisměr nalevo fungují nezávisle na tlačítcích napravo - rozdíl je jen ve vypisování, popsáno dále.
+
+\item Výběr linky (JDF)
+
+Do textového pole pod tlačítkem "Načti JDF složku" vepište cestu na složku s JDF soubory a stiskněte zmíněné tlačítko.
+
+V případě, že daná složka existuje a obsahuje soubory v požadovaném formátu, do comboboxu se načtou linky obsažené v JDF souboru (soubory z portal.radekpapez.cz obsahují jenom jednu linku). 
+
+V případě špatného formátu aplikace zpravidla spadne, v případě nesmyslných dat je chování nedefinováno. 
+
+Linky jsou určeny dvěma čísly - první je licenční (s vynechanými počátačními nulami), druhé je rozlišení linky (pro více verzí JŘ).
+
+Z comboboxu pak vyberte linku a stiskněte tlačítko "Zvol linku z JDF". Tím se načtou spoje pro tuto linku jak ve směru tam (tlačítka na pravé straně), tak i ve směru zpět (tlačítka na levé straně).
+
 
 \item Načtení spojů
 
@@ -69,6 +111,8 @@ Po načtení tras je pak možno hýbat s posuvníkem, jehož rozsah hodnot závi
 
 Pro vykreslení grafu (grafikonu) je nutno zaškrtnout dny, které chceme vykreslit, v checkboxech (zaškrtávacích čtverečcích) `Pracovní dny / Školní prázdniny / Sobota / Neděle`. Chceme-li znát vzdálenosti pro určité trasy, zaškrtneme checkbox u tlačítka `Načíst vzdálenosti` a posuvník posuneme na příslušnou trasu 
 (o jakou trasu se konkrétně jedná, zjistíme až po vykreslení, nebo přečtení jízdního řádu).
+
+Poznámka: Trasy získané z JDF jsou považovány za různé, i pokud je jedna přímou podmnožinou druhé (např. spoj $1$ má zastávky $1,2,3$ a spoj $3$ má zastávky $2,3$, pak je to považováno za 2 různé trasy. Pro spoje získané v Excelu toto spadá pod stejnou trasu.)
 
 Pokud je vybraný některý den, pak se zobrazí graf, na jehož ose X jsou uvedeny hodiny a na ose Y jsou uvedeny zastávky. Není-li vybraná trasa, pak jsou uvedeny všechny zastávky v jízdním řádu s uniformními rozestupy. Pokud používáme pravá tlačítka, pak jsou uspořádány zdola nahoru (tedy opačně, než v jízdním řádu), v případě levých tlačítek jsou pak uspořádány shora dolů - zde může být název `protisměr` poněkud matoucí.
 

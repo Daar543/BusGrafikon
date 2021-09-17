@@ -68,7 +68,7 @@ namespace Grafikon_Busy
 #if DEBUG
             this.textBoxLineBack.Text = "JR/Text/805008-Z.txt";
             this.textBoxLine.Text = "JR/Text/805008-T.txt";
-            this.txbJdfLoad.Text = "JR/Jdf/JDFBUS_POVED";
+            this.txbJdfLoad.Text = "JR/Jdf/805008-2021";
 
             
             //btnJdfLoad_Click(null, EventArgs.Empty);

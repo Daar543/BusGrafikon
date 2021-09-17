@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Grafikon_Busy
 {
@@ -56,7 +54,7 @@ namespace Grafikon_Busy
             MapujPevneKody();
             SeradVse();
 
-            return; 
+            return;
         }
         /// <summary>
         /// Creates the timetable in the same format as the one copied from excel
@@ -66,15 +64,15 @@ namespace Grafikon_Busy
         /// <returns></returns>
         //Udela tabulku podobnou te excelove, kterou pak v programu parsujeme - vypocetne je to slozitejsi, ale pokud uz parsovani
         //tabulky funguje, proc jej nevyuzit znovu
-        public string[][] PostavTabulku(ValueTuple<int, int> linka, bool dopredu) 
+        public string[][] PostavTabulku(ValueTuple<int, int> linka, bool dopredu)
         {
             //pro zjednoduseni jsou spoje v jednom radku (tedy transponovane oproti originalninu JR)
             //delka jednoho radku: nazev spoje + znacky + pocet zastavek
             const int velikostZahlavi = 2;
-            
+
             var zastLinky = (from zl in ZasLinky
                              where zl.IdLinky == linka
-                             join za in Zastavky on zl.IdZastavky equals 
+                             join za in Zastavky on zl.IdZastavky equals
                              za.CisloZastavky
                              select za.JmenoZastavky)
                             .ToArray();
@@ -140,7 +138,7 @@ namespace Grafikon_Busy
 
                 var radek = new string[velikostRadku].PopulateWith("");
                 var kilometry = new string[velikostRadku].PopulateWith("");
-                kilometry[0] = "km";// for (int j = zacatek; j <= konec; ++j) kilometry[j] = "<";
+                kilometry[0] = "km";
 
                 foreach (var x in casyTam)
                 {
@@ -219,7 +217,7 @@ namespace Grafikon_Busy
             XZasLinky = SheetLoader.ReadQuotedCSV(slozka + "/Zaslinky.txt", ',', ';');
             PevneKody = SheetLoader.ReadQuotedCSV(slozka + "/Pevnykod.txt", ',', ';');
             XSpoje = SheetLoader.ReadQuotedCSV(slozka + "/Spoje.txt", ',', ';');
-            
+
 
         }
         private void SeradVse()
@@ -373,8 +371,10 @@ namespace Grafikon_Busy
             nazevBlizsiMisto = zast[3];
         }
 
-        public int CisloZastavky { 
-            get; }
+        public int CisloZastavky
+        {
+            get;
+        }
         public string JmenoZastavky { get => $"{nazevObec},{nazevCastObce},{nazevBlizsiMisto}".Trim(','); }
         string nazevBlizsiMisto { get; }
         string nazevCastObce { get; }
